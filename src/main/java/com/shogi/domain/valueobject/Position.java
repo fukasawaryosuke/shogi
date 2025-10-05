@@ -19,15 +19,6 @@ public class Position {
         return col;
     }
 
-    // セッター（値を設定）
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setCol(int col) {
-        this.col = col;
-    }
-
     // 位置が有効かチェック
     public boolean isValid() {
         return row >= 1 && row <= 9 && col >= 1 && col <= 9;
