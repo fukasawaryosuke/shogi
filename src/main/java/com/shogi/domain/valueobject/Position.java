@@ -1,32 +1,42 @@
 package com.shogi.domain.valueobject;
 
 public class Position {
-    private int row;    // 行（1-9）
-    private int col;    // 列（1-9）
+    private static final int MIN = 1;
+    private static final int MAX = 9;
 
-    // コンストラクタ
+    private int row; // 行（1-9）
+    private int col; // 列（1-9）
+
     public Position(int row, int col) {
+        if (!this.isValid(row, col)) {
+            throw new IllegalArgumentException("行と列は1から9の範囲で指定してください。");
+        }
         this.row = row;
         this.col = col;
     }
 
-    // ゲッター（値を取得）
     public int getRow() {
-        return row;
+        return this.row;
     }
 
     public int getCol() {
-        return col;
+        return this.col;
     }
 
-    // 位置が有効かチェック
-    public boolean isValid() {
-        return row >= 1 && row <= 9 && col >= 1 && col <= 9;
+    private boolean isValid(int row, int col) {
+        return row >= this.MIN && row <= this.MAX && col >= this.MIN && col <= this.MAX;
     }
 
-    // 文字列表現
     @Override
-    public String toString() {
-        return "(" + row + ", " + col + ")";
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Position)) return false;
+        Position pos = (Position) o;
+        return this.row == pos.row && this.col == pos.col;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * row + col;
     }
 }
