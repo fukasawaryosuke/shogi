@@ -15,32 +15,32 @@ public class Board {
     }
 
     private void initializeBoard() {
-        board.put(new Position(1, 9), new Kyosha(new Position(1, 9),  Player.SENTE));
-        board.put(new Position(1, 8), new Keima(new Position(1, 8), Player.SENTE));
-        board.put(new Position(1, 7), new Ginsho(new Position(1, 7), Player.SENTE));
-        board.put(new Position(1, 6), new Kinsho(new Position(1, 6), Player.SENTE));
-        board.put(new Position(1, 5), new Ousho(new Position(1, 5), Player.SENTE));
-        board.put(new Position(1, 4), new Kinsho(new Position(1, 4), Player.SENTE));
-        board.put(new Position(1, 3), new Ginsho(new Position(1, 3), Player.SENTE));
-        board.put(new Position(1, 2), new Keima(new Position(1, 2), Player.SENTE));
-        board.put(new Position(1, 1), new Kyosha(new Position(1, 1), Player.SENTE));
-        board.put(new Position(2, 2), new Kaku(new Position(1, 1), Player.SENTE));
-        board.put(new Position(2, 8), new Hisha(new Position(1, 8), Player.SENTE));
+        board.put(new Position(1, 9), new Kyosha(Player.SENTE));
+        board.put(new Position(1, 8), new Keima(Player.SENTE));
+        board.put(new Position(1, 7), new Ginsho(Player.SENTE));
+        board.put(new Position(1, 6), new Kinsho(Player.SENTE));
+        board.put(new Position(1, 5), new Ousho(Player.SENTE));
+        board.put(new Position(1, 4), new Kinsho(Player.SENTE));
+        board.put(new Position(1, 3), new Ginsho(Player.SENTE));
+        board.put(new Position(1, 2), new Keima(Player.SENTE));
+        board.put(new Position(1, 1), new Kyosha(Player.SENTE));
+        board.put(new Position(2, 2), new Kaku(Player.SENTE));
+        board.put(new Position(2, 8), new Hisha(Player.SENTE));
         for (int col = 1; col <= 9; col++) {
-            board.put(new Position(3, col), new Fu(new Position(3, col), Player.SENTE));
-            board.put(new Position(7, col), new Fu(new Position(7, col), Player.GOTE));
+            board.put(new Position(3, col), new Fu(Player.SENTE));
+            board.put(new Position(7, col), new Fu(Player.GOTE));
         }
-        board.put(new Position(8, 8), new Kaku(new Position(8, 8), Player.GOTE));
-        board.put(new Position(8, 2), new Hisha(new Position(8, 2), Player.GOTE));
-        board.put(new Position(9, 9), new Kyosha(new Position(9, 9), Player.GOTE));
-        board.put(new Position(9, 8), new Keima(new Position(9, 8), Player.GOTE));
-        board.put(new Position(9, 7), new Ginsho(new Position(9, 7), Player.GOTE));
-        board.put(new Position(9, 6), new Kinsho(new Position(9, 6), Player.GOTE));
-        board.put(new Position(9, 5), new Ousho(new Position(9, 5), Player.GOTE));
-        board.put(new Position(9, 4), new Kinsho(new Position(9, 4), Player.GOTE));
-        board.put(new Position(9, 3), new Ginsho(new Position(9, 3), Player.GOTE));
-        board.put(new Position(9, 2), new Keima(new Position(9, 2), Player.GOTE));
-        board.put(new Position(9, 1), new Kyosha(new Position(9, 1), Player.GOTE));
+        board.put(new Position(8, 8), new Kaku(Player.GOTE));
+        board.put(new Position(8, 2), new Hisha(Player.GOTE));
+        board.put(new Position(9, 9), new Kyosha(Player.GOTE));
+        board.put(new Position(9, 8), new Keima(Player.GOTE));
+        board.put(new Position(9, 7), new Ginsho(Player.GOTE));
+        board.put(new Position(9, 6), new Kinsho(Player.GOTE));
+        board.put(new Position(9, 5), new Ousho(Player.GOTE));
+        board.put(new Position(9, 4), new Kinsho(Player.GOTE));
+        board.put(new Position(9, 3), new Ginsho(Player.GOTE));
+        board.put(new Position(9, 2), new Keima(Player.GOTE));
+        board.put(new Position(9, 1), new Kyosha(Player.GOTE));
     }
 
     public void display(){
@@ -48,13 +48,50 @@ public class Board {
             for(int col=1; col<=9; col++){
                 Position pos = new Position(row, col);
                 // 駒がある場合はその駒を表示、ない場合は空白を表示
-                if(board.containsKey(pos)){
-                    System.out.print(this.board.get(pos).getDisplayName());
+                if(this.hasPiece(pos)){
+                    System.out.print(this.getPiece(pos).getDisplayName());
                 } else {
                     System.out.print("　");
                 }
             }
             System.out.println();
         }
+    }
+
+    // NOTE:ドメインサービスに移すべきかも
+    public void movePiece(Position from, Position to) {
+        PieceInterface piece = this.getPiece(from);
+        if (!piece.canMoveTo(from, to)) {
+            throw new IllegalArgumentException("その位置には移動できません。");
+        }
+        this.resetPiece(from);
+        this.setPiece(to, piece);
+    }
+
+    private PieceInterface getPiece(Position position) {
+        if (!this.hasPiece(position)) {
+            throw new IllegalArgumentException("指定された位置に駒がありません。");
+        }
+        return board.get(position);
+    }
+
+    private void setPiece(Position position, PieceInterface piece) {
+        if (this.hasPiece(position)) {
+            // TODO:相手のコマなら取る
+            // TODO:自分のコマなら例外
+            // TODO:飛車と角、香車の場合は途中のマスに駒があるかチェック
+            throw new IllegalArgumentException("指定された位置には既に駒があります。");
+        }
+        // TODO:成る処理
+        board.put(position, piece);
+    }
+
+    private void resetPiece(Position position) {
+        if (!this.hasPiece(position)) return;
+        board.remove(position);
+    }
+
+    private boolean hasPiece(Position position) {
+        return board.containsKey(position);
     }
 }

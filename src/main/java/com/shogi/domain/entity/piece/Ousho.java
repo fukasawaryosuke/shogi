@@ -7,17 +7,17 @@ public class Ousho extends Piece implements PieceInterface {
     private static final String DISPLAY_NAME_SENTE = "王";
     private static final String DISPLAY_NAME_GOTE = "玉";
 
-    public Ousho(Position position, Player player) {
-        super(position, player);
+    public Ousho(Player player) {
+        super(player);
     }
 
     public String getDisplayName() {
         return player == Player.SENTE ? DISPLAY_NAME_SENTE : DISPLAY_NAME_GOTE;
     }
 
-    public boolean canMoveTo(Position newPosition) {
-        int rowDiff = Math.abs(newPosition.getRow() - this.position.getRow());
-        int colDiff = Math.abs(newPosition.getCol() - this.position.getCol());
+    public boolean canMoveTo(Position from, Position to) {
+        int rowDiff = Math.abs(to.getRow() - from.getRow());
+        int colDiff = Math.abs(to.getCol() - from.getCol());
 
         return (rowDiff <= 1 && colDiff <= 1) && !(rowDiff == 0 && colDiff == 0);
     }

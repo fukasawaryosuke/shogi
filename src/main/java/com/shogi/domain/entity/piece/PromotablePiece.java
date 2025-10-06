@@ -6,8 +6,8 @@ import com.shogi.domain.valueobject.Player;
 public class PromotablePiece extends Piece {
     private boolean isPromoted;
 
-    public PromotablePiece(Position position, Player player) {
-        super(position, player);
+    public PromotablePiece(Player player) {
+        super(player);
         this.isPromoted = false;
     }
 

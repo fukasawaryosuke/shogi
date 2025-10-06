@@ -7,18 +7,18 @@ import com.shogi.domain.valueobject.Player;
 public class Keima extends PromotablePiece implements PieceInterface {
     private static final String DISPLAY_NAME = "桂";
 
-    public Keima(Position position, Player player) {
-        super(position, player);
+    public Keima(Player player) {
+        super(player);
     }
 
     public String getDisplayName() {
         return DISPLAY_NAME;
     }
 
-    public boolean canMoveTo(Position newPosition) {
+    public boolean canMoveTo(Position from, Position to) {
         int direction = (this.player == Player.SENTE) ? -1 : 1;
-        int rowDiff = newPosition.getRow() - this.position.getRow();
-        int colDiff = Math.abs(newPosition.getCol() - this.position.getCol());
+        int rowDiff = to.getRow() - from.getRow();
+        int colDiff = Math.abs(to.getCol() - from.getCol());
         return rowDiff == 2 * direction && colDiff == 1;
     }
 }
