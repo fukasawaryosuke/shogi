@@ -15,7 +15,7 @@ public class Hisha extends PromotablePiece implements PieceInterface {
         return DISPLAY_NAME;
     }
 
-    public boolean canMoveTo(Position from, Position to) {
+    public boolean canMove(Position from, Position to) {
         // 現在位置から移動先の縦方向の差
         int rowDiff = to.getRow() - from.getRow();
         // 現在位置から移動先の横方向の差

@@ -15,7 +15,7 @@ public class Ousho extends Piece implements PieceInterface {
         return player == Player.SENTE ? DISPLAY_NAME_SENTE : DISPLAY_NAME_GOTE;
     }
 
-    public boolean canMoveTo(Position from, Position to) {
+    public boolean canMove(Position from, Position to) {
         int rowDiff = Math.abs(to.getRow() - from.getRow());
         int colDiff = Math.abs(to.getCol() - from.getCol());
 

@@ -14,7 +14,7 @@ public class Kyosha extends PromotablePiece implements PieceInterface {
         return DISPLAY_NAME;
     }
 
-    public boolean canMoveTo(Position from, Position to) {
+    public boolean canMove(Position from, Position to) {
         if (to.getCol() != from.getCol()) return false;
         int direction = (this.player == Player.SENTE) ? -1 : 1;
         int rowDiff = to.getRow() - from.getRow();

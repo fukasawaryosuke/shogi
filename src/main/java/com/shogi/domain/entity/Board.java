@@ -8,42 +8,46 @@ import java.util.Map;
 
 public class Board {
     private Map<Position, PieceInterface> board;
+    private Player currentPlayer;
 
     public Board() {
         board = new HashMap<>();
+        currentPlayer = Player.SENTE;
         initializeBoard();
     }
 
     private void initializeBoard() {
-        board.put(new Position(1, 9), new Kyosha(Player.SENTE));
-        board.put(new Position(1, 8), new Keima(Player.SENTE));
-        board.put(new Position(1, 7), new Ginsho(Player.SENTE));
-        board.put(new Position(1, 6), new Kinsho(Player.SENTE));
-        board.put(new Position(1, 5), new Ousho(Player.SENTE));
-        board.put(new Position(1, 4), new Kinsho(Player.SENTE));
-        board.put(new Position(1, 3), new Ginsho(Player.SENTE));
-        board.put(new Position(1, 2), new Keima(Player.SENTE));
-        board.put(new Position(1, 1), new Kyosha(Player.SENTE));
-        board.put(new Position(2, 2), new Kaku(Player.SENTE));
-        board.put(new Position(2, 8), new Hisha(Player.SENTE));
+        board.put(new Position(1, 9), new Kyosha(Player.GOTE));
+        board.put(new Position(1, 8), new Keima(Player.GOTE));
+        board.put(new Position(1, 7), new Ginsho(Player.GOTE));
+        board.put(new Position(1, 6), new Kinsho(Player.GOTE));
+        board.put(new Position(1, 5), new Ousho(Player.GOTE));
+        board.put(new Position(1, 4), new Kinsho(Player.GOTE));
+        board.put(new Position(1, 3), new Ginsho(Player.GOTE));
+        board.put(new Position(1, 2), new Keima(Player.GOTE));
+        board.put(new Position(1, 1), new Kyosha(Player.GOTE));
+        board.put(new Position(2, 2), new Kaku(Player.GOTE));
+        board.put(new Position(2, 8), new Hisha(Player.GOTE));
         for (int col = 1; col <= 9; col++) {
-            board.put(new Position(3, col), new Fu(Player.SENTE));
-            board.put(new Position(7, col), new Fu(Player.GOTE));
+            board.put(new Position(3, col), new Fu(Player.GOTE));
+            board.put(new Position(7, col), new Fu(Player.SENTE));
         }
-        board.put(new Position(8, 8), new Kaku(Player.GOTE));
-        board.put(new Position(8, 2), new Hisha(Player.GOTE));
-        board.put(new Position(9, 9), new Kyosha(Player.GOTE));
-        board.put(new Position(9, 8), new Keima(Player.GOTE));
-        board.put(new Position(9, 7), new Ginsho(Player.GOTE));
-        board.put(new Position(9, 6), new Kinsho(Player.GOTE));
-        board.put(new Position(9, 5), new Ousho(Player.GOTE));
-        board.put(new Position(9, 4), new Kinsho(Player.GOTE));
-        board.put(new Position(9, 3), new Ginsho(Player.GOTE));
-        board.put(new Position(9, 2), new Keima(Player.GOTE));
-        board.put(new Position(9, 1), new Kyosha(Player.GOTE));
+        board.put(new Position(8, 8), new Kaku(Player.SENTE));
+        board.put(new Position(8, 2), new Hisha(Player.SENTE));
+        board.put(new Position(9, 9), new Kyosha(Player.SENTE));
+        board.put(new Position(9, 8), new Keima(Player.SENTE));
+        board.put(new Position(9, 7), new Ginsho(Player.SENTE));
+        board.put(new Position(9, 6), new Kinsho(Player.SENTE));
+        board.put(new Position(9, 5), new Ousho(Player.SENTE));
+        board.put(new Position(9, 4), new Kinsho(Player.SENTE));
+        board.put(new Position(9, 3), new Ginsho(Player.SENTE));
+        board.put(new Position(9, 2), new Keima(Player.SENTE));
+        board.put(new Position(9, 1), new Kyosha(Player.SENTE));
     }
 
     public void display(){
+        // TODO:フロントエンドに移す
+        System.out.println(currentPlayer.toString() + "の番");
         for(int row=1; row<=9; row++){
             for(int col=1; col<=9; col++){
                 Position pos = new Position(row, col);
@@ -61,7 +65,7 @@ public class Board {
     // NOTE:ドメインサービスに移すべきかも
     public void movePiece(Position from, Position to) {
         PieceInterface piece = this.getPiece(from);
-        if (!piece.canMoveTo(from, to)) {
+        if (!piece.canMove(from, to)) {
             throw new IllegalArgumentException("その位置には移動できません。");
         }
         this.resetPiece(from);
