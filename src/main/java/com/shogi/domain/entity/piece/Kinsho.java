@@ -15,7 +15,7 @@ public class Kinsho extends Piece implements PieceInterface {
     }
 
     public boolean canMove(Position from, Position to) {
-        int direction = (this.player == Player.SENTE) ? -1 : 1;
+        int direction = (this.owner == Player.SENTE) ? -1 : 1;
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = to.getCol() - from.getCol();
 

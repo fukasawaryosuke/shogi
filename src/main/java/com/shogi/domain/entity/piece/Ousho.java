@@ -12,7 +12,7 @@ public class Ousho extends Piece implements PieceInterface {
     }
 
     public String getDisplayName() {
-        return player == Player.SENTE ? DISPLAY_NAME_SENTE : DISPLAY_NAME_GOTE;
+        return this.owner == Player.SENTE ? DISPLAY_NAME_SENTE : DISPLAY_NAME_GOTE;
     }
 
     public boolean canMove(Position from, Position to) {

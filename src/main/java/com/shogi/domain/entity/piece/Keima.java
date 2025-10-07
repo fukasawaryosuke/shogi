@@ -16,7 +16,7 @@ public class Keima extends PromotablePiece implements PieceInterface {
     }
 
     public boolean canMove(Position from, Position to) {
-        int direction = (this.player == Player.SENTE) ? -1 : 1;
+        int direction = (this.owner == Player.SENTE) ? -1 : 1;
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = Math.abs(to.getCol() - from.getCol());
         return rowDiff == 2 * direction && colDiff == 1;
