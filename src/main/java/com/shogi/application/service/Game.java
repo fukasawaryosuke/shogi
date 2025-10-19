@@ -2,22 +2,27 @@ package com.shogi.application.service;
 
 import com.shogi.domain.entity.Stand;
 import com.shogi.domain.entity.Board;
+import com.shogi.domain.entity.piece.Piece;
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.service.Move;
+import com.shogi.domain.service.Capture;
 
 public class Game {
   private Board board;
   private Stand stand;
   private Move moveService;
+  private Capture captureService;
   private Turn turn;
 
   public Game() {
-    board = new Board();
-    stand = new Stand(Player.SENTE);
-    turn = new Turn();
-    moveService = new Move(board, stand, turn);
+    this.board = new Board();
+    this.stand = new Stand();
+    this.turn = new Turn();
+
+    this.moveService = new Move(this.board, this.turn);
+    this.captureService = new Capture(this.stand, this.turn);
   }
 
   public Turn getTurn() {
@@ -32,10 +37,11 @@ public class Game {
     return stand;
   }
 
-  public String movePiece(Position from, Position to) {
+  public String play(Position from, Position to) {
     try {
-      Player currentPlayer = turn.getCurrentPlayer();
-      moveService.movePiece(from, to, currentPlayer);
+      Piece targetPiece = moveService.movePiece(from, to);
+      captureService.capturePiece(targetPiece);
+      this.turn.next();
       return null;
     } catch (IllegalArgumentException e) {
       return e.getMessage();

@@ -6,21 +6,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Stand {
-    private Player owner;
-    private Map<Piece, Integer> pieceMap;
+    private Map<Player, Map<Piece, Integer>> playerPieceMap;
 
-    public Stand(Player player) {
-        this.owner = player;
-        this.pieceMap = new HashMap<>();
+    public Stand() {
+        this.playerPieceMap = new HashMap<>();
+        this.playerPieceMap.put(Player.SENTE, new HashMap<>());
+        this.playerPieceMap.put(Player.GOTE, new HashMap<>());
     }
 
-    public String getCapturedPieces() {
-        if (this.pieceMap.isEmpty()) {
+    // プレイヤーごとの持ち駒一覧を文字列で返す
+    public String getCapturedPieces(Player player) {
+        Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
+        if (pieceCounts == null || pieceCounts.isEmpty()) {
             return "なし";
         }
-
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<Piece, Integer> entry : this.pieceMap.entrySet()) {
+        for (Map.Entry<Piece, Integer> entry : pieceCounts.entrySet()) {
             String pieceName = entry.getKey().toString();
             int count = entry.getValue();
             sb.append(pieceName).append("*").append(count).append(" ");
@@ -28,32 +29,30 @@ public class Stand {
         return sb.toString().trim();
     }
 
-    public void addPiece(Piece piece) {
-        this.pieceMap.put(piece, this.pieceMap.getOrDefault(piece, 0) + 1);
+    // プレイヤーの持ち駒に駒を追加
+    public void addPiece(Player player, Piece piece) {
+        Map<Piece, Integer> pieceCounts = playerPieceMap.computeIfAbsent(player, k -> new HashMap<>());
+        pieceCounts.put(piece, pieceCounts.getOrDefault(piece, 0) + 1);
     }
 
-    public void dropPiece(Piece piece) {
-        if (this.pieceMap == null) {
-            // プレイヤーの持ち駒がない場合は何もしない
+    // プレイヤーの持ち駒から駒を減らす
+    public void dropPiece(Player player, Piece piece) {
+        Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
+        if (pieceCounts == null) {
             return;
         }
-
-        Integer count = this.pieceMap.get(piece);
+        Integer count = pieceCounts.get(piece);
         if (count == null || count == 0) {
             return;
         }
-
         if (count == 1) {
-            // 駒の個数が1なら削除
-            this.pieceMap.remove(piece);
+            pieceCounts.remove(piece);
         } else {
-            // 個数が複数あれば1つ減らす
-            this.pieceMap.put(piece, count - 1);
+            pieceCounts.put(piece, count - 1);
         }
     }
 
-    @Override
-    public String toString() {
-        return getCapturedPieces();
+    public String toString(Player player) {
+        return getCapturedPieces(player);
     }
 }

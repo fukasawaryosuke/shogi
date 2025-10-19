@@ -4,6 +4,7 @@ import com.shogi.domain.entity.Board;
 import com.shogi.domain.entity.Stand;
 import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.valueobject.Player;
 
 import java.util.Scanner;
 
@@ -20,9 +21,9 @@ public class ConsoleUI {
     System.out.println(board.toString());
   }
 
-  public void displayStand(Stand stand) {
+  public void displayStand(Stand stand, Player player) {
     System.out.println();
-    System.out.println("持ち駒: " + stand.toString());
+    System.out.println("持ち駒: " + stand.toString(player));
   }
 
   public Position getFromPosition() {
