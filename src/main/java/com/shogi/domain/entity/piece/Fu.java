@@ -3,15 +3,11 @@ package com.shogi.domain.entity.piece;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
 
-public class Fu extends PromotablePiece implements PieceInterface {
+public class Fu extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "歩";
 
     public Fu(Player player) {
-        super(player);
-    }
-
-    public String getDisplayName() {
-        return DISPLAY_NAME;
+        super(player, DISPLAY_NAME);
     }
 
     public boolean canMove(Position from, Position to) {
@@ -19,5 +15,9 @@ public class Fu extends PromotablePiece implements PieceInterface {
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = to.getCol() - from.getCol();
         return rowDiff == direction && colDiff == 0;
+    }
+
+    public void promote() {
+        // return new Tokin(this.owner);
     }
 }

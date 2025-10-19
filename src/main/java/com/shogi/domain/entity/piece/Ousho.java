@@ -3,16 +3,12 @@ package com.shogi.domain.entity.piece;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
 
-public class Ousho extends Piece implements PieceInterface {
+public class Ousho extends Piece {
     private static final String DISPLAY_NAME_SENTE = "王";
     private static final String DISPLAY_NAME_GOTE = "玉";
 
     public Ousho(Player player) {
-        super(player);
-    }
-
-    public String getDisplayName() {
-        return this.owner == Player.SENTE ? DISPLAY_NAME_SENTE : DISPLAY_NAME_GOTE;
+        super(player, player == Player.SENTE ? DISPLAY_NAME_SENTE : DISPLAY_NAME_GOTE);
     }
 
     public boolean canMove(Position from, Position to) {

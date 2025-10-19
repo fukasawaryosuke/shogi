@@ -4,15 +4,11 @@ package com.shogi.domain.entity.piece;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
 
-public class Keima extends PromotablePiece implements PieceInterface {
+public class Keima extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "桂";
 
     public Keima(Player player) {
-        super(player);
-    }
-
-    public String getDisplayName() {
-        return DISPLAY_NAME;
+        super(player, DISPLAY_NAME);
     }
 
     public boolean canMove(Position from, Position to) {
@@ -20,5 +16,9 @@ public class Keima extends PromotablePiece implements PieceInterface {
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = Math.abs(to.getCol() - from.getCol());
         return rowDiff == 2 * direction && colDiff == 1;
+    }
+
+    public void promote() {
+        // return new Narikei(this.owner);
     }
 }

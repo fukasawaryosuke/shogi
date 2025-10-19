@@ -4,39 +4,48 @@ public class Position {
     private static final int MIN = 1;
     private static final int MAX = 9;
 
-    private int row; // 行（1-9）
-    private int col; // 列（1-9）
+    private int col;
+    private int row;
 
-    public Position(int row, int col) {
-        if (!this.isValid(row, col)) {
+    public Position(int col, int row) {
+        if (!this.isValid(col, row)) {
             throw new IllegalArgumentException("行と列は1から9の範囲で指定してください。");
         }
-        this.row = row;
         this.col = col;
-    }
-
-    public int getRow() {
-        return this.row;
+        this.row = row;
     }
 
     public int getCol() {
         return this.col;
     }
 
+    public int getRow() {
+        return this.row;
+    }
+
     private boolean isValid(int row, int col) {
-        return row >= this.MIN && row <= this.MAX && col >= this.MIN && col <= this.MAX;
+        return col >= MIN && col <= MAX && row >= MIN && row <= MAX;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Position)) return false;
-        Position pos = (Position) o;
-        return this.row == pos.row && this.col == pos.col;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Position)) {
+            return false;
+        }
+        Position position = (Position) obj;
+        return this.col == position.col && this.row == position.row;
     }
 
     @Override
     public int hashCode() {
-        return 31 * row + col;
+        return 31 * col + row;
+    }
+
+    @Override
+    public String toString() {
+        return col + ", " + row;
     }
 }
