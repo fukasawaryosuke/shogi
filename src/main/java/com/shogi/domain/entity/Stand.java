@@ -14,10 +14,18 @@ public class Stand {
         this.playerPieceMap.put(Player.GOTE, new HashMap<>());
     }
 
-    // プレイヤーごとの持ち駒一覧を文字列で返す
-    public String getCapturedPieces(Player player) {
+    public boolean hasPiece(Player player, Piece piece) {
         Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
         if (pieceCounts == null || pieceCounts.isEmpty()) {
+            return false;
+        }
+        Integer count = pieceCounts.get(piece);
+        return count != null && count > 0;
+    }
+
+    public String getPieces(Player player) {
+        Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
+        if (pieceCounts.isEmpty()) {
             return "なし";
         }
         StringBuilder sb = new StringBuilder();
@@ -29,14 +37,12 @@ public class Stand {
         return sb.toString().trim();
     }
 
-    // プレイヤーの持ち駒に駒を追加
-    public void addPiece(Player player, Piece piece) {
+    public void putPiece(Player player, Piece piece) {
         Map<Piece, Integer> pieceCounts = playerPieceMap.computeIfAbsent(player, k -> new HashMap<>());
         pieceCounts.put(piece, pieceCounts.getOrDefault(piece, 0) + 1);
     }
 
-    // プレイヤーの持ち駒から駒を減らす
-    public void dropPiece(Player player, Piece piece) {
+    public void removePiece(Player player, Piece piece) {
         Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
         if (pieceCounts == null) {
             return;
@@ -53,6 +59,6 @@ public class Stand {
     }
 
     public String toString(Player player) {
-        return getCapturedPieces(player);
+        return getPieces(player);
     }
 }

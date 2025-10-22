@@ -3,6 +3,7 @@ package com.shogi.presentation;
 import com.shogi.application.service.Game;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.PieceType;
 
 public class ShogiApp {
     public static void main(String[] args) {
@@ -16,11 +17,23 @@ public class ShogiApp {
             ui.displayBoard(game.getBoard());
             ui.displayStand(game.getStand(), Player.SENTE);
 
-            Position from = ui.getFromPosition();
-            Position to = ui.getToPosition();
-            String error = game.play(from, to);
-            if (error != null) {
-                ui.showMessage(error);
+            ActionType action = ui.askAction();
+            if (action == ActionType.MOVE) {
+                Position from = ui.getFromPosition();
+                Position to = ui.getToPosition();
+                String error = game.move(from, to);
+                if (error != null) {
+                    ui.showMessage(error);
+                }
+            }
+            if (action == ActionType.DROP) {
+                PieceType pieceType = ui.getDropPieceType(game.getTurn().getCurrentPlayer());
+                Position to = ui.getToPosition();
+                String error = game.drop(pieceType, to);
+                if (error != null) {
+                    ui.showMessage(error);
+                }
+                continue;
             }
         }
         ui.showMessage("勝負あり");

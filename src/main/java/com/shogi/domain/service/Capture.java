@@ -20,7 +20,7 @@ public class Capture {
     if (!this.validateCapture(targetPiece, currentPlayer))
       return;
 
-    stand.addPiece(currentPlayer, targetPiece);
+    stand.putPiece(currentPlayer, targetPiece);
   }
 
   private boolean validateCapture(Piece targetPiece, Player currentPlayer) {

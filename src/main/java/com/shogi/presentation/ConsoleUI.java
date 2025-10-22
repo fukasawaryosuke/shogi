@@ -5,6 +5,7 @@ import com.shogi.domain.entity.Stand;
 import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.PieceType;
 
 import java.util.Scanner;
 
@@ -24,6 +25,31 @@ public class ConsoleUI {
   public void displayStand(Stand stand, Player player) {
     System.out.println();
     System.out.println("持ち駒: " + stand.toString(player));
+  }
+
+  public ActionType askAction() {
+    System.out.println();
+    System.out.print("アクションを選択してください (1: 駒を動かす, 2: 駒を置く): ");
+    String input = scanner.nextLine().trim();
+    ActionType action = ActionType.fromCode(input);
+    if (action != null) {
+      return action;
+    } else {
+      System.out.println("無効な選択です");
+      return askAction();
+    }
+  }
+
+  public PieceType getDropPieceType(Player player) {
+    System.out.println();
+    System.out.print(player + "の持ち駒から駒を選択してください (例: FU, KY, KE, GI, KI, KA, HI): ");
+    String input = scanner.nextLine().trim().toUpperCase();
+    try {
+      return PieceType.valueOf(input);
+    } catch (IllegalArgumentException e) {
+      System.out.println("無効な駒の種類です");
+      return getDropPieceType(player);
+    }
   }
 
   public Position getFromPosition() {
