@@ -1,9 +1,9 @@
 package com.shogi.domain.service;
 
-import com.shogi.domain.entity.Stand;
-import com.shogi.domain.entity.piece.Piece;
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Turn;
+import com.shogi.domain.entity.Stand;
+import com.shogi.domain.entity.piece.Piece;
 
 public class Capture {
   private Stand stand;

@@ -1,9 +1,9 @@
 package com.shogi.presentation;
 
-import com.shogi.application.service.Game;
-import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.PieceType;
+import com.shogi.application.service.Game;
 
 public class ShogiApp {
     public static void main(String[] args) {

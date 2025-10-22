@@ -1,10 +1,10 @@
 package com.shogi.domain.service;
 
-import com.shogi.domain.entity.Board;
-import com.shogi.domain.entity.piece.Piece;
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Turn;
+import com.shogi.domain.entity.Board;
+import com.shogi.domain.entity.piece.Piece;
 
 public class Move {
     private Board board;

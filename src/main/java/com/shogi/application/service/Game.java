@@ -1,14 +1,14 @@
 package com.shogi.application.service;
 
+import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.valueobject.PieceType;
+import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.entity.Stand;
 import com.shogi.domain.entity.Board;
 import com.shogi.domain.entity.piece.Piece;
-import com.shogi.domain.valueobject.Player;
-import com.shogi.domain.valueobject.Position;
-import com.shogi.domain.valueobject.Turn;
-import com.shogi.domain.valueobject.PieceType;
-import com.shogi.domain.service.Move;
 import com.shogi.domain.service.Capture;
+import com.shogi.domain.service.Move;
 import com.shogi.domain.service.Drop;
 import com.shogi.domain.factory.PieceFactory;
 
