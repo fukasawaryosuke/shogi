@@ -1,23 +1,27 @@
 
 package com.shogi.domain.entity.piece;
 
-import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.entity.piece.promoted.Promotable;
+import com.shogi.domain.entity.piece.promoted.RyuOu;
 
-public class Hisha extends Piece implements Promotable {
+public class HiSha extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "飛";
 
-    public Hisha(Player player) {
-        super(player, DISPLAY_NAME);
+    public HiSha(Player owner) {
+        super(owner, DISPLAY_NAME);
     }
 
+    @Override
     public boolean canMove(Position from, Position to) {
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = to.getCol() - from.getCol();
         return (rowDiff == 0 && colDiff != 0) || (rowDiff != 0 && colDiff == 0);
     }
 
-    public void promote() {
-        // return new Ryuou(this.owner);
+    @Override
+    public RyuOu promote() {
+        return new RyuOu(this.owner);
     }
 }

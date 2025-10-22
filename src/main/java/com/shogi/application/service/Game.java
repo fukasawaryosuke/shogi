@@ -12,7 +12,6 @@ import com.shogi.domain.service.Capture;
 import com.shogi.domain.service.Drop;
 import com.shogi.domain.factory.PieceFactory;
 
-
 public class Game {
   private Board board;
   private Stand stand;
@@ -48,11 +47,10 @@ public class Game {
     return this.turn.getCurrentPlayer();
   }
 
-  public String drop(PieceType pieceType, Position position) {
+  public String move(Position from, Position to) {
     try {
-      Player currentPlayer = this.getCurrentPlayer();
-      Piece piece = PieceFactory.createPiece(pieceType, currentPlayer);
-      dropService.dropPiece(piece, position);
+      Piece targetPiece = moveService.movePiece(from, to);
+      captureService.capturePiece(targetPiece);
       this.turn.next();
       return null;
     } catch (IllegalArgumentException e) {
@@ -60,10 +58,11 @@ public class Game {
     }
   }
 
-  public String move(Position from, Position to) {
+  public String drop(PieceType pieceType, Position position) {
     try {
-      Piece targetPiece = moveService.movePiece(from, to);
-      captureService.capturePiece(targetPiece);
+      Player currentPlayer = this.getCurrentPlayer();
+      Piece piece = PieceFactory.createPiece(pieceType, currentPlayer);
+      dropService.dropPiece(piece, position);
       this.turn.next();
       return null;
     } catch (IllegalArgumentException e) {

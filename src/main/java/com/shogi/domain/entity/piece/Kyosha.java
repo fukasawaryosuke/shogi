@@ -1,15 +1,18 @@
 package com.shogi.domain.entity.piece;
 
-import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.entity.piece.promoted.Promotable;
+import com.shogi.domain.entity.piece.promoted.NariKyo;
 
-public class Kyosha extends Piece implements Promotable {
+public class KyoSha extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "香";
 
-    public Kyosha(Player player) {
-        super(player, DISPLAY_NAME);
+    public KyoSha(Player owner) {
+        super(owner, DISPLAY_NAME);
     }
 
+    @Override
     public boolean canMove(Position from, Position to) {
         if (to.getCol() != from.getCol())
             return false;
@@ -18,7 +21,8 @@ public class Kyosha extends Piece implements Promotable {
         return direction * rowDiff > 0;
     }
 
-    public void promote() {
-        // return new Narikyo(this.owner);
+    @Override
+    public NariKyo promote() {
+        return new NariKyo(this.owner);
     }
 }

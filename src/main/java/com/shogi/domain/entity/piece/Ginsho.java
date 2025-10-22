@@ -1,15 +1,18 @@
 package com.shogi.domain.entity.piece;
 
-import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.entity.piece.promoted.Promotable;
+import com.shogi.domain.entity.piece.promoted.NariGin;
 
-public class Ginsho extends Piece implements Promotable {
+public class GinSho extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "銀";
 
-    public Ginsho(Player player) {
-        super(player, DISPLAY_NAME);
+    public GinSho(Player owner) {
+        super(owner, DISPLAY_NAME);
     }
 
+    @Override
     public boolean canMove(Position from, Position to) {
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
         int rowDiff = to.getRow() - from.getRow();
@@ -24,7 +27,8 @@ public class Ginsho extends Piece implements Promotable {
         return false;
     }
 
-    public void promote() {
-        // return new Narigin(this.owner);
+    @Override
+    public NariGin promote() {
+        return new NariGin(this.owner);
     }
 }

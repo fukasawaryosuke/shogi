@@ -1,15 +1,18 @@
 package com.shogi.domain.entity.piece;
 
-import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.entity.piece.promoted.Promotable;
+import com.shogi.domain.entity.piece.promoted.ToKin;
 
-public class Fu extends Piece implements Promotable {
+public class FuHyo extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "歩";
 
-    public Fu(Player player) {
-        super(player, DISPLAY_NAME);
+    public FuHyo(Player owner) {
+        super(owner, DISPLAY_NAME);
     }
 
+    @Override
     public boolean canMove(Position from, Position to) {
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
         int rowDiff = to.getRow() - from.getRow();
@@ -17,7 +20,8 @@ public class Fu extends Piece implements Promotable {
         return rowDiff == direction && colDiff == 0;
     }
 
-    public void promote() {
-        // return new Tokin(this.owner);
+    @Override
+    public ToKin promote() {
+        return new ToKin(this.owner);
     }
 }

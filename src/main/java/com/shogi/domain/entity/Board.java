@@ -29,32 +29,32 @@ public class Board {
         // 9 香 桂 銀 金 王 金 銀 桂 香
         // SENTE側
 
-        this.pieceMap.put(new Position(1, 1), new Kyosha(Player.GOTE));
-        this.pieceMap.put(new Position(2, 1), new Keima(Player.GOTE));
-        this.pieceMap.put(new Position(3, 1), new Ginsho(Player.GOTE));
-        this.pieceMap.put(new Position(4, 1), new Kinsho(Player.GOTE));
-        this.pieceMap.put(new Position(5, 1), new Ousho(Player.GOTE));
-        this.pieceMap.put(new Position(6, 1), new Kinsho(Player.GOTE));
-        this.pieceMap.put(new Position(7, 1), new Ginsho(Player.GOTE));
-        this.pieceMap.put(new Position(8, 1), new Keima(Player.GOTE));
-        this.pieceMap.put(new Position(9, 1), new Kyosha(Player.GOTE));
-        this.pieceMap.put(new Position(2, 2), new Hisha(Player.GOTE));
-        this.pieceMap.put(new Position(8, 2), new Kaku(Player.GOTE));
+        this.pieceMap.put(new Position(1, 1), new KyoSha(Player.GOTE));
+        this.pieceMap.put(new Position(2, 1), new KeiMa(Player.GOTE));
+        this.pieceMap.put(new Position(3, 1), new GinSho(Player.GOTE));
+        this.pieceMap.put(new Position(4, 1), new KinSho(Player.GOTE));
+        this.pieceMap.put(new Position(5, 1), new OuSho(Player.GOTE));
+        this.pieceMap.put(new Position(6, 1), new KinSho(Player.GOTE));
+        this.pieceMap.put(new Position(7, 1), new GinSho(Player.GOTE));
+        this.pieceMap.put(new Position(8, 1), new KeiMa(Player.GOTE));
+        this.pieceMap.put(new Position(9, 1), new KyoSha(Player.GOTE));
+        this.pieceMap.put(new Position(2, 2), new HiSha(Player.GOTE));
+        this.pieceMap.put(new Position(8, 2), new KakuGyou(Player.GOTE));
         for (int col = 1; col <= 9; col++) {
-            this.pieceMap.put(new Position(col, 3), new Fu(Player.GOTE));
-            this.pieceMap.put(new Position(col, 7), new Fu(Player.SENTE));
+            this.pieceMap.put(new Position(col, 3), new FuHyo(Player.GOTE));
+            this.pieceMap.put(new Position(col, 7), new FuHyo(Player.SENTE));
         }
-        this.pieceMap.put(new Position(2, 8), new Kaku(Player.SENTE));
-        this.pieceMap.put(new Position(8, 8), new Hisha(Player.SENTE));
-        this.pieceMap.put(new Position(1, 9), new Kyosha(Player.SENTE));
-        this.pieceMap.put(new Position(2, 9), new Keima(Player.SENTE));
-        this.pieceMap.put(new Position(3, 9), new Ginsho(Player.SENTE));
-        this.pieceMap.put(new Position(4, 9), new Kinsho(Player.SENTE));
-        this.pieceMap.put(new Position(5, 9), new Ousho(Player.SENTE));
-        this.pieceMap.put(new Position(6, 9), new Kinsho(Player.SENTE));
-        this.pieceMap.put(new Position(7, 9), new Ginsho(Player.SENTE));
-        this.pieceMap.put(new Position(8, 9), new Keima(Player.SENTE));
-        this.pieceMap.put(new Position(9, 9), new Kyosha(Player.SENTE));
+        this.pieceMap.put(new Position(2, 8), new KakuGyou(Player.SENTE));
+        this.pieceMap.put(new Position(8, 8), new HiSha(Player.SENTE));
+        this.pieceMap.put(new Position(1, 9), new KyoSha(Player.SENTE));
+        this.pieceMap.put(new Position(2, 9), new KeiMa(Player.SENTE));
+        this.pieceMap.put(new Position(3, 9), new GinSho(Player.SENTE));
+        this.pieceMap.put(new Position(4, 9), new KinSho(Player.SENTE));
+        this.pieceMap.put(new Position(5, 9), new OuSho(Player.SENTE));
+        this.pieceMap.put(new Position(6, 9), new KinSho(Player.SENTE));
+        this.pieceMap.put(new Position(7, 9), new GinSho(Player.SENTE));
+        this.pieceMap.put(new Position(8, 9), new KeiMa(Player.SENTE));
+        this.pieceMap.put(new Position(9, 9), new KyoSha(Player.SENTE));
     }
 
     public boolean hasPiece(Position position) {
@@ -75,7 +75,7 @@ public class Board {
 
     public boolean hasOusho(Player player) {
         for (Piece piece : pieceMap.values()) {
-            if (piece instanceof Ousho && piece.isOwner(player)) {
+            if (piece instanceof OuSho && piece.isOwner(player)) {
                 return true;
             }
         }

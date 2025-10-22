@@ -1,14 +1,16 @@
 
 package com.shogi.domain.entity.piece;
 
-import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.entity.piece.promoted.Promotable;
+import com.shogi.domain.entity.piece.promoted.NariKei;
 
-public class Keima extends Piece implements Promotable {
+public class KeiMa extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "桂";
 
-    public Keima(Player player) {
-        super(player, DISPLAY_NAME);
+    public KeiMa(Player owner) {
+        super(owner, DISPLAY_NAME);
     }
 
     public boolean canMove(Position from, Position to) {
@@ -18,7 +20,7 @@ public class Keima extends Piece implements Promotable {
         return rowDiff == 2 * direction && colDiff == 1;
     }
 
-    public void promote() {
-        // return new Narikei(this.owner);
+    public NariKei promote() {
+        return new NariKei(this.owner);
     }
 }

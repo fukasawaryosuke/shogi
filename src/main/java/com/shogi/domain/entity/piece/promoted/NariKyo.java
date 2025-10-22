@@ -1,12 +1,13 @@
-package com.shogi.domain.entity.piece;
+package com.shogi.domain.entity.piece.promoted;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.entity.piece.Piece;
 
-public class KinSho extends Piece {
-    private static final String DISPLAY_NAME = "金";
+public class NariKyo extends Piece {
+    private static final String DISPLAY_NAME = "成香";
 
-    public KinSho(Player owner) {
+    public NariKyo(Player owner) {
         super(owner, DISPLAY_NAME);
     }
 
@@ -15,12 +16,14 @@ public class KinSho extends Piece {
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = to.getCol() - from.getCol();
-
-        if (rowDiff == direction && Math.abs(colDiff) <= 1)
+        // 金将と同じ動き
+        if (rowDiff == direction && colDiff == 0)
             return true;
         if (rowDiff == 0 && Math.abs(colDiff) == 1)
             return true;
         if (rowDiff == -direction && colDiff == 0)
+            return true;
+        if (rowDiff == direction && Math.abs(colDiff) == 1)
             return true;
         return false;
     }
