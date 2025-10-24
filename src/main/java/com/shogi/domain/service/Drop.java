@@ -8,9 +8,9 @@ import com.shogi.domain.entity.Stand;
 import com.shogi.domain.entity.piece.Piece;
 
 public class Drop {
-  private Board board;
-  private Stand stand;
-  private Turn turn;
+  private final Board board;
+  private final Stand stand;
+  private final Turn turn;
 
   public Drop(Board board, Stand stand, Turn turn) {
     this.board = board;

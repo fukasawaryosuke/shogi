@@ -1,4 +1,4 @@
-package com.shogi.presentation;
+package com.shogi.presentation.cli;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
@@ -12,19 +12,19 @@ import java.util.Scanner;
 public class ConsoleUI {
   private Scanner scanner = new Scanner(System.in);
 
-  public void displayTurn(Turn turn) {
+  public void display(Turn turn, Board board, Stand stand) {
     System.out.print("\n\n");
-    System.out.println("手番: " + turn.toString());
+    System.out.println("手番: " + turn);
+    System.out.println();
+    System.out.println("持ち駒: " + stand.toString(Player.GOTE));
+    System.out.println();
+    System.out.println(board);
+    System.out.println();
+    System.out.println("持ち駒: " + stand.toString(Player.SENTE));
   }
 
-  public void displayBoard(Board board) {
-    System.out.println();
-    System.out.println(board.toString());
-  }
-
-  public void displayStand(Stand stand, Player player) {
-    System.out.println();
-    System.out.println("持ち駒: " + stand.toString(player));
+  public void showMessage(String message) {
+    System.out.println(message);
   }
 
   public ActionType askAction() {
@@ -58,6 +58,11 @@ public class ConsoleUI {
     }
   }
 
+  public Position getDropPosition() {
+    String prompt = "駒を置く位置を入力してください (例: 3 7): ";
+    return inputPosition(prompt);
+  }
+
   public Position getFromPosition() {
     String prompt = "移動元を入力してください (例: 3 7): ";
     return inputPosition(prompt);
@@ -85,9 +90,5 @@ public class ConsoleUI {
     System.out.print("成りますか？ (y/n): ");
     String input = scanner.nextLine().trim().toLowerCase();
     return input.equals("y");
-  }
-
-  public void showMessage(String message) {
-    System.out.println(message);
   }
 }

@@ -8,8 +8,8 @@ import com.shogi.domain.entity.piece.KeiMa;
 import com.shogi.domain.entity.piece.Piece;
 
 public class Move {
-    private Board board;
-    private Turn turn;
+    private final Board board;
+    private final Turn turn;
 
     public Move(Board board, Turn turn) {
         this.board = board;

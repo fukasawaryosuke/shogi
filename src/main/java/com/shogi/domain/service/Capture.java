@@ -6,8 +6,8 @@ import com.shogi.domain.entity.Stand;
 import com.shogi.domain.entity.piece.Piece;
 
 public class Capture {
-  private Stand stand;
-  private Turn turn;
+  private final Stand stand;
+  private final Turn turn;
 
   public Capture(Stand stand, Turn turn) {
     this.stand = stand;

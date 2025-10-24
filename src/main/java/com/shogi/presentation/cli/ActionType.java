@@ -1,4 +1,4 @@
-package com.shogi.presentation;
+package com.shogi.presentation.cli;
 
 public enum ActionType {
   MOVE("1"),

@@ -8,25 +8,54 @@ import com.shogi.domain.entity.piece.promoted.Promotable;
 import com.shogi.domain.entity.piece.Piece;
 
 public class Promote {
-  private Board board;
-  private Turn turn;
+  private final Board board;
+  private final Turn turn;
 
   public Promote(Board board, Turn turn) {
     this.board = board;
     this.turn = turn;
   }
 
-  public Piece promotePiece(Promotable originPiece, Position to) {
-    return originPiece.promote();
+  public void promotePiece(Position to) {
+    Piece originPiece = this.board.getPiece(to);
+
+    if (!isPromotable(originPiece))
+      return;
+
+    Piece promotedPiece = ((Promotable) originPiece).promote();
+    this.board.putPiece(to, promotedPiece);
   }
 
   public boolean canChoosePromote(Position to) {
+    Piece piece = this.board.getPiece(to);
     Player currentPlayer = this.turn.getCurrentPlayer();
-    return board.isEnemyZone(to, currentPlayer) && !board.isEnemyZoneOneRow(to, currentPlayer);
+
+    if (!isPromotable(piece))
+      return false;
+
+    if (board.isEnemyZone(to, currentPlayer))
+      return true;
+
+    if (!board.isEnemyZoneOneRow(to, currentPlayer))
+      return false;
+
+    return true;
   }
 
   public boolean mustPromote(Position to) {
+    Piece piece = this.board.getPiece(to);
     Player currentPlayer = this.turn.getCurrentPlayer();
-    return board.isEnemyZoneOneRow(to, currentPlayer);
+
+    if (!isPromotable(piece))
+      return false;
+
+    if (!board.isEnemyZoneOneRow(to, currentPlayer))
+      return false;
+
+    return true;
+  }
+
+  private boolean isPromotable(Piece piece) {
+    return piece instanceof Promotable;
   }
 }

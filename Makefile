@@ -24,5 +24,8 @@ build:
 run:
 	docker-compose exec app mvn exec:java
 
+clean:
+	docker-compose run --rm app mvn clean compile
+
 test:
 	docker-compose exec app mvn test

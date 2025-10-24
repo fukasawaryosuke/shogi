@@ -1,4 +1,4 @@
-package com.shogi.application.service;
+package com.shogi.application.usecase;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
@@ -7,7 +7,6 @@ import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.entity.Stand;
 import com.shogi.domain.entity.Board;
 import com.shogi.domain.entity.piece.Piece;
-import com.shogi.domain.entity.piece.promoted.Promotable;
 import com.shogi.domain.service.Capture;
 import com.shogi.domain.service.Move;
 import com.shogi.domain.service.Drop;
@@ -15,21 +14,19 @@ import com.shogi.domain.service.Promote;
 import com.shogi.domain.factory.PieceFactory;
 
 public class Game {
-  private Board board;
-  private Stand stand;
-  private Turn turn;
-  private Player currentPlayer;
+  private final Board board;
+  private final Stand stand;
+  private final Turn turn;
 
-  private Move moveService;
-  private Capture captureService;
-  private Drop dropService;
-  private Promote promoteService;
+  private final Move moveService;
+  private final Capture captureService;
+  private final Drop dropService;
+  private final Promote promoteService;
 
   public Game() {
     this.board = new Board();
     this.stand = new Stand();
     this.turn = new Turn();
-    this.currentPlayer = this.turn.getCurrentPlayer();
 
     this.moveService = new Move(this.board, this.turn);
     this.captureService = new Capture(this.stand, this.turn);
@@ -50,7 +47,7 @@ public class Game {
   }
 
   public Player getCurrentPlayer() {
-    return this.currentPlayer;
+    return this.turn.getCurrentPlayer();
   }
 
   public void nextTurn() {
@@ -71,9 +68,8 @@ public class Game {
     }
   }
 
-  public void promote(Position from, Position to) {
-    Piece promotedPiece = promoteService.promotePiece((Promotable) this.board.getPiece(to), to);
-    this.board.putPiece(to, promotedPiece);
+  public void promote(Position to) {
+    promoteService.promotePiece(to);
   }
 
   public boolean canChoosePromote(Position to) {
@@ -86,11 +82,10 @@ public class Game {
 
   public String drop(PieceType pieceType, Position position) {
     try {
-      Piece dropPiece = PieceFactory.createPiece(pieceType, this.currentPlayer);
+      Piece dropPiece = PieceFactory.createPiece(pieceType, this.turn.getCurrentPlayer());
 
       dropService.dropPiece(dropPiece, position);
 
-      this.turn.next();
       return null;
     } catch (IllegalArgumentException e) {
       return e.getMessage();
@@ -98,6 +93,6 @@ public class Game {
   }
 
   public boolean isGameOver() {
-    return !board.hasOusho(this.currentPlayer);
+    return !board.hasOusho(this.turn.getCurrentPlayer());
   }
 }

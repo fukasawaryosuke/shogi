@@ -1,11 +1,11 @@
-package com.shogi.presentation;
+package com.shogi.presentation.cli;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
+import com.shogi.application.usecase.Game;
 import com.shogi.domain.valueobject.PieceType;
-import com.shogi.application.service.Game;
 
-public class ShogiApp {
+public class App {
     public static void main(String[] args) {
         ConsoleUI ui = new ConsoleUI();
         Game game = new Game();
@@ -18,10 +18,7 @@ public class ShogiApp {
             }
 
             ui.showMessage("手番: " + currentPlayer);
-            ui.displayTurn(game.getTurn());
-            ui.displayStand(game.getStand(), Player.GOTE);
-            ui.displayBoard(game.getBoard());
-            ui.displayStand(game.getStand(), Player.SENTE);
+            ui.display(game.getTurn(), game.getBoard(), game.getStand());
 
             ActionType action = ui.askAction();
             if (action == ActionType.MOVE) {
@@ -35,27 +32,31 @@ public class ShogiApp {
 
                 boolean mustPromote = game.mustPromote(to);
                 if (mustPromote) {
-                    game.promote(from, to);
+                    game.promote(to);
                 }
 
                 boolean canChoosePromote = game.canChoosePromote(to);
                 if (canChoosePromote) {
                     boolean shouldPromote = ui.askPromote();
                     if (shouldPromote) {
-                        game.promote(from, to);
+                        game.promote(to);
                     }
                 }
 
                 game.nextTurn();
             }
+
             if (action == ActionType.DROP) {
                 PieceType pieceType = ui.getDropPieceType(game.getTurn().getCurrentPlayer());
-                Position to = ui.getToPosition();
+                Position to = ui.getDropPosition();
                 String error = game.drop(pieceType, to);
+
                 if (error != null) {
                     ui.showMessage(error);
+                    continue;
                 }
-                continue;
+
+                game.nextTurn();
             }
         }
         ui.showMessage("勝負あり");
