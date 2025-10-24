@@ -29,12 +29,11 @@ public class Drop {
   }
 
   private void validateDrop(Piece piece, Position position, Player player) {
-    if (!stand.hasPiece(player, piece)) {
+    if (!stand.hasPiece(player, piece))
       throw new IllegalArgumentException(piece + "は持ち駒に存在しません");
-    }
 
-    if (board.hasPiece(position)) {
+    if (board.hasPiece(position))
       throw new IllegalArgumentException(position + "には既に駒が存在します");
-    }
+
   }
 }

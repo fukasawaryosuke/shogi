@@ -8,9 +8,9 @@ public class Position {
     private int row;
 
     public Position(int col, int row) {
-        if (!this.isValid(col, row)) {
+        if (!this.isValid(col, row))
             throw new IllegalArgumentException("行と列は1から9の範囲で指定してください。");
-        }
+
         this.col = col;
         this.row = row;
     }
@@ -29,12 +29,11 @@ public class Position {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (!(obj instanceof Position)) {
+        if (!(obj instanceof Position))
             return false;
-        }
+
         Position position = (Position) obj;
         return this.col == position.col && this.row == position.row;
     }

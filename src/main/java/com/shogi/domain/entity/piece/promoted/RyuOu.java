@@ -15,6 +15,7 @@ public class RyuOu extends Piece {
   public boolean canMove(Position from, Position to) {
     int rowDiff = Math.abs(to.getRow() - from.getRow());
     int colDiff = Math.abs(to.getCol() - from.getCol());
+
     if ((rowDiff == 0 && colDiff != 0) || (colDiff == 0 && rowDiff != 0))
       return true;
     if ((rowDiff <= 1 && colDiff <= 1) && (rowDiff + colDiff != 0))

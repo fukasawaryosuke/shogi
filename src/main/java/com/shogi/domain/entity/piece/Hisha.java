@@ -17,6 +17,7 @@ public class HiSha extends Piece implements Promotable {
     public boolean canMove(Position from, Position to) {
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = to.getCol() - from.getCol();
+
         return (rowDiff == 0 && colDiff != 0) || (rowDiff != 0 && colDiff == 0);
     }
 

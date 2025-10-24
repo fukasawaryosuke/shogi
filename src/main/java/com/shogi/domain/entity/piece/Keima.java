@@ -17,6 +17,7 @@ public class KeiMa extends Piece implements Promotable {
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = Math.abs(to.getCol() - from.getCol());
+
         return rowDiff == 2 * direction && colDiff == 1;
     }
 

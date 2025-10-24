@@ -12,9 +12,8 @@ public enum ActionType {
 
   public static ActionType fromCode(String code) {
     for (ActionType type : values()) {
-      if (type.code.equals(code)) {
+      if (type.code.equals(code))
         return type;
-      }
     }
     return null;
   }

@@ -81,14 +81,12 @@ public class ConsoleUI {
     return new Position(col, row);
   }
 
-  // 成りたいかの確認
   public boolean askPromotion() {
     System.out.print("成りますか？ (y/n): ");
     String input = scanner.nextLine().trim().toLowerCase();
     return input.equals("y");
   }
 
-  // メッセージ表示
   public void showMessage(String message) {
     System.out.println(message);
   }

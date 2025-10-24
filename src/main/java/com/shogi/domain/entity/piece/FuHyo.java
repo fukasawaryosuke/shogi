@@ -17,6 +17,7 @@ public class FuHyo extends Piece implements Promotable {
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = to.getCol() - from.getCol();
+
         return rowDiff == direction && colDiff == 0;
     }
 

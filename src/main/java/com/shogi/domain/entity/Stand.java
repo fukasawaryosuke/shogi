@@ -16,18 +16,17 @@ public class Stand {
 
     public boolean hasPiece(Player player, Piece piece) {
         Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
-        if (pieceCounts == null || pieceCounts.isEmpty()) {
+        if (pieceCounts == null || pieceCounts.isEmpty())
             return false;
-        }
+
         Integer count = pieceCounts.get(piece);
         return count != null && count > 0;
     }
 
     public String getPieces(Player player) {
         Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
-        if (pieceCounts.isEmpty()) {
+        if (pieceCounts.isEmpty())
             return "なし";
-        }
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Piece, Integer> entry : pieceCounts.entrySet()) {
             String pieceName = entry.getKey().toString();
@@ -44,13 +43,12 @@ public class Stand {
 
     public void removePiece(Player player, Piece piece) {
         Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
-        if (pieceCounts == null) {
+        if (pieceCounts == null)
             return;
-        }
+
         Integer count = pieceCounts.get(piece);
-        if (count == null || count == 0) {
+        if (count == null || count == 0)
             return;
-        }
         if (count == 1) {
             pieceCounts.remove(piece);
         } else {

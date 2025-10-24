@@ -100,35 +100,26 @@ public class Board {
         return false;
     }
 
-    // 移動経路に駒があるかの判定
     public boolean isPathClear(Position from, Position to) {
-        // fromとtoの行と列を取得
         int fromCol = from.getCol();
         int fromRow = from.getRow();
         int toCol = to.getCol();
         int toRow = to.getRow();
 
-        // 縦方向の進む向き(上:-1, 下:+1, 同じ:0)
         int colStep = Integer.compare(toCol, fromCol);
-
-        // 横方向の進む向き(左:-1, 右:+1, 同じ:0)
         int rowStep = Integer.compare(toRow, fromRow);
-
-        // 現在の位置をfromの次のマスに設定
-        // 例えば、fromが(3,3)でtoが(3,7)の場合、currentは(3,4)からスタート
         int currentCol = fromCol + colStep;
         int currentRow = fromRow + rowStep;
 
-        // toに到達するまでループ
         while (currentCol != toCol || currentRow != toRow) {
             Position currentPosition = new Position(currentCol, currentRow);
             if (this.hasPiece(currentPosition)) {
-                return false; // 経路上に駒が存在
+                return false;
             }
             currentCol += colStep;
             currentRow += rowStep;
         }
-        return true; // 経路上に駒が存在しない
+        return true;
     }
 
     @Override
@@ -140,7 +131,7 @@ public class Board {
                 if (this.hasPiece(pos)) {
                     sb.append(this.getPiece(pos).toString());
                 } else {
-                    sb.append("　"); // 全角スペースで盤面の空きを表現
+                    sb.append("　");
                 }
             }
             sb.append("\n");

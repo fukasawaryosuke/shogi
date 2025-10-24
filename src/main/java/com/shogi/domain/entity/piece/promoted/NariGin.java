@@ -16,14 +16,12 @@ public class NariGin extends Piece {
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
         int rowDiff = to.getRow() - from.getRow();
         int colDiff = to.getCol() - from.getCol();
-        // 金将と同じ動き
-        if (rowDiff == direction && colDiff == 0)
+
+        if (rowDiff == direction && Math.abs(colDiff) <= 1)
             return true;
         if (rowDiff == 0 && Math.abs(colDiff) == 1)
             return true;
         if (rowDiff == -direction && colDiff == 0)
-            return true;
-        if (rowDiff == direction && Math.abs(colDiff) == 1)
             return true;
         return false;
     }
