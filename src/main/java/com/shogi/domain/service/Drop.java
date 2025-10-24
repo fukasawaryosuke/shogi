@@ -19,21 +19,17 @@ public class Drop {
   }
 
   public boolean dropPiece(Piece piece, Position position) {
-    Player player = turn.getCurrentPlayer();
+    Player player = this.turn.getCurrentPlayer();
 
-    this.validateDrop(piece, position);
-
+    this.validateDrop(piece, position, player);
     this.board.putPiece(position, piece);
-
     stand.removePiece(player, piece);
 
     return true;
   }
 
-  private void validateDrop(Piece piece, Position position) {
-    Player currentPlayer = turn.getCurrentPlayer();
-
-    if (!stand.hasPiece(currentPlayer, piece)) {
+  private void validateDrop(Piece piece, Position position, Player player) {
+    if (!stand.hasPiece(player, piece)) {
       throw new IllegalArgumentException(piece + "は持ち駒に存在しません");
     }
 

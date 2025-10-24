@@ -1,7 +1,7 @@
 package com.shogi.domain.entity;
 
-import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.entity.piece.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,6 +79,24 @@ public class Board {
                 return true;
             }
         }
+        return false;
+    }
+
+    public boolean isEnemyZone(Position position, Player player) {
+        int row = position.getRow();
+        if (player == Player.SENTE)
+            return row <= 3;
+        if (player == Player.GOTE)
+            return row >= 7;
+        return false;
+    }
+
+    public boolean isEnemyZoneOneRow(Position position, Player player) {
+        int row = position.getRow();
+        if (player == Player.SENTE)
+            return row == 1;
+        if (player == Player.GOTE)
+            return row == 9;
         return false;
     }
 

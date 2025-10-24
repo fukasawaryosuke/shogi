@@ -40,6 +40,12 @@ public class ConsoleUI {
     }
   }
 
+  public boolean askPromote() {
+    System.out.print("成りますか？ (y/n): ");
+    String input = scanner.nextLine().trim().toLowerCase();
+    return input.equals("y");
+  }
+
   public PieceType getDropPieceType(Player player) {
     System.out.println();
     System.out.print(player + "の持ち駒から駒を選択してください (例: FU, KY, KE, GI, KI, KA, HI): ");

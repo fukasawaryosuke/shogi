@@ -4,6 +4,7 @@ import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.entity.Board;
+import com.shogi.domain.entity.piece.KeiMa;
 import com.shogi.domain.entity.piece.Piece;
 
 public class Move {
@@ -15,31 +16,26 @@ public class Move {
         this.turn = turn;
     }
 
-    public Piece movePiece(Position from, Position to) {
-        Piece piece = this.board.getPiece(from);
-        Piece targetPiece = this.board.getPiece(to);
-
-        this.validateMove(from, to, piece, targetPiece);
+    public void movePiece(Piece originPiece, Piece targetPiece, Position from, Position to) {
+        this.validateMove(originPiece, targetPiece, from, to);
 
         this.board.removePiece(from);
-        this.board.putPiece(to, piece);
-
-        return targetPiece;
+        this.board.putPiece(to, originPiece);
     }
 
-    private void validateMove(Position from, Position to, Piece piece, Piece targetPiece) {
-        Player currentPlayer = turn.getCurrentPlayer();
+    private void validateMove(Piece originPiece, Piece targetPiece, Position from, Position to) {
+        Player currentPlayer = this.turn.getCurrentPlayer();
 
         if (!board.hasPiece(from))
             throw new IllegalArgumentException(from.toString() + "に駒が存在しません");
 
-        if (!piece.isOwner(currentPlayer))
+        if (!originPiece.isOwner(currentPlayer))
             throw new IllegalArgumentException(currentPlayer + "の駒を選択してください");
 
-        if (!piece.canMove(from, to))
-            throw new IllegalArgumentException(piece.toString() + "は" + to.toString() + "に移動できません");
+        if (!originPiece.canMove(from, to))
+            throw new IllegalArgumentException(originPiece.toString() + "は" + to.toString() + "に移動できません");
 
-        if (!board.isPathClear(from, to))
+        if (!(originPiece instanceof KeiMa) && !board.isPathClear(from, to))
             throw new IllegalArgumentException("移動経路に駒が存在します");
 
         if (board.hasPiece(to) && targetPiece.isOwner(currentPlayer))

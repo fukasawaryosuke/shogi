@@ -11,7 +11,13 @@ public class ShogiApp {
         Game game = new Game();
 
         ui.showMessage("いざ、対局");
-        while (!game.isGameOver()) {
+        while (true) {
+            Player currentPlayer = game.getCurrentPlayer();
+            if (game.isGameOver()) {
+                break;
+            }
+
+            ui.showMessage("手番: " + currentPlayer);
             ui.displayTurn(game.getTurn());
             ui.displayStand(game.getStand(), Player.GOTE);
             ui.displayBoard(game.getBoard());
@@ -24,7 +30,23 @@ public class ShogiApp {
                 String error = game.move(from, to);
                 if (error != null) {
                     ui.showMessage(error);
+                    continue;
                 }
+
+                boolean mustPromote = game.mustPromote(to);
+                if (mustPromote) {
+                    game.promote(from, to);
+                }
+
+                boolean canChoosePromote = game.canChoosePromote(to);
+                if (canChoosePromote) {
+                    boolean shouldPromote = ui.askPromote();
+                    if (shouldPromote) {
+                        game.promote(from, to);
+                    }
+                }
+
+                game.nextTurn();
             }
             if (action == ActionType.DROP) {
                 PieceType pieceType = ui.getDropPieceType(game.getTurn().getCurrentPlayer());

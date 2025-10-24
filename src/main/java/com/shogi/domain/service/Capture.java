@@ -15,7 +15,7 @@ public class Capture {
   }
 
   public void capturePiece(Piece targetPiece) {
-    Player currentPlayer = turn.getCurrentPlayer();
+    Player currentPlayer = this.turn.getCurrentPlayer();
 
     if (!this.validateCapture(targetPiece, currentPlayer))
       return;
