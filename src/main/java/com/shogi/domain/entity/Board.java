@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    private Map<Position, Piece> pieceMap;
+    private Map<Position, Piece> boardMap;
 
     public Board() {
-        this.pieceMap = new HashMap<>();
+        this.boardMap = new HashMap<>();
         initializeBoard();
     }
 
@@ -29,52 +29,52 @@ public class Board {
         // 9 香 桂 銀 金 王 金 銀 桂 香
         // SENTE側
 
-        this.pieceMap.put(new Position(1, 1), new KyoSha(Player.GOTE));
-        this.pieceMap.put(new Position(2, 1), new KeiMa(Player.GOTE));
-        this.pieceMap.put(new Position(3, 1), new GinSho(Player.GOTE));
-        this.pieceMap.put(new Position(4, 1), new KinSho(Player.GOTE));
-        this.pieceMap.put(new Position(5, 1), new OuSho(Player.GOTE));
-        this.pieceMap.put(new Position(6, 1), new KinSho(Player.GOTE));
-        this.pieceMap.put(new Position(7, 1), new GinSho(Player.GOTE));
-        this.pieceMap.put(new Position(8, 1), new KeiMa(Player.GOTE));
-        this.pieceMap.put(new Position(9, 1), new KyoSha(Player.GOTE));
-        this.pieceMap.put(new Position(2, 2), new HiSha(Player.GOTE));
-        this.pieceMap.put(new Position(8, 2), new KakuGyou(Player.GOTE));
+        this.boardMap.put(new Position(1, 1), new KyoSha(Player.GOTE));
+        this.boardMap.put(new Position(2, 1), new KeiMa(Player.GOTE));
+        this.boardMap.put(new Position(3, 1), new GinSho(Player.GOTE));
+        this.boardMap.put(new Position(4, 1), new KinSho(Player.GOTE));
+        this.boardMap.put(new Position(5, 1), new OuSho(Player.GOTE));
+        this.boardMap.put(new Position(6, 1), new KinSho(Player.GOTE));
+        this.boardMap.put(new Position(7, 1), new GinSho(Player.GOTE));
+        this.boardMap.put(new Position(8, 1), new KeiMa(Player.GOTE));
+        this.boardMap.put(new Position(9, 1), new KyoSha(Player.GOTE));
+        this.boardMap.put(new Position(2, 2), new HiSha(Player.GOTE));
+        this.boardMap.put(new Position(8, 2), new KakuGyou(Player.GOTE));
         for (int col = 1; col <= 9; col++) {
-            this.pieceMap.put(new Position(col, 3), new FuHyo(Player.GOTE));
-            this.pieceMap.put(new Position(col, 7), new FuHyo(Player.SENTE));
+            this.boardMap.put(new Position(col, 3), new FuHyo(Player.GOTE));
+            this.boardMap.put(new Position(col, 7), new FuHyo(Player.SENTE));
         }
-        this.pieceMap.put(new Position(2, 8), new KakuGyou(Player.SENTE));
-        this.pieceMap.put(new Position(8, 8), new HiSha(Player.SENTE));
-        this.pieceMap.put(new Position(1, 9), new KyoSha(Player.SENTE));
-        this.pieceMap.put(new Position(2, 9), new KeiMa(Player.SENTE));
-        this.pieceMap.put(new Position(3, 9), new GinSho(Player.SENTE));
-        this.pieceMap.put(new Position(4, 9), new KinSho(Player.SENTE));
-        this.pieceMap.put(new Position(5, 9), new OuSho(Player.SENTE));
-        this.pieceMap.put(new Position(6, 9), new KinSho(Player.SENTE));
-        this.pieceMap.put(new Position(7, 9), new GinSho(Player.SENTE));
-        this.pieceMap.put(new Position(8, 9), new KeiMa(Player.SENTE));
-        this.pieceMap.put(new Position(9, 9), new KyoSha(Player.SENTE));
+        this.boardMap.put(new Position(2, 8), new KakuGyou(Player.SENTE));
+        this.boardMap.put(new Position(8, 8), new HiSha(Player.SENTE));
+        this.boardMap.put(new Position(1, 9), new KyoSha(Player.SENTE));
+        this.boardMap.put(new Position(2, 9), new KeiMa(Player.SENTE));
+        this.boardMap.put(new Position(3, 9), new GinSho(Player.SENTE));
+        this.boardMap.put(new Position(4, 9), new KinSho(Player.SENTE));
+        this.boardMap.put(new Position(5, 9), new OuSho(Player.SENTE));
+        this.boardMap.put(new Position(6, 9), new KinSho(Player.SENTE));
+        this.boardMap.put(new Position(7, 9), new GinSho(Player.SENTE));
+        this.boardMap.put(new Position(8, 9), new KeiMa(Player.SENTE));
+        this.boardMap.put(new Position(9, 9), new KyoSha(Player.SENTE));
     }
 
     public boolean hasPiece(Position position) {
-        return this.pieceMap.containsKey(position);
+        return this.boardMap.containsKey(position);
     }
 
     public Piece getPiece(Position position) {
-        return this.pieceMap.get(position);
+        return this.boardMap.get(position);
     }
 
     public void putPiece(Position position, Piece piece) {
-        pieceMap.put(position, piece);
+        boardMap.put(position, piece);
     }
 
     public void removePiece(Position position) {
-        pieceMap.remove(position);
+        boardMap.remove(position);
     }
 
     public boolean hasOusho(Player player) {
-        for (Piece piece : pieceMap.values()) {
+        for (Piece piece : boardMap.values()) {
             if (piece instanceof OuSho && piece.isOwner(player)) {
                 return true;
             }

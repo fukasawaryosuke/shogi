@@ -4,6 +4,7 @@ import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.entity.Stand;
 import com.shogi.domain.entity.piece.Piece;
+import com.shogi.domain.factory.PieceFactory;
 
 public class Capture {
   private final Stand stand;
@@ -20,7 +21,8 @@ public class Capture {
     if (!this.validateCapture(targetPiece, currentPlayer))
       return;
 
-    stand.putPiece(currentPlayer, targetPiece);
+    Piece capturedPiece = PieceFactory.clonePiece(targetPiece, currentPlayer);
+    stand.putPiece(currentPlayer, capturedPiece);
   }
 
   private boolean validateCapture(Piece targetPiece, Player currentPlayer) {

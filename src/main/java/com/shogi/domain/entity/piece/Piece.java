@@ -1,5 +1,6 @@
 package com.shogi.domain.entity.piece;
 
+import java.util.Objects;
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
 
@@ -21,5 +22,22 @@ public abstract class Piece {
     @Override
     public String toString() {
         return this.displayName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Piece other = (Piece) obj;
+        return Objects.equals(this.owner, other.owner) &&
+        Objects.equals(this.displayName, other.displayName);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = Objects.hash(owner, displayName);
+        return hash;
     }
 }

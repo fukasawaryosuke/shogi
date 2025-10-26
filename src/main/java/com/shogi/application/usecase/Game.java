@@ -11,7 +11,6 @@ import com.shogi.domain.service.Capture;
 import com.shogi.domain.service.Move;
 import com.shogi.domain.service.Drop;
 import com.shogi.domain.service.Promote;
-import com.shogi.domain.factory.PieceFactory;
 
 public class Game {
   private final Board board;
@@ -82,9 +81,7 @@ public class Game {
 
   public String drop(PieceType pieceType, Position position) {
     try {
-      Piece dropPiece = PieceFactory.createPiece(pieceType, this.turn.getCurrentPlayer());
-
-      dropService.dropPiece(dropPiece, position);
+      dropService.dropPiece(pieceType, position);
 
       return null;
     } catch (IllegalArgumentException e) {

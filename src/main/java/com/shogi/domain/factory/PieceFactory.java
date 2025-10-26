@@ -14,6 +14,11 @@ import com.shogi.domain.entity.piece.Piece;
 
 public class PieceFactory {
   public static Piece createPiece(PieceType type, Player owner) {
+    if (type == null)
+      throw new IllegalArgumentException("type is required");
+    if (owner == null)
+      throw new IllegalArgumentException("owner is required");
+
     switch (type) {
       case FU:
         return new FuHyo(owner);
@@ -32,7 +37,34 @@ public class PieceFactory {
       case OU:
         return new OuSho(owner);
       default:
-        throw new IllegalArgumentException(type + "は無効な駒の種類です");
+        throw new IllegalArgumentException(type + " is invalid PieceType");
+    }
+  }
+
+  public static Piece clonePiece(Piece piece, Player owner) {
+    if (piece == null)
+      throw new IllegalArgumentException("piece is required");
+    if (owner == null)
+      throw new IllegalArgumentException("owner is required");
+
+    if (piece instanceof FuHyo) {
+      return new FuHyo(owner);
+    } else if (piece instanceof KyoSha) {
+      return new KyoSha(owner);
+    } else if (piece instanceof KeiMa) {
+      return new KeiMa(owner);
+    } else if (piece instanceof GinSho) {
+      return new GinSho(owner);
+    } else if (piece instanceof KinSho) {
+      return new KinSho(owner);
+    } else if (piece instanceof KakuGyou) {
+      return new KakuGyou(owner);
+    } else if (piece instanceof HiSha) {
+      return new HiSha(owner);
+    } else if (piece instanceof OuSho) {
+      return new OuSho(owner);
+    } else {
+      throw new IllegalArgumentException(piece.getClass() + " is invalid Piece");
     }
   }
 }

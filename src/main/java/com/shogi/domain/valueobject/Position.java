@@ -1,5 +1,7 @@
 package com.shogi.domain.valueobject;
 
+import java.util.Objects;
+
 public class Position {
     private static final int MIN = 1;
     private static final int MAX = 9;
@@ -28,23 +30,22 @@ public class Position {
     }
 
     @Override
+    public String toString() {
+        return col + ", " + row;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (!(obj instanceof Position))
             return false;
-
-        Position position = (Position) obj;
-        return this.col == position.col && this.row == position.row;
+        Position other = (Position) obj;
+        return this.col == other.col && this.row == other.row;
     }
 
     @Override
     public int hashCode() {
-        return 31 * col + row;
-    }
-
-    @Override
-    public String toString() {
-        return col + ", " + row;
+        return Objects.hash(col, row);
     }
 }

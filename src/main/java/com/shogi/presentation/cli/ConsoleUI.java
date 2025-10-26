@@ -83,7 +83,12 @@ public class ConsoleUI {
     }
     int col = Integer.parseInt(tokens[0]);
     int row = Integer.parseInt(tokens[1]);
-    return new Position(col, row);
+    try {
+      return new Position(col, row);
+    } catch (IllegalArgumentException e) {
+      System.out.println(e.getMessage());
+      return inputPosition(prompt);
+    }
   }
 
   public boolean askPromotion() {

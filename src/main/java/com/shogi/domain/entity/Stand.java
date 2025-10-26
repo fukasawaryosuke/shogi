@@ -6,16 +6,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Stand {
-    private Map<Player, Map<Piece, Integer>> playerPieceMap;
+    private Map<Player, Map<Piece, Integer>> standMap;
 
     public Stand() {
-        this.playerPieceMap = new HashMap<>();
-        this.playerPieceMap.put(Player.SENTE, new HashMap<>());
-        this.playerPieceMap.put(Player.GOTE, new HashMap<>());
+        this.standMap = new HashMap<>();
+        this.standMap.put(Player.SENTE, new HashMap<>());
+        this.standMap.put(Player.GOTE, new HashMap<>());
     }
 
     public boolean hasPiece(Player player, Piece piece) {
-        Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
+        Map<Piece, Integer> pieceCounts = standMap.get(player);
         if (pieceCounts == null || pieceCounts.isEmpty())
             return false;
 
@@ -24,8 +24,8 @@ public class Stand {
     }
 
     public String getPieces(Player player) {
-        Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
-        if (pieceCounts.isEmpty())
+        Map<Piece, Integer> pieceCounts = standMap.get(player);
+        if (pieceCounts == null || pieceCounts.isEmpty())
             return "なし";
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Piece, Integer> entry : pieceCounts.entrySet()) {
@@ -37,23 +37,15 @@ public class Stand {
     }
 
     public void putPiece(Player player, Piece piece) {
-        Map<Piece, Integer> pieceCounts = playerPieceMap.computeIfAbsent(player, k -> new HashMap<>());
-        pieceCounts.put(piece, pieceCounts.getOrDefault(piece, 0) + 1);
+        Map<Piece, Integer> pieceCounts = standMap.computeIfAbsent(player, k -> new HashMap<>());
+        pieceCounts.merge(piece, 1, Integer::sum);
     }
 
     public void removePiece(Player player, Piece piece) {
-        Map<Piece, Integer> pieceCounts = playerPieceMap.get(player);
-        if (pieceCounts == null)
+        Map<Piece, Integer> pieceCounts = standMap.get(player);
+        if (pieceCounts == null || pieceCounts.isEmpty())
             return;
-
-        Integer count = pieceCounts.get(piece);
-        if (count == null || count == 0)
-            return;
-        if (count == 1) {
-            pieceCounts.remove(piece);
-        } else {
-            pieceCounts.put(piece, count - 1);
-        }
+        pieceCounts.computeIfPresent(piece, (p, cnt) -> cnt <= 1 ? null : cnt - 1);
     }
 
     public String toString(Player player) {

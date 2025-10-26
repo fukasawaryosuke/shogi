@@ -1,11 +1,13 @@
 package com.shogi.domain.service;
 
 import com.shogi.domain.valueobject.Player;
+import com.shogi.domain.valueobject.PieceType;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.entity.Board;
 import com.shogi.domain.entity.Stand;
 import com.shogi.domain.entity.piece.Piece;
+import com.shogi.domain.factory.PieceFactory;
 
 public class Drop {
   private final Board board;
@@ -18,12 +20,13 @@ public class Drop {
     this.turn = turn;
   }
 
-  public boolean dropPiece(Piece piece, Position position) {
+  public boolean dropPiece(PieceType pieceType, Position position) {
     Player player = this.turn.getCurrentPlayer();
+    Piece dropPiece = PieceFactory.createPiece(pieceType, player);
 
-    this.validateDrop(piece, position, player);
-    this.board.putPiece(position, piece);
-    stand.removePiece(player, piece);
+    this.validateDrop(dropPiece, position, player);
+    this.board.putPiece(position, dropPiece);
+    stand.removePiece(player, dropPiece);
 
     return true;
   }
@@ -34,6 +37,5 @@ public class Drop {
 
     if (board.hasPiece(position))
       throw new IllegalArgumentException(position + "には既に駒が存在します");
-
   }
 }
