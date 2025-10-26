@@ -1,8 +1,8 @@
-package com.shogi.domain.entity.piece.promoted;
+package com.shogi.domain.valueobject.piece.promoted;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
-import com.shogi.domain.entity.piece.Piece;
+import com.shogi.domain.valueobject.piece.Piece;
 
 public class ToKin extends Piece {
   private static final String DISPLAY_NAME = "と";

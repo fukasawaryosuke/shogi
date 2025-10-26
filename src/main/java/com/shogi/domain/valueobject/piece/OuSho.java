@@ -1,4 +1,4 @@
-package com.shogi.domain.entity.piece;
+package com.shogi.domain.valueobject.piece;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;

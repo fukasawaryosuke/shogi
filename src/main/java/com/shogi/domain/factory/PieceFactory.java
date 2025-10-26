@@ -2,15 +2,15 @@ package com.shogi.domain.factory;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.PieceType;
-import com.shogi.domain.entity.piece.FuHyo;
-import com.shogi.domain.entity.piece.GinSho;
-import com.shogi.domain.entity.piece.HiSha;
-import com.shogi.domain.entity.piece.KakuGyou;
-import com.shogi.domain.entity.piece.KeiMa;
-import com.shogi.domain.entity.piece.KinSho;
-import com.shogi.domain.entity.piece.KyoSha;
-import com.shogi.domain.entity.piece.OuSho;
-import com.shogi.domain.entity.piece.Piece;
+import com.shogi.domain.valueobject.piece.FuHyo;
+import com.shogi.domain.valueobject.piece.GinSho;
+import com.shogi.domain.valueobject.piece.HiSha;
+import com.shogi.domain.valueobject.piece.KakuGyou;
+import com.shogi.domain.valueobject.piece.KeiMa;
+import com.shogi.domain.valueobject.piece.KinSho;
+import com.shogi.domain.valueobject.piece.KyoSha;
+import com.shogi.domain.valueobject.piece.OuSho;
+import com.shogi.domain.valueobject.piece.Piece;
 
 public class PieceFactory {
   public static Piece createPiece(PieceType type, Player owner) {

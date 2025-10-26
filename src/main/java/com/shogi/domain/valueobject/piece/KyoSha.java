@@ -1,9 +1,9 @@
-package com.shogi.domain.entity.piece;
+package com.shogi.domain.valueobject.piece;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
-import com.shogi.domain.entity.piece.promoted.Promotable;
-import com.shogi.domain.entity.piece.promoted.NariKyo;
+import com.shogi.domain.valueobject.piece.promoted.Promotable;
+import com.shogi.domain.valueobject.piece.promoted.NariKyo;
 
 public class KyoSha extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "香";

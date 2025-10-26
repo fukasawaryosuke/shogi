@@ -2,7 +2,8 @@ package com.shogi.domain.entity;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
-import com.shogi.domain.entity.piece.*;
+import com.shogi.domain.valueobject.piece.*;
+
 import java.util.HashMap;
 import java.util.Map;
 

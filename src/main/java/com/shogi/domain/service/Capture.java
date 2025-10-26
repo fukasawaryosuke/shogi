@@ -2,8 +2,8 @@ package com.shogi.domain.service;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Turn;
+import com.shogi.domain.valueobject.piece.Piece;
 import com.shogi.domain.entity.Stand;
-import com.shogi.domain.entity.piece.Piece;
 import com.shogi.domain.factory.PieceFactory;
 
 public class Capture {

@@ -1,10 +1,10 @@
 
-package com.shogi.domain.entity.piece;
+package com.shogi.domain.valueobject.piece;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
-import com.shogi.domain.entity.piece.promoted.Promotable;
-import com.shogi.domain.entity.piece.promoted.NariKei;
+import com.shogi.domain.valueobject.piece.promoted.Promotable;
+import com.shogi.domain.valueobject.piece.promoted.NariKei;
 
 public class KeiMa extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "桂";

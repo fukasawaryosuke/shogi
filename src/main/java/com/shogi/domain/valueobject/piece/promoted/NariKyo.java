@@ -1,12 +1,13 @@
-package com.shogi.domain.entity.piece;
+package com.shogi.domain.valueobject.piece.promoted;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.valueobject.piece.Piece;
 
-public class KinSho extends Piece {
-    private static final String DISPLAY_NAME = "金";
+public class NariKyo extends Piece {
+    private static final String DISPLAY_NAME = "成香";
 
-    public KinSho(Player owner) {
+    public NariKyo(Player owner) {
         super(owner, DISPLAY_NAME);
     }
 

@@ -1,4 +1,4 @@
-package com.shogi.domain.entity.piece;
+package com.shogi.domain.valueobject.piece;
 
 import java.util.Objects;
 import com.shogi.domain.valueobject.Player;
