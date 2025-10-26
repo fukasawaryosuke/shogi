@@ -1,10 +1,10 @@
 package com.shogi.domain.service;
 
 import com.shogi.domain.valueobject.Player;
-import com.shogi.domain.valueobject.PieceType;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.valueobject.piece.Piece;
+import com.shogi.domain.valueobject.piece.PieceType;
 import com.shogi.domain.entity.Board;
 import com.shogi.domain.entity.Stand;
 import com.shogi.domain.factory.PieceFactory;

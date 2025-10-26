@@ -32,7 +32,7 @@ public abstract class Piece {
             return false;
         Piece other = (Piece) obj;
         return Objects.equals(this.owner, other.owner) &&
-        Objects.equals(this.displayName, other.displayName);
+                Objects.equals(this.displayName, other.displayName);
     }
 
     @Override

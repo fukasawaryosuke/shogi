@@ -1,7 +1,6 @@
 package com.shogi.domain.factory;
 
 import com.shogi.domain.valueobject.Player;
-import com.shogi.domain.valueobject.PieceType;
 import com.shogi.domain.valueobject.piece.FuHyo;
 import com.shogi.domain.valueobject.piece.GinSho;
 import com.shogi.domain.valueobject.piece.HiSha;
@@ -11,6 +10,7 @@ import com.shogi.domain.valueobject.piece.KinSho;
 import com.shogi.domain.valueobject.piece.KyoSha;
 import com.shogi.domain.valueobject.piece.OuSho;
 import com.shogi.domain.valueobject.piece.Piece;
+import com.shogi.domain.valueobject.piece.PieceType;
 
 public class PieceFactory {
   public static Piece createPiece(PieceType type, Player owner) {

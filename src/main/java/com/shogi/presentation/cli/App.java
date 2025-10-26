@@ -2,8 +2,8 @@ package com.shogi.presentation.cli;
 
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.valueobject.piece.PieceType;
 import com.shogi.application.usecase.Game;
-import com.shogi.domain.valueobject.PieceType;
 
 public class App {
     public static void main(String[] args) {
