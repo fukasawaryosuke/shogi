@@ -8,6 +8,8 @@ help:
 	@echo "  make build - コンパイル実行"
 	@echo "  make run   - アプリケーション実行"
 	@echo "  make test  - テスト実行"
+	@echo "  make package - パッケージ作成"
+	@echo "  make spring-run - Spring Boot実行"
 
 up:
 	docker-compose up -d
@@ -21,11 +23,17 @@ shell:
 build:
 	docker-compose run --rm app mvn compile
 
+clean:
+	docker-compose run --rm app mvn clean compile
+
+package:
+	docker-compose run --rm app mvn -DskipTests package
+
 run:
 	docker-compose exec app mvn exec:java
 
-clean:
-	docker-compose run --rm app mvn clean compile
+spring-run:
+	docker-compose exec app mvn spring-boot:run
 
 test:
 	docker-compose exec app mvn test

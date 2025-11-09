@@ -5,7 +5,10 @@ services:
     build:
       context: .
       dockerfile: docker/app/Dockerfile
+    ports:
+      - "8080:8080"
     volumes:
       - ./src:/app/src
       - ./target:/app/target
+      - ./pom.xml:/app/pom.xml:ro
     working_dir: /app
