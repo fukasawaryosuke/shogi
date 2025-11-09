@@ -1,51 +1,32 @@
 import "../styles/Board.css";
 
-type Props = { board?: Record<string, string> };
+type Piece = {
+  position: { x: number; y: number };
+  name: string;
+  owner: string;
+};
+
+type Props = { board?: Piece[] };
 
 export default function Board({ board }: Props) {
-  //    "board": {
-  //         "2, 9": "桂",
-  //         "2, 8": "角",
-  //         "2, 7": "歩",
-  //         "4, 9": "金",
-  //         "6, 3": "歩",
-  //         "8, 7": "歩",
-  //         "4, 1": "金",
-  //         "4, 3": "歩",
-  //         "6, 7": "歩",
-  //         "8, 8": "飛",
-  //         "6, 9": "金",
-  //         "8, 9": "桂",
-  //         "4, 7": "歩",
-  //         "2, 3": "歩",
-  //         "2, 2": "飛",
-  //         "2, 1": "桂",
-  //         "8, 2": "角",
-  //         "8, 3": "歩",
-  //         "6, 1": "金",
-  //         "8, 1": "桂",
-  //         "1, 9": "香",
-  //         "1, 7": "歩",
-  //         "3, 9": "銀",
-  //         "3, 7": "歩",
-  //         "5, 9": "王",
-  //         "5, 1": "玉",
-  //         "9, 7": "歩",
-  //         "7, 3": "歩",
-  //         "5, 3": "歩",
-  //         "7, 7": "歩",
-  //         "9, 9": "香",
-  //         "5, 7": "歩",
-  //         "7, 9": "銀",
-  //         "1, 3": "歩",
-  //         "1, 1": "香",
-  //         "3, 3": "歩",
-  //         "9, 3": "歩",
-  //         "3, 1": "銀",
-  //         "9, 1": "香",
-  //         "7, 1": "銀"
-  //     }
-  // }
+//  "board": [
+//         {
+//             "position": {
+//                 "x": 2,
+//                 "y": 1
+//             },
+//             "name": "桂",
+//             "owner": "後手"
+//         },
+//         {
+//             "position": {
+//                 "x": 4,
+//                 "y": 3
+//             },
+//             "name": "歩",
+//             "owner": "後手"
+//         },
+//        ... ]
 
   // 駒の初期配置
   // GOTE側
@@ -66,33 +47,39 @@ export default function Board({ board }: Props) {
   const Y = Array.from({ length: LENGTH });
 
   const pieceFileMap: Record<string, string> = {
-    歩: "sente/fu_hyou.svg",
-    香: "sente/kyo_sha.svg",
-    桂: "sente/kei_ma.svg",
-    銀: "sente/gin_sho.svg",
-    金: "sente/kin_sho.svg",
-    角: "sente/kaku_gyou.svg",
-    飛: "sente/hi_sha.svg",
-    王: "sente/ou_sho.svg",
-    玉: "sente/gyoku_sho.svg",
-    と: "sente/to.svg",
-    成香: "sente/nari_kyo.svg",
-    成桂: "sente/nari_kei.svg",
-    成銀: "sente/nari_gin.svg",
-    馬: "sente/ryu_ma.svg",
-    竜: "sente/ryu_ou.svg",
+    歩: "fu_hyou.svg",
+    香: "kyo_sha.svg",
+    桂: "kei_ma.svg",
+    銀: "gin_sho.svg",
+    金: "kin_sho.svg",
+    角: "kaku_gyou.svg",
+    飛: "hi_sha.svg",
+    王: "ou_sho.svg",
+    玉: "gyoku_sho.svg",
+    と: "to.svg",
+    成香: "nari_kyo.svg",
+    成桂: "nari_kei.svg",
+    成銀: "nari_gin.svg",
+    馬: "ryu_ma.svg",
+    竜: "ryu_ou.svg",
   };
 
-  const getPieceSrc = (piece: string) => {
+  const ownerDirMap: Record<string, string> = {
+    先手: "sente",
+    後手: "gote",
+  };
+
+  const getPieceSrc = (piece: string, owner: string) => {
+    const dir = ownerDirMap[owner];
     const file = pieceFileMap[piece];
     if (!file) return null;
-    return new URL(`../assets/${file}`, import.meta.url).href;
+    return new URL(`../assets/${dir}/${file}`, import.meta.url).href;
   };
 
-  const renderPiece = (piece: string) => {
-    const src = getPieceSrc(piece);
+  const renderPiece = (name: string, owner: string) => {
+    const src = getPieceSrc(name, owner);
     if (!src) return null;
-    return <img src={src} alt={piece} className="shogi-piece" />;
+    return <img src={src} alt={name} className="shogi-piece" />;
   };
 
   return (
@@ -108,11 +95,10 @@ export default function Board({ board }: Props) {
                   <tr key={y}>
                     {X.map((_, index) => {
                       const x = index + 1;
-                      const key = `${x}, ${y}`;
-                      const piece = board?.[key];
+                      const piece = board?.find((p) => p.position.x === x && p.position.y === y);
                       return (
                         <td key={x} className="cell">
-                          {piece ? renderPiece(piece) : null}
+                          {piece ? renderPiece(piece.name, piece.owner) : null}
                         </td>
                       );
                     })}

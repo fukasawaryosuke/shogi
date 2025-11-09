@@ -1,18 +1,18 @@
 package com.shogi.presentation.web.dto;
 
-import java.util.Map;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public class BoardDto {
-  private final Map<String, String> board;
+  private List<PieceDto> board;
 
-  public BoardDto(Map<String, String> board) {
+  public BoardDto(List<PieceDto> board) {
     this.board = board;
   }
 
   @JsonValue
-  public Map<String, String> getBoard() {
+  public List<PieceDto> getBoard() {
     return board;
   }
 }

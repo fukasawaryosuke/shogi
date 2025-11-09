@@ -17,6 +17,10 @@ public abstract class Piece {
         return this.owner.equals(player);
     }
 
+    public String getOwner() {
+        return this.owner.toString();
+    }
+
     public abstract boolean canMove(Position from, Position to);
 
     @Override
