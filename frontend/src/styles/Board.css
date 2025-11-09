@@ -54,6 +54,22 @@
     rgba(255, 255, 255, 0.02),
     rgba(0, 0, 0, 0.02)
   );
+  overflow: hidden; /* ensure widened pieces don't overflow neighboring cells */
+}
+
+/* make piece images square and fit inside the cell */
+.shogi-piece {
+  width: calc(var(--cell-size) * 0.9);
+  height: calc(var(--cell-size) * 0.9);
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* preserve aspect ratio */
+  display: block;
+  margin: 0 auto;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  transform: scaleX(1.12); /* widen horizontally without changing cell size */
+  will-change: transform;
 }
 
 /* Emphasize outer border lines */
@@ -76,5 +92,9 @@
   }
   .shogi-board td.cell {
     font-size: 14px;
+  }
+  /* reduce horizontal stretch on small screens */
+  .shogi-piece {
+    transform: scaleX(1.06);
   }
 }

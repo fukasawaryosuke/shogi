@@ -92,7 +92,7 @@ export default function Board({ board }: Props) {
   const renderPiece = (piece: string) => {
     const src = getPieceSrc(piece);
     if (!src) return null;
-    return <img src={src} alt={piece} width={50} height={50} />;
+    return <img src={src} alt={piece} className="shogi-piece" />;
   };
 
   return (
