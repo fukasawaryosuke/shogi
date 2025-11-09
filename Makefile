@@ -12,28 +12,28 @@ help:
 	@echo "  make spring-run - Spring Boot実行"
 
 up:
-	docker-compose up -d
+	docker compose up -d
 
 down:
-	docker-compose down
+	docker compose down
 
 shell:
-	docker-compose exec app bash
+	docker compose exec app bash
 
 build:
-	docker-compose run --rm app mvn compile
+	docker compose run --rm app mvn compile
 
 clean:
-	docker-compose run --rm app mvn clean compile
+	docker compose run --rm app mvn clean compile
 
 package:
-	docker-compose run --rm app mvn -DskipTests package
+	docker compose run --rm app mvn -DskipTests package
 
 run:
-	docker-compose exec app mvn exec:java
+	docker compose exec app mvn exec:java
 
 spring-run:
-	docker-compose exec app mvn spring-boot:run
+	docker compose exec app mvn spring-boot:run
 
 test:
-	docker-compose exec app mvn test
+	docker compose exec app mvn test
