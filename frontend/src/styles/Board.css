@@ -1,12 +1,3 @@
-/* Minimal styles used by frontend/src/components/Board.tsx
-   Kept rules correspond to class names used in the component:
-   - .board-title
-   - .board-wrapper
-   - .shogi-board-container
-   - .shogi-board
-   - td.cell
-*/
-
 :root {
   --cell-size: 48px;
   --board-edge: #3f2a14;
