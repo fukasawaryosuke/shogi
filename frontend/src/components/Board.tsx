@@ -62,8 +62,8 @@ export default function Board({ board }: Props) {
   // SENTE側
 
   const LENGTH = 9;
-  const ROWS = Array.from({ length: LENGTH });
-  const COLS = Array.from({ length: LENGTH });
+  const X = Array.from({ length: LENGTH });
+  const Y = Array.from({ length: LENGTH });
 
   const pieceFileMap: Record<string, string> = {
     歩: "sente/fu_hyou.svg",
@@ -102,17 +102,16 @@ export default function Board({ board }: Props) {
         <div className="shogi-board-container">
           <table className="shogi-board" cellPadding={0} cellSpacing={0}>
             <tbody>
-              {ROWS.map((_, rowIndex) => {
-                const row = rowIndex + 1; // 1..9
+              {Y.map((_, index) => {
+                const y = index + 1;
                 return (
-                  <tr key={row}>
-                    {COLS.map((_, colIndex) => {
-                      const col = colIndex + 1; // 1..9
-                      // board のキーは "col, row" の形式 (例: "2, 9")
-                      const key = `${col}, ${row}`;
+                  <tr key={y}>
+                    {X.map((_, index) => {
+                      const x = index + 1;
+                      const key = `${x}, ${y}`;
                       const piece = board?.[key];
                       return (
-                        <td key={col} className="cell">
+                        <td key={x} className="cell">
                           {piece ? renderPiece(piece) : null}
                         </td>
                       );

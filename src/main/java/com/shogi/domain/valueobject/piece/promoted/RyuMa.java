@@ -13,12 +13,12 @@ public class RyuMa extends Piece {
 
   @Override
   public boolean canMove(Position from, Position to) {
-    int rowDiff = Math.abs(to.getRow() - from.getRow());
-    int colDiff = Math.abs(to.getCol() - from.getCol());
+    int yDiff = Math.abs(to.getY() - from.getY());
+    int xDiff = Math.abs(to.getX() - from.getX());
 
-    if (rowDiff == colDiff && rowDiff != 0)
+    if (yDiff == xDiff && yDiff != 0)
       return true;
-    if ((rowDiff <= 1 && colDiff <= 1) && (rowDiff + colDiff != 0))
+    if ((yDiff <= 1 && xDiff <= 1) && (yDiff + xDiff != 0))
       return true;
     return false;
   }

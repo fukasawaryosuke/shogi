@@ -6,32 +6,32 @@ public class Position {
     private static final int MIN = 1;
     private static final int MAX = 9;
 
-    private int col;
-    private int row;
+    private int x; // 列
+    private int y; // 行
 
-    public Position(int col, int row) {
-        if (!this.isValid(col, row))
+    public Position(int x, int y) {
+        if (!this.isValid(x, y))
             throw new IllegalArgumentException("行と列は1から9の範囲で指定してください。");
 
-        this.col = col;
-        this.row = row;
+        this.x = x;
+        this.y = y;
     }
 
-    public int getCol() {
-        return this.col;
+    public int getX() {
+        return this.x;
     }
 
-    public int getRow() {
-        return this.row;
+    public int getY() {
+        return this.y;
     }
 
-    private boolean isValid(int row, int col) {
-        return col >= MIN && col <= MAX && row >= MIN && row <= MAX;
+    private boolean isValid(int x, int y) {
+        return x >= MIN && x <= MAX && y >= MIN && y <= MAX;
     }
 
     @Override
     public String toString() {
-        return col + ", " + row;
+        return String.format("%d, %d", x, y);
     }
 
     @Override
@@ -41,11 +41,11 @@ public class Position {
         if (!(obj instanceof Position))
             return false;
         Position other = (Position) obj;
-        return this.col == other.col && this.row == other.row;
+        return this.x == other.x && this.y == other.y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(col, row);
+        return Objects.hash(x, y);
     }
 }

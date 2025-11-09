@@ -15,13 +15,13 @@ public class GinSho extends Piece implements Promotable {
     @Override
     public boolean canMove(Position from, Position to) {
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
-        int rowDiff = to.getRow() - from.getRow();
-        int colDiff = to.getCol() - from.getCol();
+        int yDiff = to.getY() - from.getY();
+        int xDiff = to.getX() - from.getX();
 
-        if (colDiff == 0 && rowDiff == direction)
+        if (xDiff == 0 && yDiff == direction)
             return true;
-        if (Math.abs(colDiff) == 1) {
-            if (rowDiff == direction || rowDiff == -direction)
+        if (Math.abs(xDiff) == 1) {
+            if (yDiff == direction || yDiff == -direction)
                 return true;
         }
         return false;

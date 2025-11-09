@@ -15,10 +15,10 @@ public class HiSha extends Piece implements Promotable {
 
     @Override
     public boolean canMove(Position from, Position to) {
-        int rowDiff = to.getRow() - from.getRow();
-        int colDiff = to.getCol() - from.getCol();
+        int yDiff = to.getY() - from.getY();
+        int xDiff = to.getX() - from.getX();
 
-        return (rowDiff == 0 && colDiff != 0) || (rowDiff != 0 && colDiff == 0);
+        return (yDiff == 0 && xDiff != 0) || (yDiff != 0 && xDiff == 0);
     }
 
     @Override

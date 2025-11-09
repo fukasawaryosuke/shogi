@@ -15,10 +15,10 @@ public class KeiMa extends Piece implements Promotable {
 
     public boolean canMove(Position from, Position to) {
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
-        int rowDiff = to.getRow() - from.getRow();
-        int colDiff = Math.abs(to.getCol() - from.getCol());
+        int yDiff = to.getY() - from.getY();
+        int xDiff = Math.abs(to.getX() - from.getX());
 
-        return rowDiff == 2 * direction && colDiff == 1;
+        return yDiff == 2 * direction && xDiff == 1;
     }
 
     public NariKei promote() {

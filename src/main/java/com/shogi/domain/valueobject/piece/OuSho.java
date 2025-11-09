@@ -13,9 +13,9 @@ public class OuSho extends Piece {
 
     @Override
     public boolean canMove(Position from, Position to) {
-        int rowDiff = Math.abs(to.getRow() - from.getRow());
-        int colDiff = Math.abs(to.getCol() - from.getCol());
+        int yDiff = Math.abs(to.getY() - from.getY());
+        int xDiff = Math.abs(to.getX() - from.getX());
 
-        return (rowDiff <= 1 && colDiff <= 1) && !(rowDiff == 0 && colDiff == 0);
+        return (yDiff <= 1 && xDiff <= 1) && !(yDiff == 0 && xDiff == 0);
     }
 }

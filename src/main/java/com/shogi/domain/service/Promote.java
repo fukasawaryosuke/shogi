@@ -36,7 +36,7 @@ public class Promote {
     if (board.isEnemyZone(to, currentPlayer))
       return true;
 
-    if (!board.isEnemyZoneOneRow(to, currentPlayer))
+    if (!board.isEnemyZoneEdge(to, currentPlayer))
       return false;
 
     return true;
@@ -49,7 +49,7 @@ public class Promote {
     if (!isPromotable(piece))
       return false;
 
-    if (!board.isEnemyZoneOneRow(to, currentPlayer))
+    if (!board.isEnemyZoneEdge(to, currentPlayer))
       return false;
 
     return true;

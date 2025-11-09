@@ -15,10 +15,10 @@ public class KakuGyou extends Piece implements Promotable {
 
     @Override
     public boolean canMove(Position from, Position to) {
-        int rowDiff = to.getRow() - from.getRow();
-        int colDiff = to.getCol() - from.getCol();
+        int yDiff = to.getY() - from.getY();
+        int xDiff = to.getX() - from.getX();
 
-        return Math.abs(rowDiff) == Math.abs(colDiff) && rowDiff != 0;
+        return Math.abs(yDiff) == Math.abs(xDiff) && yDiff != 0;
     }
 
     @Override

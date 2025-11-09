@@ -81,10 +81,10 @@ public class ConsoleUI {
       System.out.println("入力形式が正しくありません");
       return inputPosition(prompt);
     }
-    int col = Integer.parseInt(tokens[0]);
-    int row = Integer.parseInt(tokens[1]);
+    int x = Integer.parseInt(tokens[0]);
+    int y = Integer.parseInt(tokens[1]);
     try {
-      return new Position(col, row);
+      return new Position(x, y);
     } catch (IllegalArgumentException e) {
       System.out.println(e.getMessage());
       return inputPosition(prompt);

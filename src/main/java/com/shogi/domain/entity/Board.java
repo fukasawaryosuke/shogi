@@ -88,41 +88,41 @@ public class Board {
     }
 
     public boolean isEnemyZone(Position position, Player player) {
-        int row = position.getRow();
+        int y = position.getY();
         if (player == Player.SENTE)
-            return row <= 3;
+            return y <= 3;
         if (player == Player.GOTE)
-            return row >= 7;
+            return y >= 7;
         return false;
     }
 
-    public boolean isEnemyZoneOneRow(Position position, Player player) {
-        int row = position.getRow();
+    public boolean isEnemyZoneEdge(Position position, Player player) {
+        int y = position.getY();
         if (player == Player.SENTE)
-            return row == 1;
+            return y == 1;
         if (player == Player.GOTE)
-            return row == 9;
+            return y == 9;
         return false;
     }
 
     public boolean isPathClear(Position from, Position to) {
-        int fromCol = from.getCol();
-        int fromRow = from.getRow();
-        int toCol = to.getCol();
-        int toRow = to.getRow();
+        int fromX = from.getX();
+        int fromY = from.getY();
+        int toX = to.getX();
+        int toY = to.getY();
 
-        int colStep = Integer.compare(toCol, fromCol);
-        int rowStep = Integer.compare(toRow, fromRow);
-        int currentCol = fromCol + colStep;
-        int currentRow = fromRow + rowStep;
+        int xStep = Integer.compare(toX, fromX);
+        int yStep = Integer.compare(toY, fromY);
+        int currentX = fromX + xStep;
+        int currentY = fromY + yStep;
 
-        while (currentCol != toCol || currentRow != toRow) {
-            Position currentPosition = new Position(currentCol, currentRow);
+        while (currentX != toX || currentY != toY) {
+            Position currentPosition = new Position(currentX, currentY);
             if (this.hasPiece(currentPosition)) {
                 return false;
             }
-            currentCol += colStep;
-            currentRow += rowStep;
+            currentX += xStep;
+            currentY += yStep;
         }
         return true;
     }
@@ -130,9 +130,9 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int row = 1; row <= 9; row++) {
-            for (int col = 1; col <= 9; col++) {
-                Position pos = new Position(col, row);
+        for (int y = 1; y <= 9; y++) {
+            for (int x = 1; x <= 9; x++) {
+                Position pos = new Position(x, y);
                 if (this.hasPiece(pos)) {
                     sb.append(this.getPiece(pos).toString());
                 } else {

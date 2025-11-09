@@ -15,10 +15,10 @@ public class FuHyo extends Piece implements Promotable {
     @Override
     public boolean canMove(Position from, Position to) {
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
-        int rowDiff = to.getRow() - from.getRow();
-        int colDiff = to.getCol() - from.getCol();
+        int yDiff = to.getY() - from.getY();
+        int xDiff = to.getX() - from.getX();
 
-        return rowDiff == direction && colDiff == 0;
+        return yDiff == direction && xDiff == 0;
     }
 
     @Override

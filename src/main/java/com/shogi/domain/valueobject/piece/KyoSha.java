@@ -14,13 +14,13 @@ public class KyoSha extends Piece implements Promotable {
 
     @Override
     public boolean canMove(Position from, Position to) {
-        if (to.getCol() != from.getCol())
+        if (to.getX() != from.getX())
             return false;
 
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
-        int rowDiff = to.getRow() - from.getRow();
+        int yDiff = to.getY() - from.getY();
 
-        return direction * rowDiff > 0;
+        return direction * yDiff > 0;
     }
 
     @Override
