@@ -26,9 +26,10 @@ export default function App() {
   const { board, stand, turn } = state;
 
   return (
-    <div>
+    <div className="app-container">
       <h1>My Shogi (React)</h1>
       <Turn turn={turn} />
+      <Stand stand={stand} />
       <Board board={board} />
       <Stand stand={stand} />
     </div>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240" aria-labelledby="title">
+	<title id="title">将棋の駒・王</title>
+	<defs>
+		<linearGradient id="wood" x1="0" x2="0" y1="0" y2="1">
+			<stop offset="0" stop-color="#f6e2be"/>
+			<stop offset="0.5" stop-color="#e8c889"/>
+			<stop offset="1" stop-color="#d1a45a"/>
+		</linearGradient>
+		<linearGradient id="rim" x1="0" x2="0" y1="0" y2="1">
+			<stop offset="0" stop-color="#fff6e6" stop-opacity="0.75"/>
+			<stop offset="1" stop-color="#d6b162" stop-opacity="0.96"/>
+		</linearGradient>
+		<linearGradient id="gloss" x1="0" x2="1" y1="0" y2="0">
+			<stop offset="0" stop-color="#fff8ee" stop-opacity="0.20"/>
+			<stop offset="0.5" stop-color="#fff8ee" stop-opacity="0.07"/>
+			<stop offset="1" stop-color="#fff8ee" stop-opacity="0"/>
+		</linearGradient>
+		<filter id="innershadow" x="-50%" y="-50%" width="200%" height="200%">
+			<feOffset dx="0" dy="2"/>
+			<feGaussianBlur stdDeviation="3" result="offset-blur"/>
+			<feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse"/>
+			<feFlood flood-color="#000" flood-opacity="0.12" result="color"/>
+			<feComposite operator="in" in="color" in2="inverse" result="shadow"/>
+			<feComposite operator="over" in="shadow" in2="SourceGraphic"/>
+		</filter>
+		<filter id="kanji-emboss" x="-20%" y="-20%" width="140%" height="140%">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur"/>
+			<feOffset in="blur" dx="0" dy="1" result="off"/>
+			<feComposite in="SourceGraphic" in2="off" operator="over"/>
+		</filter>
+	</defs>
+
+	<g filter="url(#innershadow)">
+		<path d="M100 12 L156 60 L170 224 L30 224 L44 60 Z"
+			fill="url(#wood)" stroke="#3f2a14" stroke-width="6" stroke-linejoin="round"/>
+		<path d="M100 22 L148 66 L162 214 L38 214 L52 66 Z"
+			fill="none" stroke="url(#rim)" stroke-width="2.5" stroke-linejoin="round"/>
+	</g>
+
+	<g style="mix-blend-mode:screen;" opacity="0.9">
+		<path d="M20 30 C70 -10 130 -10 180 30 L160 54 C120 28 80 28 40 54 Z"
+			fill="url(#gloss)" transform="rotate(-6 100 120)" opacity="0.35"/>
+	</g>
+
+	<!-- 王将: vertical two-character layout -->
+	<text x="100" y="118" font-size="64" text-anchor="middle" dominant-baseline="middle"
+	  font-family="'Shippori Mincho', 'Noto Serif JP', 'Hiragino Mincho ProN', serif" font-weight="900" fill="#0f0906" stroke="#000000" stroke-opacity="0.06" stroke-width="0.5" filter="url(#kanji-emboss)">王</text>
+	<text x="100" y="178" font-size="64" text-anchor="middle" dominant-baseline="middle"
+	  font-family="'Shippori Mincho', 'Noto Serif JP', 'Hiragino Mincho ProN', serif" font-weight="900" fill="#0f0906" stroke="#000000" stroke-opacity="0.06" stroke-width="0.5" filter="url(#kanji-emboss)">将</text>
+
+	<circle cx="132" cy="58" r="3.2" fill="#fff" opacity="0.9" />
+
+</svg>

@@ -1,0 +1,144 @@
+/* Shogi board styles
+   - 9x9 grid
+   - wood color cells, thin brown grid lines
+   - outer edge and drop shadow for depth
+   - cell aspect ratio roughly 1.2 (height:width)
+*/
+:root {
+  --cell-size: 48px;
+  /* richer, warmer wood tones for luxurious feel */
+  --wood-start: #f6e2be;
+  --wood-mid: #e8c889;
+  --wood-end: #d1a45a;
+  --gloss: rgba(255, 255, 255, 0.18);
+  --line: rgba(80, 50, 20, 0.9);
+  --edge: #3f2a14; /* darker frame for premium look */
+}
+
+.shogi-board-container {
+  display: inline-grid;
+  grid-template-columns: repeat(9, var(--cell-size));
+  grid-auto-rows: var(--cell-size);
+  gap: 0; /* セル間の余白をなくす */
+  padding: 14px;
+  /* layered gradients for depth */
+  background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 40%
+    ),
+    linear-gradient(
+      180deg,
+      var(--wood-start),
+      var(--wood-mid) 50%,
+      var(--wood-end)
+    );
+  border-radius: 8px;
+  border: 10px solid var(--edge);
+  box-shadow: 0 10px 30px rgba(16, 10, 5, 0.25),
+    inset 0 2px 8px rgba(255, 255, 255, 0.04);
+}
+
+.board-wrapper {
+  display: flex;
+  justify-content: center; /* 横方向中央寄せ */
+  width: 100%;
+}
+
+/* Title centering moved from inline JSX styles */
+.board-title {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+}
+
+.board-label {
+  height: var(--cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #3b2f2f;
+}
+
+.board-cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  /* per-cell wood with subtle gloss */
+  background: linear-gradient(
+    180deg,
+    rgba(246, 226, 190, 0.98),
+    rgba(232, 200, 136, 0.98)
+  );
+  border: 1px solid var(--line);
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-weight: 900;
+  font-size: 18px;
+  color: #0f0906;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* SVG piece image sizing inside a cell */
+.board-cell img.piece-svg {
+  width: 84%;
+  height: auto;
+  max-height: 92%;
+  object-fit: contain;
+  display: block;
+}
+
+/* rotate the image for 後手 (gote). If you prefer baked-in _gote.svg files, this rule can be omitted. */
+.board-cell.gote img.piece-svg {
+  transform: rotate(180deg);
+}
+
+.piece-fallback {
+  font-size: 14px;
+  font-weight: 900;
+  color: inherit;
+}
+
+/* subtle glossy highlight on each cell */
+.board-cell::after {
+  content: "";
+  position: absolute;
+  left: -30%;
+  top: -60%;
+  width: 160%;
+  height: 60%;
+  background: linear-gradient(90deg, transparent, var(--gloss), transparent);
+  transform: rotate(-18deg);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* Piece variants */
+.board-cell.sente {
+  color: #1b1b1b;
+}
+.board-cell.gote {
+  color: #b30000; /* 赤系 */
+}
+
+/* Keep labels visually separate */
+.shogi-board-container > .board-label {
+  background: transparent;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --cell-size: 36px;
+  }
+  .board-label {
+    font-size: 11px;
+  }
+  .board-cell {
+    font-size: 14px;
+  }
+}

@@ -1,7 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;900&family=Noto+Serif+JP:wght@400;700;900&display=swap");
+
 /* minimal styles */
+:root {
+  --kanji-font: "Shippori Mincho", "Noto Serif JP", "Hiragino Mincho ProN",
+    serif;
+}
+
 body {
   margin: 0;
   padding: 0;
   background: #f9fafb;
   color: #111827;
+  /* Use a neutral UI font for body; kanji headings use the kanji font */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial;
+}
+
+/* App layout: center main content horizontally */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+}
+
+h1 {
+  text-align: center;
+  margin: 0;
+  font-family: var(--kanji-font);
+}
+
+.centered-section {
+  text-align: center;
+}
+
+/* helper class for kanji/labels in HTML (SVG uses inline font-family) */
+.kanji-font {
+  font-family: var(--kanji-font);
 }
