@@ -9,25 +9,6 @@ type Piece = {
 type Props = { board?: Piece[] };
 
 export default function Board({ board }: Props) {
-//  "board": [
-//         {
-//             "position": {
-//                 "x": 2,
-//                 "y": 1
-//             },
-//             "name": "桂",
-//             "owner": "後手"
-//         },
-//         {
-//             "position": {
-//                 "x": 4,
-//                 "y": 3
-//             },
-//             "name": "歩",
-//             "owner": "後手"
-//         },
-//        ... ]
-
   // 駒の初期配置
   // GOTE側
   // ・ 1 2 3 4 5 6 7 8 9

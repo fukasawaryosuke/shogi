@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   app:
     build:
@@ -12,3 +10,18 @@ services:
       - ./target:/app/target
       - ./pom.xml:/app/pom.xml:ro
     working_dir: /app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
