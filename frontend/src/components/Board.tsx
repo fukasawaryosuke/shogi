@@ -59,6 +59,10 @@ export default function Board({ board }: Record<string, string>) {
   // 9 香 桂 銀 金 王 金 銀 桂 香
   // SENTE側
 
+  const LENGTH = 9;
+  const ROWS = Array.from({ length: LENGTH });
+  const COLS = Array.from({ length: LENGTH });
+
   return (
     <section>
       <h2 className="board-title">Board</h2>
@@ -66,105 +70,24 @@ export default function Board({ board }: Record<string, string>) {
         <div className="shogi-board-container">
           <table className="shogi-board" cellPadding={0} cellSpacing={0}>
             <tbody>
-              <tr>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-              </tr>
-              <tr>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-              </tr>
-              <tr>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-              </tr>
-              <tr>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-              </tr>
-              <tr>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-              </tr>
-              <tr>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-              </tr>
-              <tr>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-              </tr>
-              <tr>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-              </tr>
-              <tr>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-                <td className="cell"></td>
-              </tr>
+              {ROWS.map((_, rowIndex) => {
+                const row = rowIndex + 1; // 1..9
+                return (
+                  <tr key={row}>
+                    {COLS.map((_, colIndex) => {
+                      const col = colIndex + 1; // 1..9
+                      // board のキーは "col, row" の形式 (例: "2, 9")
+                      const key = `${col}, ${row}`;
+                      const piece = board && board[key];
+                      return (
+                        <td key={col} className="cell">
+                          {piece ?? ""}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
