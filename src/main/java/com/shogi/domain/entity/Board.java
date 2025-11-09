@@ -15,6 +15,10 @@ public class Board {
         initializeBoard();
     }
 
+    public Map<Position, Piece> getBoardMap() {
+        return this.boardMap;
+    }
+
     private void initializeBoard() {
         // 駒の初期配置
         // GOTE側

@@ -14,6 +14,10 @@ public class Stand {
         this.standMap.put(Player.GOTE, new HashMap<>());
     }
 
+    public Map<Player, Map<Piece, Integer>> getStandMap() {
+        return this.standMap;
+    }
+
     public boolean hasPiece(Player player, Piece piece) {
         Map<Piece, Integer> pieceCounts = standMap.get(player);
         if (pieceCounts == null || pieceCounts.isEmpty())
