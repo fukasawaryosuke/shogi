@@ -1,6 +1,8 @@
 import "../styles/Board.css";
 
-export default function Board({ board }: Record<string, string>) {
+type Props = { board?: Record<string, string> };
+
+export default function Board({ board }: Props) {
   //    "board": {
   //         "2, 9": "桂",
   //         "2, 8": "角",
@@ -63,6 +65,36 @@ export default function Board({ board }: Record<string, string>) {
   const ROWS = Array.from({ length: LENGTH });
   const COLS = Array.from({ length: LENGTH });
 
+  const pieceFileMap: Record<string, string> = {
+    歩: "sente/fu_hyou.svg",
+    香: "sente/kyo_sha.svg",
+    桂: "sente/kei_ma.svg",
+    銀: "sente/gin_sho.svg",
+    金: "sente/kin_sho.svg",
+    角: "sente/kaku_gyou.svg",
+    飛: "sente/hi_sha.svg",
+    王: "sente/ou_sho.svg",
+    玉: "sente/gyoku_sho.svg",
+    と: "sente/to.svg",
+    成香: "sente/nari_kyo.svg",
+    成桂: "sente/nari_kei.svg",
+    成銀: "sente/nari_gin.svg",
+    馬: "sente/ryu_ma.svg",
+    竜: "sente/ryu_ou.svg",
+  };
+
+  const getPieceSrc = (piece: string) => {
+    const file = pieceFileMap[piece];
+    if (!file) return null;
+    return new URL(`../assets/${file}`, import.meta.url).href;
+  };
+
+  const renderPiece = (piece: string) => {
+    const src = getPieceSrc(piece);
+    if (!src) return null;
+    return <img src={src} alt={piece} width={50} height={50} />;
+  };
+
   return (
     <section>
       <h2 className="board-title">Board</h2>
@@ -78,10 +110,10 @@ export default function Board({ board }: Record<string, string>) {
                       const col = colIndex + 1; // 1..9
                       // board のキーは "col, row" の形式 (例: "2, 9")
                       const key = `${col}, ${row}`;
-                      const piece = board && board[key];
+                      const piece = board?.[key];
                       return (
                         <td key={col} className="cell">
-                          {piece ?? ""}
+                          {piece ? renderPiece(piece) : null}
                         </td>
                       );
                     })}
