@@ -1,4 +1,4 @@
-.PHONY: help up down shell run build test
+.PHONY: help up down shell build clean package run spring-run test teavm
 
 help:
 	@echo "Maven開発用コマンド:"
@@ -10,6 +10,7 @@ help:
 	@echo "  make test  - テスト実行"
 	@echo "  make package - パッケージ作成"
 	@echo "  make spring-run - Spring Boot実行"
+	@echo "  make teavm - TeaVMでWebAssemblyにコンパイル"
 
 up:
 	docker compose up -d
@@ -21,13 +22,13 @@ shell:
 	docker compose exec app bash
 
 build:
-	docker compose run --rm app mvn compile
+	docker compose exec app mvn compile
 
 clean:
-	docker compose run --rm app mvn clean compile
+	docker compose exec app mvn clean
 
 package:
-	docker compose run --rm app mvn -DskipTests package
+	docker compose exec app mvn -DskipTests package
 
 run:
 	docker compose exec app mvn exec:java
@@ -37,3 +38,9 @@ spring-run:
 
 test:
 	docker compose exec app mvn test
+
+teavm:
+	docker compose exec app mvn clean compile -Pwasm
+	docker compose exec app mvn org.teavm:teavm-maven-plugin:0.10.0:compile -Pwasm
+	mkdir -p frontend/dist
+	docker compose cp "app:/app/target/javascript/." frontend/dist/

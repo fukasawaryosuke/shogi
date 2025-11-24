@@ -4,23 +4,33 @@ import Peer from "./components/connection/peer";
 import Board from "./components/Board";
 import Stand from "./components/Stand";
 import Turn from "./components/Turn";
+import { WasmGameLoader } from "./utils/wasmLoader";
 
 export default function App() {
-  const [state, setState] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [wasmLoader, setWasmLoader] = useState(null);
 
   const { peer, peerId, isConnected, connectToPeer } = usePeer();
 
   useEffect(() => {
-    fetch(`/api/state`)
-      .then((res) => {
-        if (!res.ok) throw new Error(res.statusText);
-        return res.json();
-      })
-      .then((data) => setState(data))
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
+    (async () => {
+      try {
+        const loader = await WasmGameLoader.init();
+        setWasmLoader(loader);
+        loader.main();
+        const board = loader.getBoard(game);
+        const stand = loader.getStand(game);
+        const turn = loader.getTurn(game);
+        console.log("WASM Board:", board);
+        console.log("WASM Stand:", stand);
+        console.log("WASM Turn:", turn);
+      } catch (e) {
+        setError(e.stack || e.message || JSON.stringify(e));
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
 
   if (loading) return <div>Loading...</div>;

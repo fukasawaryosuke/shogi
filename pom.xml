@@ -25,6 +25,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <teavm.version>0.10.0</teavm.version>
     </properties>
 
     <dependencies>
@@ -53,6 +54,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <!-- TeaVM dependencies for WASM compilation -->
+        <dependency>
+            <groupId>org.teavm</groupId>
+            <artifactId>teavm-classlib</artifactId>
+            <version>${teavm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- TeaVM Interop for JavaScript interoperation -->
+        <dependency>
+            <groupId>org.teavm</groupId>
+            <artifactId>teavm-interop</artifactId>
+            <version>${teavm.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -94,4 +111,33 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>wasm</id>
+            <build>
+                <plugins>
+                    <!-- TeaVM Maven Plugin for WASM compilation -->
+                    <plugin>
+                        <groupId>org.teavm</groupId>
+                        <artifactId>teavm-maven-plugin</artifactId>
+                        <version>${teavm.version}</version>
+                        <configuration>
+                            <mainClass>com.shogi.wasm.ShogiWasm</mainClass>
+                            <optimization>ADVANCED</optimization>
+                            <minified>true</minified>
+                            <targetType>WEBASSEMBLY</targetType>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
