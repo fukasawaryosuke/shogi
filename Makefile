@@ -40,7 +40,8 @@ test:
 	docker compose exec app mvn test
 
 teavm:
-	docker compose exec app mvn clean compile -Pwasm
-	docker compose exec app mvn org.teavm:teavm-maven-plugin:0.10.0:compile -Pwasm
+	docker compose exec app mvn clean compile
+	docker compose exec app mvn org.teavm:teavm-maven-plugin:0.10.0:compile@js
+	docker compose exec app mvn org.teavm:teavm-maven-plugin:0.10.0:compile@wasm
 	mkdir -p frontend/dist
 	docker compose cp "app:/app/target/javascript/." frontend/dist/

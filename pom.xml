@@ -71,6 +71,14 @@
             <version>${teavm.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- TeaVM JSO for JavaScript String support -->
+        <dependency>
+            <groupId>org.teavm</groupId>
+            <artifactId>teavm-jso</artifactId>
+            <version>${teavm.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -109,35 +117,54 @@
                     <mainClass>com.shogi.presentation.cli.App</mainClass>
                 </configuration>
             </plugin>
-        </plugins>
-    </build>
 
-    <profiles>
-        <profile>
-            <id>wasm</id>
-            <build>
-                <plugins>
-                    <!-- TeaVM Maven Plugin for WASM compilation -->
-                    <plugin>
-                        <groupId>org.teavm</groupId>
-                        <artifactId>teavm-maven-plugin</artifactId>
-                        <version>${teavm.version}</version>
+            <!-- TeaVM Maven Plugin: JS & WASM両方を1ビルドで生成 -->
+            <plugin>
+                <groupId>org.teavm</groupId>
+                <artifactId>teavm-maven-plugin</artifactId>
+                <version>${teavm.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.shogi.wasm.ShogiWasm</mainClass>
+                            <optimization>ADVANCED</optimization>
+                            <minified>true</minified>
+                            <targetType>JAVASCRIPT</targetType>
+                            <outputDir>${project.build.directory}/javascript</outputDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>js</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.shogi.wasm.ShogiWasm</mainClass>
+                            <optimization>ADVANCED</optimization>
+                            <minified>true</minified>
+                            <targetType>JAVASCRIPT</targetType>
+                            <outputDir>${project.build.directory}/javascript</outputDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>wasm</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
                         <configuration>
                             <mainClass>com.shogi.wasm.ShogiWasm</mainClass>
                             <optimization>ADVANCED</optimization>
                             <minified>true</minified>
                             <targetType>WEBASSEMBLY</targetType>
+                            <outputDir>${project.build.directory}/wasm</outputDir>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>compile</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

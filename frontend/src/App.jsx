@@ -1,30 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { usePeer } from "./hooks/usePeer";
 import Peer from "./components/connection/peer";
 import Board from "./components/Board";
 import Stand from "./components/Stand";
 import Turn from "./components/Turn";
-import { WasmGameLoader } from "./utils/wasmLoader";
+import { Wasm } from "./utils/wasm";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [wasmLoader, setWasmLoader] = useState(null);
+  const [wasm, setWasm] = useState(null);
+  const initialized = useRef(false);
 
   const { peer, peerId, isConnected, connectToPeer } = usePeer();
 
   useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
+
     (async () => {
       try {
-        const loader = await WasmGameLoader.init();
-        setWasmLoader(loader);
-        loader.main();
-        const board = loader.getBoard(game);
-        const stand = loader.getStand(game);
-        const turn = loader.getTurn(game);
-        console.log("WASM Board:", board);
-        console.log("WASM Stand:", stand);
-        console.log("WASM Turn:", turn);
+        const wasm = await Wasm.init();
+        setWasm(wasm);
+
+        wasm.main();
       } catch (e) {
         setError(e.stack || e.message || JSON.stringify(e));
       } finally {
@@ -35,9 +34,7 @@ export default function App() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!state) return <div>No data</div>;
-
-  const { board, stand, turn } = state;
+  if (!wasm) return <div>No data</div>;
 
   return (
     <div className="app-container">
@@ -47,10 +44,10 @@ export default function App() {
         peerId={peerId}
         connectToPeer={connectToPeer}
       />
-      <Turn turn={turn} />
+      {/* <Turn turn={turn} />
       <Stand stand={stand} />
       <Board board={board} />
-      <Stand stand={stand} />
+      <Stand stand={stand} /> */}
     </div>
   );
 }
