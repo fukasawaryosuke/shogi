@@ -1,14 +1,10 @@
-import "../styles/Board.css";
+import type { Board } from "../types/schemas/board.zod";
 
-type Piece = {
-  position: { x: number; y: number };
-  name: string;
-  owner: string;
+type BoardProps = {
+  board: Board;
 };
 
-type Props = { board?: Piece[] };
-
-export default function Board({ board }: Props) {
+export default function Board({ board }: BoardProps) {
   // 駒の初期配置
   // GOTE側
   // ・ 1 2 3 4 5 6 7 8 9
@@ -22,10 +18,6 @@ export default function Board({ board }: Props) {
   // 8 ・ 角 ・ ・ ・ ・ ・ 飛 ・
   // 9 香 桂 銀 金 王 金 銀 桂 香
   // SENTE側
-
-  const LENGTH = 9;
-  const X = Array.from({ length: LENGTH });
-  const Y = Array.from({ length: LENGTH });
 
   const pieceFileMap: Record<string, string> = {
     歩: "fu_hyou.svg",
@@ -70,22 +62,17 @@ export default function Board({ board }: Props) {
         <div className="shogi-board-container">
           <table className="shogi-board" cellPadding={0} cellSpacing={0}>
             <tbody>
-              {Y.map((_, index) => {
-                const y = index + 1;
-                return (
-                  <tr key={y}>
-                    {X.map((_, index) => {
-                      const x = index + 1;
-                      const piece = board?.find((p) => p.position.x === x && p.position.y === y);
-                      return (
-                        <td key={x} className="cell">
-                          {piece ? renderPiece(piece.name, piece.owner) : null}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
+              {board.map((row, yIdx) => (
+                <tr key={yIdx}>
+                  {row.map((cell, xIdx) => (
+                    <td key={xIdx} className="cell">
+                      {cell && cell.piece
+                        ? renderPiece(cell.piece.name, cell.piece.owner)
+                        : null}
+                    </td>
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
