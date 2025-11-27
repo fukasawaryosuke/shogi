@@ -10,14 +10,10 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [wasm, setWasm] = useState(null);
-  const initialized = useRef(false);
 
   const { peer, peerId, isConnected, connectToPeer } = usePeer();
 
   useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
-
     (async () => {
       try {
         const wasm = await Wasm.init();
