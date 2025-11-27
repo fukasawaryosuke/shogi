@@ -1,4 +1,5 @@
 import type { Board } from "../types/schemas/board.zod";
+import "../styles/Board.css";
 
 type BoardProps = {
   board: Board;

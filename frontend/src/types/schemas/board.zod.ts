@@ -9,10 +9,12 @@ export const BoardSchema = z
   .array(
     z
       .array(
-        z.object({
-          position: PositionSchema,
-          piece: PieceSchema,
-        })
+        z
+          .object({
+            position: PositionSchema,
+            piece: PieceSchema,
+          })
+          .nullable()
       )
       .length(BOARD_X_SIZE)
   )
