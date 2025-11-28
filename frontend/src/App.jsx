@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { usePeer } from "./hooks/usePeer";
 import Peer from "./components/connection/peer";
 import Board from "./components/Board";
@@ -107,7 +107,8 @@ export default function App() {
         </div>
       )}
       <Stand
-        stand={stand?.["後手"] || []}
+        player="後手"
+        pieces={stand?.["後手"] || []}
         onPieceClick={turn === "後手" ? handlePieceClick : undefined}
         selectedPiece={selectedPiece}
       />
@@ -117,7 +118,8 @@ export default function App() {
         onCellClick={handleCellClick}
       />
       <Stand
-        stand={stand?.["先手"] || []}
+        player="先手"
+        pieces={stand?.["先手"] || []}
         onPieceClick={turn === "先手" ? handlePieceClick : undefined}
         selectedPiece={selectedPiece}
       />

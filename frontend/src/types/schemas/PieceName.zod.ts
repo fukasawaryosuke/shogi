@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const PieceTypeSchema = z.enum([
+export const PieceNameSchema = z.enum([
   "歩",
   "香",
   "桂",
@@ -18,4 +18,4 @@ export const PieceTypeSchema = z.enum([
   "竜",
 ]);
 
-export type PieceType = z.infer<typeof PieceTypeSchema>;
+export type PieceName = z.infer<typeof PieceNameSchema>;

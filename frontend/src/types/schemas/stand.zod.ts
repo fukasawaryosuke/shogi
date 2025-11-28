@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { PlayerSchema } from "./player.zod";
+import { PieceNameSchema } from "./PieceName.zod";
 
 const StandPieceSchema = z.object({
-  name: z.string(),
+  name: PieceNameSchema,
   type: z.string(),
   count: z.number().int().min(0),
 });
