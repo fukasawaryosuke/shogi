@@ -7,10 +7,12 @@ import com.shogi.domain.valueobject.Position;
 public abstract class Piece {
     protected Player owner;
     protected String displayName;
+    protected PieceType type;
 
-    public Piece(Player owner, String displayName) {
+    public Piece(Player owner, String displayName, PieceType type) {
         this.owner = owner;
         this.displayName = displayName;
+        this.type = type;
     }
 
     public boolean isOwner(Player player) {
@@ -19,6 +21,10 @@ public abstract class Piece {
 
     public String getOwner() {
         return this.owner.toString();
+    }
+
+    public PieceType getType() {
+        return this.type;
     }
 
     public abstract boolean canMove(Position from, Position to);

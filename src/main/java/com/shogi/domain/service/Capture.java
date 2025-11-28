@@ -21,7 +21,8 @@ public class Capture {
     if (!this.validateCapture(targetPiece, currentPlayer))
       return;
 
-    Piece capturedPiece = PieceFactory.clonePiece(targetPiece, currentPlayer);
+    // 成駒の場合は元の駒に戻す
+    Piece capturedPiece = PieceFactory.createPiece(targetPiece.getType(), currentPlayer);
     stand.putPiece(currentPlayer, capturedPiece);
   }
 

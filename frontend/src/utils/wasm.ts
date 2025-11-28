@@ -73,6 +73,27 @@ export class Wasm {
     return this.textDecoder.decode(bytes);
   }
 
+  /**
+   * WASMメモリに文字列を書き込む
+   *
+   * @param str 書き込む文字列
+   * @returns 書き込んだバイト長
+   */
+  private writeStringToMemory(str: string): number {
+    if (!this.wasm.memory) {
+      throw new Error("WASM memory is not available");
+    }
+
+    const encoder = new TextEncoder();
+    const bytes = encoder.encode(str);
+    const pointer = this.wasm.getStringBufferPointer();
+    const memoryBuffer = new Uint8Array(this.wasm.memory.buffer);
+
+    memoryBuffer.set(bytes, pointer);
+
+    return bytes.length;
+  }
+
   main(): void {
     this.wasm.main();
   }
@@ -190,6 +211,34 @@ export class Wasm {
 
     const pointer = this.wasm.getStringBufferPointer();
     return this.readStringFromMemory(pointer, length);
+  }
+
+  /**
+   * 持ち駒を打つ
+   *
+   * @param pieceType 駒の種類
+   * @param x X座標
+   * @param y Y座標
+   * @returns エラーメッセージ（成功時は空文字列）
+   */
+  drop(pieceType: string, x: number, y: number): string {
+    // 文字列をメモリに書き込む
+    const length = this.writeStringToMemory(pieceType);
+
+    // Javaのdrop関数を呼び出す（文字列の長さを渡す）
+    const resultLength = this.wasm.drop(length, x, y);
+
+    if (resultLength < 0) {
+      throw new Error("Failed to execute drop");
+    }
+
+    if (resultLength === 0) {
+      return ""; // 成功
+    }
+
+    // エラーメッセージを読み取る
+    const pointer = this.wasm.getStringBufferPointer();
+    return this.readStringFromMemory(pointer, resultLength);
   }
 
   /**

@@ -3,12 +3,14 @@ package com.shogi.domain.valueobject.piece.promoted;
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.piece.Piece;
+import com.shogi.domain.valueobject.piece.PieceType;
 
 public class ToKin extends Piece {
   private static final String DISPLAY_NAME = "と";
+  private static final PieceType PIECE_TYPE = PieceType.FU;
 
   public ToKin(Player owner) {
-    super(owner, DISPLAY_NAME);
+    super(owner, DISPLAY_NAME, PIECE_TYPE);
   }
 
   @Override

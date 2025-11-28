@@ -8,11 +8,13 @@ import com.shogi.domain.valueobject.piece.promoted.NariKei;
 
 public class KeiMa extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "桂";
+    private static final PieceType PIECE_TYPE = PieceType.KE;
 
     public KeiMa(Player owner) {
-        super(owner, DISPLAY_NAME);
+        super(owner, DISPLAY_NAME, PIECE_TYPE);
     }
 
+    @Override
     public boolean canMove(Position from, Position to) {
         int direction = (this.owner == Player.SENTE) ? -1 : 1;
         int yDiff = to.getY() - from.getY();

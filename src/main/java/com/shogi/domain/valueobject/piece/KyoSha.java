@@ -7,9 +7,10 @@ import com.shogi.domain.valueobject.piece.promoted.NariKyo;
 
 public class KyoSha extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "香";
+    private static final PieceType PIECE_TYPE = PieceType.KY;
 
     public KyoSha(Player owner) {
-        super(owner, DISPLAY_NAME);
+        super(owner, DISPLAY_NAME, PIECE_TYPE);
     }
 
     @Override

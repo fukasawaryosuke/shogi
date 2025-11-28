@@ -6,6 +6,7 @@ export interface Exports extends WebAssembly.Exports {
   getStand(): number;
   getTurn(): number;
   move(fromX: number, fromY: number, toX: number, toY: number): number;
+  drop(pieceTypeNameLength: number, x: number, y: number): number;
   nextTurn(): void;
 
   getStringBufferPointer(): number; // バッファのメモリアドレス

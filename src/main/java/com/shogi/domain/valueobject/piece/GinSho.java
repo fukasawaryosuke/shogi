@@ -7,9 +7,10 @@ import com.shogi.domain.valueobject.piece.promoted.NariGin;
 
 public class GinSho extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "銀";
+    private static final PieceType PIECE_TYPE = PieceType.GI;
 
     public GinSho(Player owner) {
-        super(owner, DISPLAY_NAME);
+        super(owner, DISPLAY_NAME, PIECE_TYPE);
     }
 
     @Override

@@ -5,9 +5,10 @@ import com.shogi.domain.valueobject.Position;
 
 public class KinSho extends Piece {
     private static final String DISPLAY_NAME = "金";
+    private static final PieceType PIECE_TYPE = PieceType.KI;
 
     public KinSho(Player owner) {
-        super(owner, DISPLAY_NAME);
+        super(owner, DISPLAY_NAME, PIECE_TYPE);
     }
 
     @Override

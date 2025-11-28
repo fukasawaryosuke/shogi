@@ -8,9 +8,10 @@ import com.shogi.domain.valueobject.piece.promoted.RyuMa;
 
 public class KakuGyou extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "角";
+    private static final PieceType PIECE_TYPE = PieceType.KA;
 
     public KakuGyou(Player owner) {
-        super(owner, DISPLAY_NAME);
+        super(owner, DISPLAY_NAME, PIECE_TYPE);
     }
 
     @Override

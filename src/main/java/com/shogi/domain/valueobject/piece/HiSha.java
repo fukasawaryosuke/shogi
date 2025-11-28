@@ -8,9 +8,10 @@ import com.shogi.domain.valueobject.piece.promoted.RyuOu;
 
 public class HiSha extends Piece implements Promotable {
     private static final String DISPLAY_NAME = "飛";
+    private static final PieceType PIECE_TYPE = PieceType.HI;
 
     public HiSha(Player owner) {
-        super(owner, DISPLAY_NAME);
+        super(owner, DISPLAY_NAME, PIECE_TYPE);
     }
 
     @Override

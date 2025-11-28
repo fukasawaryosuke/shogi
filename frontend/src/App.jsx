@@ -15,6 +15,7 @@ export default function App() {
   const [board, setBoard] = useState(null);
   const [stand, setStand] = useState(null);
   const [selectedPosition, setSelectedPosition] = useState(null);
+  const [selectedPiece, setSelectedPiece] = useState(null);
 
   const { peer, peerId, isConnected, connectToPeer } = usePeer();
 
@@ -36,7 +37,23 @@ export default function App() {
   }, []);
 
   const handleCellClick = (x, y) => {
-    if (!selectedPosition) {
+    if (selectedPiece) {
+      // 持ち駒を打つ
+      const error = wasm.drop(selectedPiece, x, y);
+
+      if (error) {
+        setMoveError(error);
+        setSelectedPiece(null);
+      } else {
+        // 成功: ターンを進めて盤面を更新
+        wasm.nextTurn();
+        setTurn(wasm.getTurn());
+        setBoard(wasm.getBoard());
+        setStand(wasm.getStand());
+        setSelectedPiece(null);
+        setMoveError(null);
+      }
+    } else if (!selectedPosition) {
       // 最初のクリック: 駒を選択
       setSelectedPosition({ x, y });
       setMoveError(null);
@@ -60,6 +77,12 @@ export default function App() {
     }
   };
 
+  const handlePieceClick = (pieceName) => {
+    setSelectedPiece(pieceName);
+    setSelectedPosition(null);
+    setMoveError(null);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!wasm) return <div>No data</div>;
@@ -78,13 +101,26 @@ export default function App() {
           {moveError}
         </div>
       )}
-      <Stand stand={stand["後手"]} />
+      {selectedPiece && (
+        <div style={{ color: "blue", textAlign: "center", padding: "8px" }}>
+          選択中の持ち駒: {selectedPiece}
+        </div>
+      )}
+      <Stand
+        stand={stand?.["後手"] || []}
+        onPieceClick={turn === "後手" ? handlePieceClick : undefined}
+        selectedPiece={selectedPiece}
+      />
       <Board
         board={board}
         selectedPosition={selectedPosition}
         onCellClick={handleCellClick}
       />
-      <Stand stand={stand["先手"]} />
+      <Stand
+        stand={stand?.["先手"] || []}
+        onPieceClick={turn === "先手" ? handlePieceClick : undefined}
+        selectedPiece={selectedPiece}
+      />
     </div>
   );
 }

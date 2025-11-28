@@ -80,4 +80,24 @@ public class StringBuffer {
   public static void clear() {
     lastLength = 0;
   }
+
+  /**
+   * バッファから文字列を読み取る
+   * TypeScript側でバッファに文字列を書き込んだ後に呼び出す
+   *
+   * @param length バイト長
+   * @return 読み取った文字列
+   */
+  public static String readString(int length) {
+    if (length <= 0 || length > BUFFER_SIZE) {
+      return null;
+    }
+
+    try {
+      return new String(buffer, 0, length, StandardCharsets.UTF_8);
+    } catch (Exception e) {
+      System.err.println("Error decoding string: " + e.getMessage());
+      return null;
+    }
+  }
 }

@@ -13,6 +13,7 @@ public class StandJsConverter {
 
   /**
    * StandオブジェクトをJSON文字列に変換
+   * 形式: {"player": [{"name": "歩", "type": "FU", "count": 2}]}
    *
    * @param stand Standオブジェクト
    * @return JSON文字列
@@ -32,7 +33,7 @@ public class StandJsConverter {
       Player player = playerEntry.getKey();
       Map<Piece, Integer> pieces = playerEntry.getValue();
 
-      json.append("\"").append(player.toString()).append("\":{");
+      json.append("\"").append(player.toString()).append("\":[");
 
       boolean firstPiece = true;
       for (Map.Entry<Piece, Integer> pieceEntry : pieces.entrySet()) {
@@ -44,14 +45,16 @@ public class StandJsConverter {
         Piece piece = pieceEntry.getKey();
         Integer count = pieceEntry.getValue();
 
-        json.append("\"")
+        json.append("{\"name\":\"")
             .append(escapeJson(piece.toString()))
-            .append("\":\"")
+            .append("\",\"type\":\"")
+            .append(piece.getType().name())
+            .append("\",\"count\":")
             .append(count)
-            .append("\"");
+            .append("}");
       }
 
-      json.append("}");
+      json.append("]");
     }
 
     json.append("}");

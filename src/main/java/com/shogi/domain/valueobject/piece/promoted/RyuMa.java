@@ -3,12 +3,14 @@ package com.shogi.domain.valueobject.piece.promoted;
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.piece.Piece;
+import com.shogi.domain.valueobject.piece.PieceType;
 
 public class RyuMa extends Piece {
   private static final String DISPLAY_NAME = "馬";
+  private static final PieceType PIECE_TYPE = PieceType.KA;
 
   public RyuMa(Player owner) {
-    super(owner, DISPLAY_NAME);
+    super(owner, DISPLAY_NAME, PIECE_TYPE);
   }
 
   @Override

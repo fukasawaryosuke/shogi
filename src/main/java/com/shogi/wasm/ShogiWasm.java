@@ -2,6 +2,7 @@ package com.shogi.wasm;
 
 import com.shogi.application.usecase.Game;
 import com.shogi.domain.valueobject.Position;
+import com.shogi.domain.valueobject.piece.PieceType;
 import com.shogi.wasm.converter.BoardJsConverter;
 import com.shogi.wasm.converter.StandJsConverter;
 
@@ -81,7 +82,40 @@ public class ShogiWasm {
   }
 
   /**
-   * 次の手番に進める
+   * 持ち駒を打つ
+   *
+   * @param pieceTypeNameLength 駒の種類名のバイト長
+   * @param x                   X座標
+   * @param y                   Y座標
+   * @return エラーメッセージのバイト数（成功時は0）
+   */
+  @Export(name = "drop")
+  public static int drop(int pieceTypeNameLength, int x, int y) {
+    try {
+      // バッファから文字列を読み取る
+      String pieceTypeName = StringBuffer.readString(pieceTypeNameLength);
+
+      if (pieceTypeName == null || pieceTypeName.isEmpty()) {
+        return StringBuffer.writeString("駒の種類が指定されていません");
+      }
+
+      PieceType pieceType = PieceType.valueOf(pieceTypeName);
+      Position position = new Position(x, y);
+
+      String error = game.drop(pieceType, position);
+
+      if (error == null) {
+        return 0; // 成功
+      }
+
+      return StringBuffer.writeString(error);
+    } catch (Exception e) {
+      return StringBuffer.writeString("駒の配置に失敗しました: " + e.getMessage());
+    }
+  }
+
+  /**
+   * 次のターンに進む
    */
   @Export(name = "nextTurn")
   public static void nextTurn() {
