@@ -2,6 +2,9 @@ import type { Exports } from "../types/wasm";
 import type { Board } from "../types/schemas/board.zod";
 import type { Stand } from "../types/schemas/stand.zod";
 import type { Turn } from "../types/schemas/turn.zod";
+import { BoardSchema } from "../types/schemas/board.zod";
+import { StandSchema } from "../types/schemas/stand.zod";
+import { PlayerSchema } from "../types/schemas/player.zod";
 
 export class Wasm {
   private static readonly WASM_PATH = "dist/classes.wasm";
@@ -92,9 +95,12 @@ export class Wasm {
     }
 
     const pointer = this.wasm.getStringBufferPointer();
-    const jsonString = this.readStringFromMemory(pointer, length);
 
-    return JSON.parse(jsonString) as Board;
+    const jsonString = this.readStringFromMemory(pointer, length);
+    const parsed = JSON.parse(jsonString);
+    const board = BoardSchema.parse(parsed);
+
+    return board;
   }
 
   /**
@@ -115,9 +121,12 @@ export class Wasm {
     }
 
     const pointer = this.wasm.getStringBufferPointer();
-    const jsonString = this.readStringFromMemory(pointer, length);
 
-    return JSON.parse(jsonString) as Stand;
+    const jsonString = this.readStringFromMemory(pointer, length);
+    const parsed = JSON.parse(jsonString);
+    const stand = StandSchema.parse(parsed);
+
+    return stand;
   }
 
   /**
@@ -126,7 +135,7 @@ export class Wasm {
    *
    * @returns ターン情報の文字列
    */
-  getTurn(): string {
+  getTurn(): Turn {
     const length = this.wasm.getTurn();
 
     if (length < 0) {
@@ -134,13 +143,14 @@ export class Wasm {
     }
 
     if (length === 0) {
-      return "";
+      throw new Error("Turn data is empty");
     }
 
-    // バッファのポインタを取得
     const pointer = this.wasm.getStringBufferPointer();
 
-    // メモリから文字列を読み取る
-    return this.readStringFromMemory(pointer, length);
+    const string = this.readStringFromMemory(pointer, length);
+    const turn = PlayerSchema.parse(string);
+
+    return turn;
   }
 }
