@@ -42,7 +42,7 @@ public class Stand {
 
     public void putPiece(Player player, Piece piece) {
         Map<Piece, Integer> pieceCounts = standMap.computeIfAbsent(player, k -> new HashMap<>());
-        pieceCounts.merge(piece, 1, Integer::sum);
+        pieceCounts.merge(piece, 1, (a, b) -> a + b);
     }
 
     public void removePiece(Player player, Piece piece) {

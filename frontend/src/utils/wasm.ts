@@ -95,12 +95,19 @@ export class Wasm {
     }
 
     const pointer = this.wasm.getStringBufferPointer();
-
     const jsonString = this.readStringFromMemory(pointer, length);
-    const parsed = JSON.parse(jsonString);
-    const board = BoardSchema.parse(parsed);
 
-    return board;
+    try {
+      const parsed = JSON.parse(jsonString);
+      const board = BoardSchema.parse(parsed);
+      return board;
+    } catch (error) {
+      console.error("Board validation error:", error);
+      if (error instanceof Error && "errors" in error) {
+        console.error("Zod errors:", (error as any).errors);
+      }
+      throw error;
+    }
   }
 
   /**
@@ -121,12 +128,19 @@ export class Wasm {
     }
 
     const pointer = this.wasm.getStringBufferPointer();
-
     const jsonString = this.readStringFromMemory(pointer, length);
-    const parsed = JSON.parse(jsonString);
-    const stand = StandSchema.parse(parsed);
 
-    return stand;
+    try {
+      const parsed = JSON.parse(jsonString);
+      const stand = StandSchema.parse(parsed);
+      return stand;
+    } catch (error) {
+      console.error("Stand validation error:", error);
+      if (error instanceof Error && "errors" in error) {
+        console.error("Zod errors:", (error as any).errors);
+      }
+      throw error;
+    }
   }
 
   /**
@@ -152,5 +166,36 @@ export class Wasm {
     const turn = PlayerSchema.parse(string);
 
     return turn;
+  }
+
+  /**
+   * 駒を移動する
+   *
+   * @param fromX 移動元X座標
+   * @param fromY 移動元Y座標
+   * @param toX 移動先X座標
+   * @param toY 移動先Y座標
+   * @returns エラーメッセージ（成功時は空文字列）
+   */
+  move(fromX: number, fromY: number, toX: number, toY: number): string {
+    const length = this.wasm.move(fromX, fromY, toX, toY);
+
+    if (length < 0) {
+      throw new Error("Failed to execute move");
+    }
+
+    if (length === 0) {
+      return ""; // 成功
+    }
+
+    const pointer = this.wasm.getStringBufferPointer();
+    return this.readStringFromMemory(pointer, length);
+  }
+
+  /**
+   * 次のターンに進む
+   */
+  nextTurn(): void {
+    this.wasm.nextTurn();
   }
 }

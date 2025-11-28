@@ -3,9 +3,15 @@ import "../styles/Board.css";
 
 type BoardProps = {
   board: Board;
+  selectedPosition: { x: number; y: number } | null;
+  onCellClick: (x: number, y: number) => void;
 };
 
-export default function Board({ board }: BoardProps) {
+export default function Board({
+  board,
+  selectedPosition,
+  onCellClick,
+}: BoardProps) {
   // 駒の初期配置
   // GOTE側
   // ・ 1 2 3 4 5 6 7 8 9
@@ -65,13 +71,24 @@ export default function Board({ board }: BoardProps) {
             <tbody>
               {board.map((row, yIdx) => (
                 <tr key={yIdx}>
-                  {row.map((cell, xIdx) => (
-                    <td key={xIdx} className="cell">
-                      {cell && cell.piece
-                        ? renderPiece(cell.piece.name, cell.piece.owner)
-                        : null}
-                    </td>
-                  ))}
+                  {row.map((cell, xIdx) => {
+                    const isSelected =
+                      selectedPosition &&
+                      selectedPosition.x === xIdx + 1 &&
+                      selectedPosition.y === yIdx + 1;
+
+                    return (
+                      <td
+                        key={xIdx}
+                        className={`cell ${isSelected ? "selected" : ""}`}
+                        onClick={() => onCellClick(xIdx + 1, yIdx + 1)}
+                      >
+                        {cell && cell.piece
+                          ? renderPiece(cell.piece.name, cell.piece.owner)
+                          : null}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))}
             </tbody>

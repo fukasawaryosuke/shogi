@@ -53,6 +53,17 @@
     rgba(0, 0, 0, 0.02)
   );
   overflow: hidden; /* ensure widened pieces don't overflow neighboring cells */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.shogi-board td.cell:hover {
+  background-color: rgba(100, 150, 255, 0.15);
+}
+
+.shogi-board td.cell.selected {
+  background-color: rgba(100, 200, 100, 0.3);
+  border: 2px solid #4ade80;
 }
 
 /* make piece images square and fit inside the cell */
