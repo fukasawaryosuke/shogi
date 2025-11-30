@@ -5,6 +5,7 @@ import Board from "./components/Board";
 import Stand from "./components/Stand";
 import Turn from "./components/Turn";
 import { Wasm } from "./utils/wasm";
+import "./styles/App.css";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,7 @@ export default function App() {
   const [stand, setStand] = useState(null);
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [selectedPiece, setSelectedPiece] = useState(null);
+  const [promoteDialog, setPromoteDialog] = useState(null);
 
   const { peer, peerId, isConnected, connectToPeer } = usePeer();
 
@@ -66,13 +68,31 @@ export default function App() {
         setMoveError(error);
         setSelectedPosition(null);
       } else {
-        // 成功: ターンを進めて盤面を更新
-        wasm.nextTurn();
-        setTurn(wasm.getTurn());
-        setBoard(wasm.getBoard());
-        setStand(wasm.getStand());
-        setSelectedPosition(null);
-        setMoveError(null);
+        // 成功: 成り判定をチェック
+        const mustPromote = wasm.mustPromote(x, y);
+        const canChoose = wasm.canChoosePromote(x, y);
+
+        if (mustPromote) {
+          // 必須成り: 自動的に成る
+          wasm.promote(x, y);
+          wasm.nextTurn();
+          setTurn(wasm.getTurn());
+          setBoard(wasm.getBoard());
+          setStand(wasm.getStand());
+          setSelectedPosition(null);
+          setMoveError(null);
+        } else if (canChoose) {
+          // 任意成り: ダイアログを表示
+          setPromoteDialog({ x, y });
+        } else {
+          // 成れない: ターンを進める
+          wasm.nextTurn();
+          setTurn(wasm.getTurn());
+          setBoard(wasm.getBoard());
+          setStand(wasm.getStand());
+          setSelectedPosition(null);
+          setMoveError(null);
+        }
       }
     }
   };
@@ -80,6 +100,25 @@ export default function App() {
   const handlePieceClick = (pieceName) => {
     setSelectedPiece(pieceName);
     setSelectedPosition(null);
+    setMoveError(null);
+  };
+
+  const handlePromoteChoice = (shouldPromote) => {
+    if (!promoteDialog) return;
+
+    const { x, y } = promoteDialog;
+
+    if (shouldPromote) {
+      wasm.promote(x, y);
+    }
+
+    // ターンを進めて盤面を更新
+    wasm.nextTurn();
+    setTurn(wasm.getTurn());
+    setBoard(wasm.getBoard());
+    setStand(wasm.getStand());
+    setSelectedPosition(null);
+    setPromoteDialog(null);
     setMoveError(null);
   };
 
@@ -96,14 +135,31 @@ export default function App() {
         connectToPeer={connectToPeer}
       />
       <Turn turn={turn} />
-      {moveError && (
-        <div style={{ color: "red", textAlign: "center", padding: "8px" }}>
-          {moveError}
+      {moveError && <div className="error-message">{moveError}</div>}
+      {selectedPiece && (
+        <div className="selected-piece-message">
+          選択中の持ち駒: {selectedPiece}
         </div>
       )}
-      {selectedPiece && (
-        <div style={{ color: "blue", textAlign: "center", padding: "8px" }}>
-          選択中の持ち駒: {selectedPiece}
+      {promoteDialog && (
+        <div className="promote-dialog-overlay">
+          <div className="promote-dialog-content">
+            <h2 className="promote-dialog-title">駒を成りますか?</h2>
+            <div className="promote-dialog-buttons">
+              <button
+                onClick={() => handlePromoteChoice(true)}
+                className="promote-button"
+              >
+                成る
+              </button>
+              <button
+                onClick={() => handlePromoteChoice(false)}
+                className="no-promote-button"
+              >
+                成らない
+              </button>
+            </div>
+          </div>
         </div>
       )}
       <Stand

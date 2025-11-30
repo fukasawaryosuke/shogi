@@ -242,6 +242,38 @@ export class Wasm {
   }
 
   /**
+   * 駒が成ることができるかチェックする（任意成り）
+   *
+   * @param x X座標
+   * @param y Y座標
+   * @returns 成ることができる場合true
+   */
+  canChoosePromote(x: number, y: number): boolean {
+    return this.wasm.canChoosePromote(x, y);
+  }
+
+  /**
+   * 駒が成らなければならないかチェックする（必須成り）
+   *
+   * @param x X座標
+   * @param y Y座標
+   * @returns 成らなければならない場合true
+   */
+  mustPromote(x: number, y: number): boolean {
+    return this.wasm.mustPromote(x, y);
+  }
+
+  /**
+   * 駒を成る
+   *
+   * @param x X座標
+   * @param y Y座標
+   */
+  promote(x: number, y: number): void {
+    this.wasm.promote(x, y);
+  }
+
+  /**
    * 次のターンに進む
    */
   nextTurn(): void {

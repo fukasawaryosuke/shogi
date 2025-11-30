@@ -14,7 +14,6 @@ export default function Board({
   onCellClick,
 }: BoardProps) {
   // 駒の初期配置
-  // GOTE側
   // ・ 1 2 3 4 5 6 7 8 9
   // 1 香 桂 銀 金 王 金 銀 桂 香
   // 2 ・ 飛 ・ ・ ・ ・ ・ 角 ・
@@ -25,7 +24,6 @@ export default function Board({
   // 7 歩 歩 歩 歩 歩 歩 歩 歩 歩
   // 8 ・ 角 ・ ・ ・ ・ ・ 飛 ・
   // 9 香 桂 銀 金 王 金 銀 桂 香
-  // SENTE側
 
   const renderPiece = (name: string, owner: string) => {
     const src = PieceAssetResolver.getImageUrl(name, owner);

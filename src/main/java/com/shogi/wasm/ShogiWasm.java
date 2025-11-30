@@ -115,6 +115,56 @@ public class ShogiWasm {
   }
 
   /**
+   * 駒が成ることができるかチェックする（任意成り）
+   *
+   * @param x X座標
+   * @param y Y座標
+   * @return 成ることができる場合true
+   */
+  @Export(name = "canChoosePromote")
+  public static boolean canChoosePromote(int x, int y) {
+    try {
+      Position position = new Position(x, y);
+      return game.canChoosePromote(position);
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  /**
+   * 駒が成らなければならないかチェックする（必須成り）
+   *
+   * @param x X座標
+   * @param y Y座標
+   * @return 成らなければならない場合true
+   */
+  @Export(name = "mustPromote")
+  public static boolean mustPromote(int x, int y) {
+    try {
+      Position position = new Position(x, y);
+      return game.mustPromote(position);
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  /**
+   * 駒を成る
+   *
+   * @param x X座標
+   * @param y Y座標
+   */
+  @Export(name = "promote")
+  public static void promote(int x, int y) {
+    try {
+      Position position = new Position(x, y);
+      game.promote(position);
+    } catch (Exception e) {
+      // エラーは無視
+    }
+  }
+
+  /**
    * 次のターンに進む
    */
   @Export(name = "nextTurn")

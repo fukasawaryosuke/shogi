@@ -20,8 +20,8 @@ export class PieceAssetResolver {
     成香: "nari_kyo.svg",
     成桂: "nari_kei.svg",
     成銀: "nari_gin.svg",
-    馬: "ryu_ma.svg",
-    竜: "ryu_ou.svg",
+    馬: "uma.svg",
+    竜: "ryu.svg",
   };
 
   /**
