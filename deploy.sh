@@ -1,8 +1,11 @@
 #!/bin/bash
 set -e
 
-echo "Building frontend..."
+echo "Installing frontend dependencies..."
 cd frontend
+npm ci
+
+echo "Building frontend..."
 npm run build
 
 echo "Building wasm..."
