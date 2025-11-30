@@ -1,4 +1,4 @@
-.PHONY: help up down shell build clean package run spring-run test teavm
+.PHONY: help up down shell build clean package run spring-run test teavm deploy
 
 help:
 	@echo "Maven開発用コマンド:"
@@ -42,5 +42,8 @@ test:
 teavm:
 	docker compose exec app mvn clean compile
 	docker compose exec app mvn org.teavm:teavm-maven-plugin:0.10.0:compile@wasm
-	mkdir -p frontend/dist && rm -rf frontend/dist/*
-	docker compose cp "app:/app/target/javascript/." frontend/dist/
+	mkdir -p frontend/dist/wasm
+	docker compose cp "app:/app/target/javascript/." frontend/dist/wasm/
+
+deploy:
+	./deploy.sh
