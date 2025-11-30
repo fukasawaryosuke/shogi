@@ -18,6 +18,8 @@ export default function App() {
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [selectedPiece, setSelectedPiece] = useState(null);
   const [promoteDialog, setPromoteDialog] = useState(null);
+  const [gameOver, setGameOver] = useState(false);
+  const [winner, setWinner] = useState(null);
 
   const { peer, peerId, isConnected, connectToPeer } = usePeer();
 
@@ -39,6 +41,8 @@ export default function App() {
   }, []);
 
   const handleCellClick = (x, y) => {
+    if (gameOver) return;
+
     if (selectedPiece) {
       // 持ち駒を打つ
       const error = wasm.drop(selectedPiece, x, y);
@@ -54,6 +58,7 @@ export default function App() {
         setStand(wasm.getStand());
         setSelectedPiece(null);
         setMoveError(null);
+        checkGameOver();
       }
     } else if (!selectedPosition) {
       // 最初のクリック: 駒を選択
@@ -81,6 +86,7 @@ export default function App() {
           setStand(wasm.getStand());
           setSelectedPosition(null);
           setMoveError(null);
+          checkGameOver();
         } else if (canChoose) {
           // 任意成り: ダイアログを表示
           setPromoteDialog({ x, y });
@@ -92,12 +98,27 @@ export default function App() {
           setStand(wasm.getStand());
           setSelectedPosition(null);
           setMoveError(null);
+          checkGameOver();
         }
       }
     }
   };
 
+  const checkGameOver = () => {
+    if (wasm.isGameOver()) {
+      // 現在のターンのプレイヤーが負け（王将を取られた）
+      const currentPlayer = wasm.getTurn();
+      const winner = currentPlayer === "先手" ? "後手" : "先手";
+      setGameOver(true);
+      setWinner(winner);
+      return true;
+    }
+    return false;
+  };
+
   const handlePieceClick = (pieceName) => {
+    if (gameOver) return;
+
     setSelectedPiece(pieceName);
     setSelectedPosition(null);
     setMoveError(null);
@@ -120,6 +141,7 @@ export default function App() {
     setSelectedPosition(null);
     setPromoteDialog(null);
     setMoveError(null);
+    checkGameOver();
   };
 
   if (loading) return <div>Loading...</div>;
@@ -162,21 +184,39 @@ export default function App() {
           </div>
         </div>
       )}
+      {gameOver && (
+        <div className="promote-dialog-overlay">
+          <div className="promote-dialog-content">
+            <h2 className="promote-dialog-title">ゲーム終了</h2>
+            <p className="game-over-message">{winner}の勝ちです！</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="promote-button replay-button"
+            >
+              もう一度プレイ
+            </button>
+          </div>
+        </div>
+      )}
       <Stand
         player="後手"
         pieces={stand?.["後手"] || []}
-        onPieceClick={turn === "後手" ? handlePieceClick : undefined}
+        onPieceClick={
+          !gameOver && turn === "後手" ? handlePieceClick : undefined
+        }
         selectedPiece={selectedPiece}
       />
       <Board
         board={board}
         selectedPosition={selectedPosition}
-        onCellClick={handleCellClick}
+        onCellClick={!gameOver ? handleCellClick : undefined}
       />
       <Stand
         player="先手"
         pieces={stand?.["先手"] || []}
-        onPieceClick={turn === "先手" ? handlePieceClick : undefined}
+        onPieceClick={
+          !gameOver && turn === "先手" ? handlePieceClick : undefined
+        }
         selectedPiece={selectedPiece}
       />
     </div>

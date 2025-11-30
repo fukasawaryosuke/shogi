@@ -71,3 +71,12 @@
 .no-promote-button:hover {
   background-color: #da190b;
 }
+
+.game-over-message {
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+
+.replay-button {
+  width: 100%;
+}

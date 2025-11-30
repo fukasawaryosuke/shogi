@@ -165,6 +165,20 @@ public class ShogiWasm {
   }
 
   /**
+   * ゲームが終了しているかチェックする
+   *
+   * @return ゲームが終了している場合true（王将が取られた場合）
+   */
+  @Export(name = "isGameOver")
+  public static boolean isGameOver() {
+    try {
+      return game.isGameOver();
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  /**
    * 次のターンに進む
    */
   @Export(name = "nextTurn")

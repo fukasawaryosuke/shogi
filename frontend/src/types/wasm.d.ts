@@ -10,6 +10,7 @@ export interface Exports extends WebAssembly.Exports {
   canChoosePromote(x: number, y: number): boolean;
   mustPromote(x: number, y: number): boolean;
   promote(x: number, y: number): void;
+  isGameOver(): boolean;
   nextTurn(): void;
 
   getStringBufferPointer(): number; // バッファのメモリアドレス

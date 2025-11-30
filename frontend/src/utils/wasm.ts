@@ -274,6 +274,15 @@ export class Wasm {
   }
 
   /**
+   * ゲームが終了しているかチェックする
+   *
+   * @returns ゲームが終了している場合true（王将が取られた場合）
+   */
+  isGameOver(): boolean {
+    return this.wasm.isGameOver();
+  }
+
+  /**
    * 次のターンに進む
    */
   nextTurn(): void {
