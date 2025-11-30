@@ -3,3 +3,13 @@ compatibility_date = "2024-11-30"
 
 [site]
 bucket = "./dist"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.wasm"]
+fallthrough = true
+
+[[headers]]
+for = "*.wasm"
+[headers.values]
+"Content-Type" = "application/wasm"
