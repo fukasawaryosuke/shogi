@@ -1,2 +1,3 @@
-dist
+dist/*
+!dist/wasm/
 node_modules
