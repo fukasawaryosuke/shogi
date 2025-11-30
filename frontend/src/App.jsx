@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePeer } from "./hooks/usePeer";
-import Peer from "./components/connection/peer";
+import Peer from "./components/connection/Peer";
 import Board from "./components/Board";
 import Stand from "./components/Stand";
 import Turn from "./components/Turn";
