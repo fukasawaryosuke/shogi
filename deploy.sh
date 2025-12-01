@@ -8,11 +8,9 @@ npm ci
 echo "Building frontend..."
 npm run build
 
-# WASMファイルは事前にビルドしてコミット済みと想定
-if [ ! -f "dist/wasm/classes.wasm" ]; then
-  echo "Warning: WASM files not found in dist/wasm/"
-  echo "Run 'make teavm' locally before deploying"
-fi
+echo "Building wasm..."
+cd ..
+make teavm
 
 echo "Build completed!"
 echo "Deploy directory: frontend/dist"
