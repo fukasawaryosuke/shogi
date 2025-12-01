@@ -42,8 +42,8 @@ test:
 teavm:
 	docker compose exec app mvn clean compile
 	docker compose exec app mvn org.teavm:teavm-maven-plugin:0.10.0:compile@wasm
-	mkdir -p frontend/dist/wasm
-	docker compose cp "app:/app/target/javascript/." frontend/dist/wasm/
+	mkdir -p frontend/public/wasm
+	docker compose cp "app:/app/target/javascript/." frontend/public/wasm/
 
 deploy:
 	./deploy.sh

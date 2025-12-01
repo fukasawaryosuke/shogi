@@ -7,7 +7,7 @@ import { StandSchema } from "../types/schemas/stand.zod";
 import { PlayerSchema } from "../types/schemas/player.zod";
 
 export class Wasm {
-  private static readonly WASM_PATH = "/classes.wasm";
+  private static readonly WASM_PATH = "/wasm/classes.wasm";
   private static readonly IMPORTS: WebAssembly.Imports = {
     teavm: {
       logString: (str: string) => {
