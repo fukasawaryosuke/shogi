@@ -316,24 +316,30 @@ export default function P2PGame() {
   if (error) return <div>Error: {error}</div>;
   if (!wasm) return <div>No data</div>;
 
+  // 対戦相手が接続されていない場合は接続UIのみ表示
+  if (!opponentConnected) {
+    return (
+      <div className="game-container">
+        <h1>P2P対戦</h1>
+        <Peer
+          isConnected={isConnected}
+          peerId={peerId}
+          connectToPeer={handleConnectToPeer}
+        />
+        <div className="waiting-message">対戦相手の接続を待っています...</div>
+      </div>
+    );
+  }
+
+  // 対戦相手が接続されたらゲーム画面を表示
   return (
     <div className="game-container">
       <h1>P2P対戦</h1>
-      <Peer
-        isConnected={isConnected}
-        peerId={peerId}
-        connectToPeer={handleConnectToPeer}
-      />
 
       {myPlayer && (
         <div className="player-info">
           <p>あなた: {myPlayer}</p>
-          <p>接続状態: {opponentConnected ? "接続中" : "未接続"}</p>
         </div>
-      )}
-
-      {!opponentConnected && (
-        <div className="waiting-message">対戦相手の接続を待っています...</div>
       )}
 
       <Turn turn={turn} />
