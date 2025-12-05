@@ -15,16 +15,21 @@ export default function Input({
   };
 
   return (
-    <>
+    <div className="peer-input">
       <input
+        className="peer-input-field"
         type="text"
         value={opponentId}
         onChange={(e) => setOpponentId(e.target.value)}
         placeholder="opponent ID"
       />
-      <button onClick={handleConnect} disabled={!opponentId.trim()}>
+      <button
+        className="peer-button"
+        onClick={handleConnect}
+        disabled={!opponentId.trim()}
+      >
         Connect
       </button>
-    </>
+    </div>
   );
 }

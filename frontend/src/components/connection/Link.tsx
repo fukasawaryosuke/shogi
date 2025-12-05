@@ -10,11 +10,11 @@ export default function Link({ peerId }: { peerId: string }) {
   };
 
   return (
-    <>
-      <p>Your ID: {peerId}</p>
-      <button onClick={handleCopyPeerId}>
+    <div className="peer-link">
+      <p className="peer-id-text">Your ID: {peerId}</p>
+      <button className="peer-button" onClick={handleCopyPeerId}>
         {isCopied ? "Copied!" : "Copy ID"}
       </button>
-    </>
+    </div>
   );
 }

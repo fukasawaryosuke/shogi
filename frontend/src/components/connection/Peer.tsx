@@ -13,9 +13,9 @@ export default function Peer({
   if (!isConnected) return <p>Connecting...</p>;
 
   return (
-    <>
+    <div className="peer-connection">
       <Link peerId={peerId} />
       <Input connectToPeer={connectToPeer} />
-    </>
+    </div>
   );
 }
