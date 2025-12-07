@@ -207,27 +207,29 @@ export default function LocalGame() {
           </div>
         </div>
       )}
-      <Stand
-        player="後手"
-        pieces={stand?.["後手"] || []}
-        onPieceClick={
-          !gameOver && turn === "後手" ? handlePieceClick : undefined
-        }
-        selectedPiece={selectedPiece}
-      />
-      <Board
-        board={board}
-        selectedPosition={selectedPosition}
-        onCellClick={!gameOver ? handleCellClick : undefined}
-      />
-      <Stand
-        player="先手"
-        pieces={stand?.["先手"] || []}
-        onPieceClick={
-          !gameOver && turn === "先手" ? handlePieceClick : undefined
-        }
-        selectedPiece={selectedPiece}
-      />
+      <div className="game-layout">
+        <Stand
+          player="後手"
+          pieces={stand?.["後手"] || []}
+          onPieceClick={
+            !gameOver && turn === "後手" ? handlePieceClick : undefined
+          }
+          selectedPiece={selectedPiece}
+        />
+        <Board
+          board={board}
+          selectedPosition={selectedPosition}
+          onCellClick={!gameOver ? handleCellClick : undefined}
+        />
+        <Stand
+          player="先手"
+          pieces={stand?.["先手"] || []}
+          onPieceClick={
+            !gameOver && turn === "先手" ? handlePieceClick : undefined
+          }
+          selectedPiece={selectedPiece}
+        />
+      </div>
     </div>
   );
 }

@@ -23,7 +23,11 @@ export default function Stand({
   };
 
   return (
-    <section className="centered-section stand-section">
+    <section
+      className={`centered-section stand-section ${
+        player === "後手" ? "stand-top" : "stand-bottom"
+      }`}
+    >
       <ul className="stand-pieces-list">
         {pieces &&
           pieces.length > 0 &&

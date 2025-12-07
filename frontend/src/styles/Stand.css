@@ -1,8 +1,22 @@
 .stand-section {
-  min-height: 80px;
+  width: 120px;
+  height: calc(var(--cell-size, 48px) * 9 + 32px);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.stand-section.stand-top {
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+.stand-section.stand-bottom {
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-top: 8px;
 }
 
 .stand-pieces-list {
@@ -12,8 +26,14 @@
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
-  min-height: 60px;
-  align-items: center;
+}
+
+.stand-top .stand-pieces-list {
+  align-content: flex-start;
+}
+
+.stand-bottom .stand-pieces-list {
+  align-content: flex-end;
 }
 
 .stand-piece-item {
@@ -24,10 +44,11 @@
 }
 
 .stand-piece-image {
-  width: 40px;
-  height: 40px;
+  width: calc(var(--cell-size, 48px) * 0.9);
+  height: calc(var(--cell-size, 48px) * 0.9);
   object-fit: contain;
   display: block;
+  transform: scaleX(1.12);
 }
 
 .stand-piece-count {

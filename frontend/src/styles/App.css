@@ -9,6 +9,14 @@
   position: relative;
 }
 
+.game-layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0px;
+  margin: 20px auto;
+}
+
 .error-message {
   position: fixed;
   top: 20px;
