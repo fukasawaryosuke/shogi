@@ -36,6 +36,7 @@ export default function P2PGame() {
   const [winner, setWinner] = useState<string | null>(null);
   const [myPlayer, setMyPlayer] = useState<"先手" | "後手" | null>(null);
   const [opponentConnected, setOpponentConnected] = useState(false);
+  const [showPlayerInfo, setShowPlayerInfo] = useState(false);
 
   const { peer, peerId, isConnected, connectToPeer } = usePeer();
   const connectionRef = useRef<DataConnection | null>(null);
@@ -67,6 +68,8 @@ export default function P2PGame() {
       connectionRef.current = conn;
       setOpponentConnected(true);
       setMyPlayer("後手");
+      setShowPlayerInfo(true);
+      setTimeout(() => setShowPlayerInfo(false), 3000);
 
       conn.on("data", (data: GameAction) => {
         handleReceivedAction(data);
@@ -100,6 +103,8 @@ export default function P2PGame() {
       connectionRef.current = conn;
       setOpponentConnected(true);
       setMyPlayer("先手");
+      setShowPlayerInfo(true);
+      setTimeout(() => setShowPlayerInfo(false), 3000);
     });
 
     conn.on("data", (data: GameAction) => {
@@ -338,10 +343,8 @@ export default function P2PGame() {
     <div className="game-container">
       <h1>P2P対戦</h1>
 
-      {myPlayer && (
-        <div className="player-info">
-          <p>あなた: {myPlayer}</p>
-        </div>
+      {showPlayerInfo && myPlayer && (
+        <div className="player-info-toast">あなたは{myPlayer}です</div>
       )}
 
       <Turn turn={turn} />
