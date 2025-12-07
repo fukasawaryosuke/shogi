@@ -346,11 +346,6 @@ export default function P2PGame() {
 
       <Turn turn={turn} />
       {moveError && <div className="error-message">{moveError}</div>}
-      {selectedPiece && (
-        <div className="selected-piece-message">
-          選択中の持ち駒: {selectedPiece}
-        </div>
-      )}
       {promoteDialog && (
         <div className="promote-dialog-overlay">
           <div className="promote-dialog-content">

@@ -167,11 +167,6 @@ export default function LocalGame() {
       <h1>ローカル対戦</h1>
       <Turn turn={turn} />
       {moveError && <div className="error-message">{moveError}</div>}
-      {selectedPiece && (
-        <div className="selected-piece-message">
-          選択中の持ち駒: {selectedPiece}
-        </div>
-      )}
       {promoteDialog && (
         <div className="promote-dialog-overlay">
           <div className="promote-dialog-content">
