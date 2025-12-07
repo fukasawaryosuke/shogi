@@ -22,27 +22,25 @@ export default function Stand({
     return <img src={src} alt={name} className="stand-piece-image" />;
   };
 
-  if (!pieces || pieces.length === 0) {
-    return <section className="centered-section"></section>;
-  }
-
   return (
-    <section className="centered-section">
+    <section className="centered-section stand-section">
       <ul className="stand-pieces-list">
-        {pieces.map((piece) => (
-          <li
-            key={piece.type}
-            onClick={() => onPieceClick?.(piece.type)}
-            className={`stand-piece-item ${
-              selectedPiece === piece.type ? "selected" : ""
-            } ${!onPieceClick ? "disabled" : ""} ${
-              player === "後手" ? "top-player" : ""
-            }`}
-          >
-            {renderPiece(piece.name)}
-            <span className="stand-piece-count">×{piece.count}</span>
-          </li>
-        ))}
+        {pieces &&
+          pieces.length > 0 &&
+          pieces.map((piece) => (
+            <li
+              key={piece.type}
+              onClick={() => onPieceClick?.(piece.type)}
+              className={`stand-piece-item ${
+                selectedPiece === piece.type ? "selected" : ""
+              } ${!onPieceClick ? "disabled" : ""} ${
+                player === "後手" ? "top-player" : ""
+              }`}
+            >
+              {renderPiece(piece.name)}
+              <span className="stand-piece-count">×{piece.count}</span>
+            </li>
+          ))}
       </ul>
     </section>
   );
