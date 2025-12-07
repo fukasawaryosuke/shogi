@@ -8,48 +8,61 @@
 }
 
 .stand-piece-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 8px;
-  background-color: #fff;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  position: relative;
+  display: inline-block;
   cursor: pointer;
   transition: all 0.2s;
-  min-width: 60px;
 }
 
 .stand-piece-image {
   width: 40px;
   height: 40px;
   object-fit: contain;
+  display: block;
 }
 
 .stand-piece-count {
-  margin-top: 4px;
-  font-size: 14px;
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  font-size: 10px;
   font-weight: bold;
   color: #333;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  min-width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.stand-piece-item.selected {
-  background-color: #4ade80;
-  border: 2px solid #22c55e;
+.stand-piece-item.top-player .stand-piece-count {
+  top: -2px;
+  left: -2px;
+  bottom: auto;
+  right: auto;
 }
 
-.stand-piece-item:hover {
-  background-color: #e8f4fd;
+.stand-piece-item.selected .stand-piece-image {
+  filter: drop-shadow(0 0 4px #22c55e);
 }
 
-.stand-piece-item.selected:hover {
-  background-color: #4ade80;
+.stand-piece-item:hover .stand-piece-image {
+  transform: scale(1.1);
+}
+
+.stand-piece-item.selected:hover .stand-piece-image {
+  transform: scale(1.1);
 }
 
 .stand-piece-item.disabled {
   cursor: default;
+  opacity: 0.5;
 }
 
-.stand-piece-item.disabled:hover {
-  background-color: #fff;
+.stand-piece-item.disabled:hover .stand-piece-image {
+  transform: none;
 }

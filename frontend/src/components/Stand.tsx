@@ -23,17 +23,11 @@ export default function Stand({
   };
 
   if (!pieces || pieces.length === 0) {
-    return (
-      <section className="centered-section">
-        <h2>持ち駒</h2>
-        <p>なし</p>
-      </section>
-    );
+    return <section className="centered-section"></section>;
   }
 
   return (
     <section className="centered-section">
-      <h2>持ち駒</h2>
       <ul className="stand-pieces-list">
         {pieces.map((piece) => (
           <li
@@ -41,7 +35,9 @@ export default function Stand({
             onClick={() => onPieceClick?.(piece.type)}
             className={`stand-piece-item ${
               selectedPiece === piece.type ? "selected" : ""
-            } ${!onPieceClick ? "disabled" : ""}`}
+            } ${!onPieceClick ? "disabled" : ""} ${
+              player === "後手" ? "top-player" : ""
+            }`}
           >
             {renderPiece(piece.name)}
             <span className="stand-piece-count">×{piece.count}</span>
