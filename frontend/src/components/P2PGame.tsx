@@ -326,7 +326,9 @@ export default function P2PGame() {
           peerId={peerId}
           connectToPeer={handleConnectToPeer}
         />
-        <div className="waiting-message">対戦相手の接続を待っています...</div>
+        {isConnected && (
+          <div className="waiting-message">対戦相手の接続を待っています...</div>
+        )}
       </div>
     );
   }
