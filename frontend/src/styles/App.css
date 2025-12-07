@@ -10,14 +10,30 @@
 }
 
 .error-message {
-  color: #d32f2f;
-  background-color: #fff;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  background-color: #d32f2f;
   text-align: center;
-  padding: 12px 20px;
-  border: 1px solid #d32f2f;
-  border-radius: 4px;
-  margin: 16px auto;
+  padding: 12px 24px;
+  border-radius: 8px;
   max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 .selected-piece-message {
