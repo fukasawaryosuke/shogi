@@ -81,11 +81,11 @@
 }
 
 .stand-piece-item:hover .stand-piece-image {
-  transform: scale(1.1);
+  /* No transform on hover */
 }
 
 .stand-piece-item.selected:hover .stand-piece-image {
-  transform: scale(1.1);
+  /* No transform on hover */
 }
 
 .stand-piece-item.disabled {
@@ -94,5 +94,5 @@
 }
 
 .stand-piece-item.disabled:hover .stand-piece-image {
-  transform: none;
+  /* Keep original transform */
 }

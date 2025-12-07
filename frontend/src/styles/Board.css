@@ -58,7 +58,7 @@
 }
 
 .shogi-board td.cell:hover {
-  background-color: rgba(100, 150, 255, 0.15);
+  /* No hover effect */
 }
 
 .shogi-board td.cell.selected {
