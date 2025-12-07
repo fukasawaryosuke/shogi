@@ -5,7 +5,7 @@ export default function ModeSelector({
 }) {
   return (
     <div className="mode-selector">
-      <h1>Shogi</h1>
+      <h1>将棋</h1>
       <div className="mode-buttons">
         <button className="mode-button" onClick={() => onSelectMode("local")}>
           <p>ローカル対戦</p>
