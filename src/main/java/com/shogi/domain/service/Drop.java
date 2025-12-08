@@ -28,7 +28,17 @@ public class Drop {
     Piece dropPiece = PieceFactory.createPiece(pieceType, player);
 
     this.validateDrop(dropPiece, position, player);
+
+    // 一時的に駒を配置
     this.board.putPiece(position, dropPiece);
+
+    // この手を指した後も王手されているかチェック
+    if (checkMateService.isInCheck(player)) {
+      // 元に戻す
+      this.board.removePiece(position);
+      throw new IllegalArgumentException("王手を回避してください");
+    }
+
     stand.removePiece(player, dropPiece);
 
     return true;
