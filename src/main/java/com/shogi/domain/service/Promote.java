@@ -6,6 +6,9 @@ import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.entity.Board;
 import com.shogi.domain.valueobject.piece.promoted.Promotable;
 import com.shogi.domain.valueobject.piece.Piece;
+import com.shogi.domain.valueobject.piece.KeiMa;
+import com.shogi.domain.valueobject.piece.KyoSha;
+import com.shogi.domain.valueobject.piece.FuHyo;
 
 public class Promote {
   private final Board board;
@@ -49,10 +52,48 @@ public class Promote {
     if (!isPromotable(piece))
       return false;
 
-    if (!board.isEnemyZoneEdge(to, currentPlayer))
-      return false;
+    int y = to.getY();
 
-    return true;
+    // 先手の場合
+    if (currentPlayer == Player.SENTE) {
+      // 桂馬: 1段目は必ず成る
+      if (piece instanceof KeiMa && y == 1) {
+        return true;
+      }
+      // 香車: 1段目は必ず成る
+      if (piece instanceof KyoSha && y == 1) {
+        return true;
+      }
+      // 歩: 1段目は必ず成る
+      if (piece instanceof FuHyo && y == 1) {
+        return true;
+      }
+      // 桂馬: 2段目は必ず成る
+      if (piece instanceof KeiMa && y == 2) {
+        return true;
+      }
+    }
+    // 後手の場合
+    else if (currentPlayer == Player.GOTE) {
+      // 桂馬: 9段目は必ず成る
+      if (piece instanceof KeiMa && y == 9) {
+        return true;
+      }
+      // 香車: 9段目は必ず成る
+      if (piece instanceof KyoSha && y == 9) {
+        return true;
+      }
+      // 歩: 9段目は必ず成る
+      if (piece instanceof FuHyo && y == 9) {
+        return true;
+      }
+      // 桂馬: 8段目は必ず成る
+      if (piece instanceof KeiMa && y == 8) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private boolean isPromotable(Piece piece) {

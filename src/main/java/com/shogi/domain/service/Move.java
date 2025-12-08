@@ -7,6 +7,7 @@ import com.shogi.domain.valueobject.piece.KeiMa;
 import com.shogi.domain.valueobject.piece.KyoSha;
 import com.shogi.domain.valueobject.piece.FuHyo;
 import com.shogi.domain.valueobject.piece.Piece;
+import com.shogi.domain.valueobject.piece.promoted.Promotable;
 import com.shogi.domain.entity.Board;
 
 public class Move {
@@ -70,6 +71,11 @@ public class Move {
      * 駒が動けなくなる位置かどうかをチェック
      */
     private boolean isDeadPosition(Piece piece, Position to, Player player) {
+        // 成れる駒の場合は、成れば動けるので禁止しない
+        if (piece instanceof Promotable) {
+            return false;
+        }
+
         int y = to.getY();
 
         // 先手の場合
