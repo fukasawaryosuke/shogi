@@ -3,6 +3,7 @@ package com.shogi.domain.service;
 import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Turn;
+import com.shogi.domain.valueobject.piece.FuHyo;
 import com.shogi.domain.valueobject.piece.Piece;
 import com.shogi.domain.valueobject.piece.PieceType;
 import com.shogi.domain.entity.Board;
@@ -37,5 +38,25 @@ public class Drop {
 
     if (board.hasPiece(position))
       throw new IllegalArgumentException(position + "には既に駒が存在します");
+
+    // 二歩のチェック（歩のみ、と金は除外）
+    if (piece instanceof FuHyo) {
+      if (hasDoubleHyo(position.getX(), player)) {
+        throw new IllegalArgumentException("二歩は禁止されています");
+      }
+    }
+  }
+
+  private boolean hasDoubleHyo(int x, Player player) {
+    for (int y = 1; y <= 9; y++) {
+      Position pos = new Position(x, y);
+      if (board.hasPiece(pos)) {
+        Piece piece = board.getPiece(pos);
+        if (piece instanceof FuHyo && piece.isOwner(player)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }
