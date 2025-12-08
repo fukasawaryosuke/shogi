@@ -179,6 +179,34 @@ public class ShogiWasm {
   }
 
   /**
+   * 現在のプレイヤーが王手されているかチェックする
+   *
+   * @return 王手されている場合true
+   */
+  @Export(name = "isInCheck")
+  public static boolean isInCheck() {
+    try {
+      return game.isInCheck();
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  /**
+   * 現在のプレイヤーが詰んでいるかチェックする
+   *
+   * @return 詰んでいる場合true
+   */
+  @Export(name = "isCheckmate")
+  public static boolean isCheckmate() {
+    try {
+      return game.isCheckmate();
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  /**
    * 次のターンに進む
    */
   @Export(name = "nextTurn")

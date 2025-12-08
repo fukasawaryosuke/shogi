@@ -6,12 +6,16 @@ type BoardProps = {
   board: Board;
   selectedPosition: { x: number; y: number } | null;
   onCellClick: (x: number, y: number) => void;
+  isInCheck?: boolean;
+  currentPlayer?: string;
 };
 
 export default function Board({
   board,
   selectedPosition,
   onCellClick,
+  isInCheck = false,
+  currentPlayer = "",
 }: BoardProps) {
   // 駒の初期配置
   // ・ 1 2 3 4 5 6 7 8 9
@@ -45,10 +49,20 @@ export default function Board({
                       selectedPosition.x === xIdx + 1 &&
                       selectedPosition.y === yIdx + 1;
 
+                    // 王手されている王かチェック
+                    const isKingInCheck =
+                      isInCheck &&
+                      cell &&
+                      cell.piece &&
+                      (cell.piece.name === "王" || cell.piece.name === "玉") &&
+                      cell.piece.owner === currentPlayer;
+
                     return (
                       <td
                         key={xIdx}
-                        className={`cell ${isSelected ? "selected" : ""}`}
+                        className={`cell ${isSelected ? "selected" : ""} ${
+                          isKingInCheck ? "in-check" : ""
+                        }`}
                         onClick={() => onCellClick(xIdx + 1, yIdx + 1)}
                       >
                         {cell && cell.piece

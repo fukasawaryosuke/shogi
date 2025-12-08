@@ -11,6 +11,7 @@ import com.shogi.domain.service.Capture;
 import com.shogi.domain.service.Move;
 import com.shogi.domain.service.Drop;
 import com.shogi.domain.service.Promote;
+import com.shogi.domain.service.CheckMate;
 
 public class Game {
   private final Board board;
@@ -21,6 +22,7 @@ public class Game {
   private final Capture captureService;
   private final Drop dropService;
   private final Promote promoteService;
+  private final CheckMate checkMateService;
 
   public Game() {
     this.board = new Board();
@@ -31,6 +33,7 @@ public class Game {
     this.captureService = new Capture(this.stand, this.turn);
     this.dropService = new Drop(this.board, this.stand, this.turn);
     this.promoteService = new Promote(this.board, this.turn);
+    this.checkMateService = new CheckMate(this.board);
   }
 
   public Turn getTurn() {
@@ -91,5 +94,33 @@ public class Game {
 
   public boolean isGameOver() {
     return !board.hasOusho(this.turn.getCurrentPlayer());
+  }
+
+  /**
+   * 指定されたプレイヤーが王手されているかチェック
+   */
+  public boolean isInCheck(Player player) {
+    return checkMateService.isInCheck(player);
+  }
+
+  /**
+   * 現在のプレイヤーが王手されているかチェック
+   */
+  public boolean isInCheck() {
+    return checkMateService.isInCheck(this.turn.getCurrentPlayer());
+  }
+
+  /**
+   * 指定されたプレイヤーが詰んでいるかチェック
+   */
+  public boolean isCheckmate(Player player) {
+    return checkMateService.isCheckmate(player);
+  }
+
+  /**
+   * 現在のプレイヤーが詰んでいるかチェック
+   */
+  public boolean isCheckmate() {
+    return checkMateService.isCheckmate(this.turn.getCurrentPlayer());
   }
 }

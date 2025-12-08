@@ -14,11 +14,13 @@ public class Drop {
   private final Board board;
   private final Stand stand;
   private final Turn turn;
+  private final CheckMate checkMateService;
 
   public Drop(Board board, Stand stand, Turn turn) {
     this.board = board;
     this.stand = stand;
     this.turn = turn;
+    this.checkMateService = new CheckMate(board);
   }
 
   public boolean dropPiece(PieceType pieceType, Position position) {
@@ -44,6 +46,11 @@ public class Drop {
       if (hasDoubleHyo(position.getX(), player)) {
         throw new IllegalArgumentException("二歩は禁止されています");
       }
+
+      // 打ち歩詰めのチェック
+      if (isUchifuZume(piece, position, player)) {
+        throw new IllegalArgumentException("打ち歩詰めは禁止されています");
+      }
     }
   }
 
@@ -58,5 +65,37 @@ public class Drop {
       }
     }
     return false;
+  }
+
+  /**
+   * 打ち歩詰めかどうかをチェック
+   * 歩を打った位置が相手の王に王手をかけ、かつ相手が詰んでいる場合は打ち歩詰め
+   */
+  private boolean isUchifuZume(Piece fu, Position fuPosition, Player player) {
+    // 一時的に歩を配置
+    board.putPiece(fuPosition, fu);
+
+    try {
+      Player opponent = player.reverse();
+
+      // 相手の王の位置を探す
+      Position ouPosition = checkMateService.findOuSho(opponent);
+      if (ouPosition == null) {
+        return false;
+      }
+
+      // この歩が王手をかけているかチェック
+      if (!fu.canMove(fuPosition, ouPosition)) {
+        return false;
+      }
+
+      // 王手をかけている場合、相手が詰んでいるかチェック
+      boolean isMate = checkMateService.isCheckmate(opponent);
+
+      return isMate;
+    } finally {
+      // 一時的に配置した歩を削除
+      board.removePiece(fuPosition);
+    }
   }
 }

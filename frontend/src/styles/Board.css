@@ -66,6 +66,21 @@
   border: 2px solid #4ade80;
 }
 
+.shogi-board td.cell.in-check {
+  background-color: rgba(239, 68, 68, 0.3);
+  border: 2px solid #ef4444;
+  animation: checkPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes checkPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+  }
+}
+
 /* make piece images square and fit inside the cell */
 .shogi-piece {
   width: calc(var(--cell-size) * 0.9);

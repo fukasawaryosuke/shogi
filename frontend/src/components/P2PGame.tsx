@@ -37,6 +37,8 @@ export default function P2PGame() {
   const [myPlayer, setMyPlayer] = useState<"先手" | "後手" | null>(null);
   const [opponentConnected, setOpponentConnected] = useState(false);
   const [showPlayerInfo, setShowPlayerInfo] = useState(false);
+  const [isInCheck, setIsInCheck] = useState(false);
+  const [checkMessage, setCheckMessage] = useState<string | null>(null);
 
   const { peer, peerId, isConnected, connectToPeer } = usePeer();
   const connectionRef = useRef<DataConnection | null>(null);
@@ -262,6 +264,28 @@ export default function P2PGame() {
   };
 
   const checkGameOver = () => {
+    // 詰みチェック
+    if (wasm.isCheckmate()) {
+      const currentPlayer = wasm.getTurn();
+      const winner = currentPlayer === "先手" ? "後手" : "先手";
+      setGameOver(true);
+      setWinner(winner);
+      setIsInCheck(false);
+      setCheckMessage(null);
+      return true;
+    }
+
+    // 王手チェック
+    if (wasm.isInCheck()) {
+      setIsInCheck(true);
+      setCheckMessage("王手");
+      setTimeout(() => setCheckMessage(null), 3000);
+    } else {
+      setIsInCheck(false);
+      setCheckMessage(null);
+    }
+
+    // 王将が取られたかチェック（念のため）
     if (wasm.isGameOver()) {
       const currentPlayer = wasm.getTurn();
       const winner = currentPlayer === "先手" ? "後手" : "先手";
@@ -311,6 +335,8 @@ export default function P2PGame() {
     setSelectedPiece(null);
     setMoveError(null);
     setPromoteDialog(null);
+    setIsInCheck(false);
+    setCheckMessage(null);
 
     if (connectionRef.current && connectionRef.current.open) {
       sendAction({ type: "restart" });
@@ -348,6 +374,7 @@ export default function P2PGame() {
       )}
 
       <Turn turn={turn} />
+      {checkMessage && <div className="check-message">{checkMessage}</div>}
       {moveError && <div className="error-message">{moveError}</div>}
       {promoteDialog && (
         <div className="promote-dialog-overlay">
@@ -404,6 +431,8 @@ export default function P2PGame() {
           onCellClick={
             !gameOver && opponentConnected ? handleCellClick : undefined
           }
+          isInCheck={isInCheck}
+          currentPlayer={turn}
         />
         <Stand
           player="先手"

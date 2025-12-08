@@ -283,6 +283,24 @@ export class Wasm {
   }
 
   /**
+   * 現在のプレイヤーが王手されているかチェックする
+   *
+   * @returns 王手されている場合true
+   */
+  isInCheck(): boolean {
+    return this.wasm.isInCheck();
+  }
+
+  /**
+   * 現在のプレイヤーが詰んでいるかチェックする
+   *
+   * @returns 詰んでいる場合true
+   */
+  isCheckmate(): boolean {
+    return this.wasm.isCheckmate();
+  }
+
+  /**
    * 次のターンに進む
    */
   nextTurn(): void {

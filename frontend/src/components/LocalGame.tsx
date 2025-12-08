@@ -23,6 +23,8 @@ export default function LocalGame() {
   } | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState<string | null>(null);
+  const [isInCheck, setIsInCheck] = useState(false);
+  const [checkMessage, setCheckMessage] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -106,8 +108,29 @@ export default function LocalGame() {
   };
 
   const checkGameOver = () => {
+    // 詰みチェック
+    if (wasm.isCheckmate()) {
+      const currentPlayer = wasm.getTurn();
+      const winner = currentPlayer === "先手" ? "後手" : "先手";
+      setGameOver(true);
+      setWinner(winner);
+      setIsInCheck(false);
+      setCheckMessage(null);
+      return true;
+    }
+
+    // 王手チェック
+    if (wasm.isInCheck()) {
+      setIsInCheck(true);
+      setCheckMessage("王手");
+      setTimeout(() => setCheckMessage(null), 3000);
+    } else {
+      setIsInCheck(false);
+      setCheckMessage(null);
+    }
+
+    // 王将が取られたかチェック（念のため）
     if (wasm.isGameOver()) {
-      // 現在のターンのプレイヤーが負け(王将を取られた)
       const currentPlayer = wasm.getTurn();
       const winner = currentPlayer === "先手" ? "後手" : "先手";
       setGameOver(true);
@@ -156,6 +179,8 @@ export default function LocalGame() {
     setSelectedPiece(null);
     setMoveError(null);
     setPromoteDialog(null);
+    setIsInCheck(false);
+    setCheckMessage(null);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -166,6 +191,7 @@ export default function LocalGame() {
     <div className="game-container">
       <h1>ローカル対戦</h1>
       <Turn turn={turn} />
+      {checkMessage && <div className="check-message">{checkMessage}</div>}
       {moveError && <div className="error-message">{moveError}</div>}
       {promoteDialog && (
         <div className="promote-dialog-overlay">
@@ -215,6 +241,8 @@ export default function LocalGame() {
           board={board}
           selectedPosition={selectedPosition}
           onCellClick={!gameOver ? handleCellClick : undefined}
+          isInCheck={isInCheck}
+          currentPlayer={turn}
         />
         <Stand
           player="先手"
