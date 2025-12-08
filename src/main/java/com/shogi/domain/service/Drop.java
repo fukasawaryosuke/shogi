@@ -4,6 +4,8 @@ import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.valueobject.piece.FuHyo;
+import com.shogi.domain.valueobject.piece.KyoSha;
+import com.shogi.domain.valueobject.piece.KeiMa;
 import com.shogi.domain.valueobject.piece.Piece;
 import com.shogi.domain.valueobject.piece.PieceType;
 import com.shogi.domain.entity.Board;
@@ -62,6 +64,11 @@ public class Drop {
         throw new IllegalArgumentException("打ち歩詰めは禁止されています");
       }
     }
+
+    // 行き所のない駒の禁止
+    if (isDeadPosition(piece, position, player)) {
+      throw new IllegalArgumentException("その位置に駒を打つと動けなくなります");
+    }
   }
 
   private boolean hasDoubleHyo(int x, Player player) {
@@ -107,5 +114,45 @@ public class Drop {
       // 一時的に配置した歩を削除
       board.removePiece(fuPosition);
     }
+  }
+
+  /**
+   * 駒が動けなくなる位置かどうかをチェック
+   */
+  private boolean isDeadPosition(Piece piece, Position position, Player player) {
+    int y = position.getY();
+
+    // 先手の場合
+    if (player == Player.SENTE) {
+      // 歩: 1段目に置けない
+      if (piece instanceof FuHyo && y == 1) {
+        return true;
+      }
+      // 香車: 1段目に置けない
+      if (piece instanceof KyoSha && y == 1) {
+        return true;
+      }
+      // 桂馬: 1-2段目に置けない
+      if (piece instanceof KeiMa && (y == 1 || y == 2)) {
+        return true;
+      }
+    }
+    // 後手の場合
+    else if (player == Player.GOTE) {
+      // 歩: 9段目に置けない
+      if (piece instanceof FuHyo && y == 9) {
+        return true;
+      }
+      // 香車: 9段目に置けない
+      if (piece instanceof KyoSha && y == 9) {
+        return true;
+      }
+      // 桂馬: 8-9段目に置けない
+      if (piece instanceof KeiMa && (y == 8 || y == 9)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

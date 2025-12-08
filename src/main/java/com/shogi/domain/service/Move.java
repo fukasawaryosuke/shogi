@@ -4,6 +4,8 @@ import com.shogi.domain.valueobject.Player;
 import com.shogi.domain.valueobject.Position;
 import com.shogi.domain.valueobject.Turn;
 import com.shogi.domain.valueobject.piece.KeiMa;
+import com.shogi.domain.valueobject.piece.KyoSha;
+import com.shogi.domain.valueobject.piece.FuHyo;
 import com.shogi.domain.valueobject.piece.Piece;
 import com.shogi.domain.entity.Board;
 
@@ -57,5 +59,50 @@ public class Move {
 
         if (board.hasPiece(to) && targetPiece.isOwner(currentPlayer))
             throw new IllegalArgumentException(to.toString() + "に自分の駒が存在します");
+
+        // 行き所のない駒の禁止
+        if (isDeadPosition(originPiece, to, currentPlayer)) {
+            throw new IllegalArgumentException("その位置に駒を動かすと動けなくなります");
+        }
+    }
+
+    /**
+     * 駒が動けなくなる位置かどうかをチェック
+     */
+    private boolean isDeadPosition(Piece piece, Position to, Player player) {
+        int y = to.getY();
+
+        // 先手の場合
+        if (player == Player.SENTE) {
+            // 歩: 1段目に置けない
+            if (piece instanceof FuHyo && y == 1) {
+                return true;
+            }
+            // 香車: 1段目に置けない
+            if (piece instanceof KyoSha && y == 1) {
+                return true;
+            }
+            // 桂馬: 1-2段目に置けない
+            if (piece instanceof KeiMa && (y == 1 || y == 2)) {
+                return true;
+            }
+        }
+        // 後手の場合
+        else if (player == Player.GOTE) {
+            // 歩: 9段目に置けない
+            if (piece instanceof FuHyo && y == 9) {
+                return true;
+            }
+            // 香車: 9段目に置けない
+            if (piece instanceof KyoSha && y == 9) {
+                return true;
+            }
+            // 桂馬: 8-9段目に置けない
+            if (piece instanceof KeiMa && (y == 8 || y == 9)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
