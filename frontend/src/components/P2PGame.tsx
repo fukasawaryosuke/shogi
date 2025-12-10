@@ -66,7 +66,6 @@ export default function P2PGame() {
 
     // 接続を受け入れる側(後手)
     peer.on("connection", (conn) => {
-      console.log("Connection received from:", conn.peer);
       connectionRef.current = conn;
       setOpponentConnected(true);
       setMyPlayer("後手");
@@ -101,7 +100,6 @@ export default function P2PGame() {
     const conn = peer.connect(opponentId);
 
     conn.on("open", () => {
-      console.log("Connected to opponent:", opponentId);
       connectionRef.current = conn;
       setOpponentConnected(true);
       setMyPlayer("先手");
@@ -191,9 +189,6 @@ export default function P2PGame() {
   };
 
   const handleCellClick = (x: number, y: number) => {
-    console.log(
-      `handleCellClick: ゲーム座標(${x}, ${y}), turn=${turn}, myPlayer=${myPlayer}`
-    );
     if (gameOver || !myPlayer || turn !== myPlayer || !opponentConnected)
       return;
 
@@ -220,25 +215,9 @@ export default function P2PGame() {
       // 最初のクリック: 駒を選択
       // その位置に自分の駒が存在するかチェック
       const cell = board?.[y - 1]?.[x - 1];
-      console.log(
-        `セル確認: ゲーム座標(${x}, ${y}), 配列index[${y - 1}][${x - 1}]`
-      );
-      console.log(`cell=`, cell);
-      console.log(`myPlayer=${myPlayer}, turn=${turn}`);
-      if (cell && cell.piece) {
-        console.log(`駒の情報: ${cell.piece.name}, owner=${cell.piece.owner}`);
-        console.log(
-          `一致チェック: cell.piece.owner(${
-            cell.piece.owner
-          }) === myPlayer(${myPlayer})? ${cell.piece.owner === myPlayer}`
-        );
-      }
       if (cell && cell.piece && cell.piece.owner === myPlayer) {
-        console.log(`✓ 駒を選択: ${cell.piece.name} at (${x}, ${y})`);
         setSelectedPosition({ x, y });
         setMoveError(null);
-      } else {
-        console.log(`✗ 選択できません`);
       }
     } else {
       // 2回目のクリック: 駒を移動

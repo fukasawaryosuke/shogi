@@ -47,11 +47,8 @@ export class Wasm {
         Wasm.IMPORTS
       );
 
-      console.log(instance.exports);
-
       return new Wasm(instance.exports as Exports);
     } catch (error) {
-      console.error("Failed to initialize WASM:", error);
       throw error;
     }
   }
@@ -123,10 +120,6 @@ export class Wasm {
       const board = BoardSchema.parse(parsed);
       return board;
     } catch (error) {
-      console.error("Board validation error:", error);
-      if (error instanceof Error && "errors" in error) {
-        console.error("Zod errors:", (error as any).errors);
-      }
       throw error;
     }
   }
@@ -156,10 +149,6 @@ export class Wasm {
       const stand = StandSchema.parse(parsed);
       return stand;
     } catch (error) {
-      console.error("Stand validation error:", error);
-      if (error instanceof Error && "errors" in error) {
-        console.error("Zod errors:", (error as any).errors);
-      }
       throw error;
     }
   }

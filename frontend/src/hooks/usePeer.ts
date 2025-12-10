@@ -36,28 +36,23 @@ export function usePeer(): UsePeer {
     peer.on("open", (id) => {
       setPeerId(id);
       setIsConnected(true);
-      console.log("PeerJS connected with ID:", id);
     });
 
     // 他のピアからの接続要求を受け入れるイベントリスナー
     peer.on("connection", (conn) => {
-      console.log("PeerJS connection established with:", conn.peer);
       conn.on("data", (data) => {
-        // テスト
-        console.log("Received:", data);
+        // 接続確認用
       });
     });
 
     // 接続失敗時のイベントリスナー
     peer.on("error", (err) => {
       resetState();
-      console.error("PeerJS error:", err);
     });
 
     // 接続切断時のイベントリスナー
     peer.on("disconnected", () => {
       resetState();
-      console.log("PeerJS disconnected");
     });
 
     return () => {
@@ -68,21 +63,17 @@ export function usePeer(): UsePeer {
 
   const connectToPeer = (opponentId: string) => {
     if (!peer) {
-      console.error("Peer is not initialized");
       return;
     }
 
     if (opponentId === peerId) {
-      console.error("Cannot connect to yourself");
       return;
     }
 
     const conn = peer.connect(opponentId);
 
     conn.on("open", () => {
-      console.log("Connected to opponent:", opponentId);
-      //テスト
-      conn.send({ type: "greeting", message: "Hello!" });
+      // 接続確立
     });
   };
 
