@@ -8,6 +8,7 @@ type StandProps = {
   pieces: StandPiece[];
   onPieceClick?: (pieceType: string) => void;
   selectedPiece?: string | null;
+  viewPlayer?: "先手" | "後手" | null;
 };
 
 export default function Stand({
@@ -15,12 +16,16 @@ export default function Stand({
   pieces,
   onPieceClick,
   selectedPiece,
+  viewPlayer = null,
 }: StandProps) {
   const renderPiece = (name: string) => {
     const src = PieceAssetResolver.getImageUrl(name);
     if (!src) return null;
-    const className =
-      player === "後手" ? "stand-piece-image piece-gote" : "stand-piece-image";
+    // 自分から見て相手の持ち駒を回転させる
+    const shouldRotate = viewPlayer ? player !== viewPlayer : player === "後手";
+    const className = shouldRotate
+      ? "stand-piece-image piece-rotated"
+      : "stand-piece-image";
     return <img src={src} alt={name} className={className} />;
   };
 

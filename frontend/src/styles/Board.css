@@ -97,8 +97,8 @@
   will-change: transform;
 }
 
-/* 後手の駒を180度回転 */
-.shogi-piece.piece-gote {
+/* 駒を180度回転 */
+.shogi-piece.piece-rotated {
   transform: rotate(180deg) scaleX(1.12);
 }
 

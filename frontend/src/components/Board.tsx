@@ -33,7 +33,7 @@ export default function Board({
     const src = PieceAssetResolver.getImageUrl(name);
     if (!src) return null;
     const className =
-      owner === "後手" ? "shogi-piece piece-gote" : "shogi-piece";
+      owner === "後手" ? "shogi-piece piece-rotated" : "shogi-piece";
     return <img src={src} alt={name} className={className} />;
   };
 

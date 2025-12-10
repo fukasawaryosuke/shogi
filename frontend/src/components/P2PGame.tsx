@@ -424,6 +424,7 @@ export default function P2PGame() {
               : undefined
           }
           selectedPiece={selectedPiece}
+          viewPlayer={myPlayer}
         />
         <Board
           board={board}
@@ -446,6 +447,7 @@ export default function P2PGame() {
               : undefined
           }
           selectedPiece={selectedPiece}
+          viewPlayer={myPlayer}
         />
       </div>
     </div>
