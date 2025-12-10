@@ -25,26 +25,16 @@ export class PieceAssetResolver {
   };
 
   /**
-   * プレイヤーとディレクトリ名のマッピング
-   */
-  private static readonly PLAYER_DIR_MAP: Record<string, string> = {
-    先手: "sente",
-    後手: "gote",
-  };
-
-  /**
-   * 駒の画像URLを取得
+   * 駒の画像URLを取得する
    *
    * @param pieceName 駒の名前（例: "歩", "金"）
-   * @param player プレイヤー（"先手" または "後手"）
    * @returns 画像のURL、存在しない場合はnull
    */
-  static getImageUrl(pieceName: string, player: string): string | null {
-    const dir = this.PLAYER_DIR_MAP[player];
+  static getImageUrl(pieceName: string): string | null {
     const file = this.PIECE_FILE_MAP[pieceName];
 
-    if (!dir || !file) return null;
+    if (!file) return null;
 
-    return new URL(`../assets/${dir}/${file}`, import.meta.url).href;
+    return new URL(`../assets/piece/${file}`, import.meta.url).href;
   }
 }

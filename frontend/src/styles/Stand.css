@@ -51,6 +51,11 @@
   transform: scaleX(1.12);
 }
 
+/* 後手の持ち駒を180度回転 */
+.stand-piece-image.piece-gote {
+  transform: rotate(180deg) scaleX(1.12);
+}
+
 .stand-piece-count {
   position: absolute;
   bottom: -2px;

@@ -30,9 +30,11 @@ export default function Board({
   // 9 香 桂 銀 金 王 金 銀 桂 香
 
   const renderPiece = (name: string, owner: string) => {
-    const src = PieceAssetResolver.getImageUrl(name, owner);
+    const src = PieceAssetResolver.getImageUrl(name);
     if (!src) return null;
-    return <img src={src} alt={name} className="shogi-piece" />;
+    const className =
+      owner === "後手" ? "shogi-piece piece-gote" : "shogi-piece";
+    return <img src={src} alt={name} className={className} />;
   };
 
   return (

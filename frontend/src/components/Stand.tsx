@@ -17,9 +17,11 @@ export default function Stand({
   selectedPiece,
 }: StandProps) {
   const renderPiece = (name: string) => {
-    const src = PieceAssetResolver.getImageUrl(name, player);
+    const src = PieceAssetResolver.getImageUrl(name);
     if (!src) return null;
-    return <img src={src} alt={name} className="stand-piece-image" />;
+    const className =
+      player === "後手" ? "stand-piece-image piece-gote" : "stand-piece-image";
+    return <img src={src} alt={name} className={className} />;
   };
 
   return (
