@@ -102,6 +102,21 @@
   transform: rotate(180deg) scaleX(1.12);
 }
 
+/* 後手視点: 盤面全体を180度回転 */
+.shogi-board-container.board-rotated {
+  transform: rotate(180deg);
+}
+
+/* 盤面回転時に駒を元に戻す(盤面の回転を打ち消す) */
+.shogi-piece.piece-rotated-back {
+  transform: rotate(180deg) scaleX(1.12);
+}
+
+/* 盤面回転時に駒を元に戻し、さらに駒自体も回転 */
+.shogi-piece.piece-rotated.piece-rotated-back {
+  transform: rotate(360deg) scaleX(1.12);
+}
+
 /* Emphasize outer border lines */
 .shogi-board tr:first-child td.cell {
   border-top-width: 2px;

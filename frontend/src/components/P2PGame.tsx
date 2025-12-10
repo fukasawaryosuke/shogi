@@ -191,6 +191,9 @@ export default function P2PGame() {
   };
 
   const handleCellClick = (x: number, y: number) => {
+    console.log(
+      `handleCellClick: ゲーム座標(${x}, ${y}), turn=${turn}, myPlayer=${myPlayer}`
+    );
     if (gameOver || !myPlayer || turn !== myPlayer || !opponentConnected)
       return;
 
@@ -202,7 +205,12 @@ export default function P2PGame() {
         setMoveError(error);
         setSelectedPiece(null);
       } else {
-        sendAction({ type: "drop", pieceName: selectedPiece, x, y });
+        sendAction({
+          type: "drop",
+          pieceName: selectedPiece,
+          x,
+          y,
+        });
         wasm.nextTurn();
         updateGameState();
         setSelectedPiece(null);
@@ -210,8 +218,28 @@ export default function P2PGame() {
       }
     } else if (!selectedPosition) {
       // 最初のクリック: 駒を選択
-      setSelectedPosition({ x, y });
-      setMoveError(null);
+      // その位置に自分の駒が存在するかチェック
+      const cell = board?.[y - 1]?.[x - 1];
+      console.log(
+        `セル確認: ゲーム座標(${x}, ${y}), 配列index[${y - 1}][${x - 1}]`
+      );
+      console.log(`cell=`, cell);
+      console.log(`myPlayer=${myPlayer}, turn=${turn}`);
+      if (cell && cell.piece) {
+        console.log(`駒の情報: ${cell.piece.name}, owner=${cell.piece.owner}`);
+        console.log(
+          `一致チェック: cell.piece.owner(${
+            cell.piece.owner
+          }) === myPlayer(${myPlayer})? ${cell.piece.owner === myPlayer}`
+        );
+      }
+      if (cell && cell.piece && cell.piece.owner === myPlayer) {
+        console.log(`✓ 駒を選択: ${cell.piece.name} at (${x}, ${y})`);
+        setSelectedPosition({ x, y });
+        setMoveError(null);
+      } else {
+        console.log(`✗ 選択できません`);
+      }
     } else {
       // 2回目のクリック: 駒を移動
       const error = wasm.move(selectedPosition.x, selectedPosition.y, x, y);
@@ -412,13 +440,14 @@ export default function P2PGame() {
         </div>
       )}
       <div className="game-layout">
+        {/* 後手視点では相手(先手)のStandを上に表示 */}
         <Stand
-          player="後手"
-          pieces={stand?.["後手"] || []}
+          player={myPlayer === "後手" ? "先手" : "後手"}
+          pieces={stand?.[myPlayer === "後手" ? "先手" : "後手"] || []}
           onPieceClick={
             !gameOver &&
-            turn === "後手" &&
-            myPlayer === "後手" &&
+            turn === (myPlayer === "後手" ? "先手" : "後手") &&
+            myPlayer === (myPlayer === "後手" ? "先手" : "後手") &&
             opponentConnected
               ? handlePieceClick
               : undefined
@@ -434,14 +463,16 @@ export default function P2PGame() {
           }
           isInCheck={isInCheck}
           currentPlayer={turn}
+          viewPlayer={myPlayer}
         />
+        {/* 後手視点では自分(後手)のStandを下に表示 */}
         <Stand
-          player="先手"
-          pieces={stand?.["先手"] || []}
+          player={myPlayer === "後手" ? "後手" : "先手"}
+          pieces={stand?.[myPlayer === "後手" ? "後手" : "先手"] || []}
           onPieceClick={
             !gameOver &&
-            turn === "先手" &&
-            myPlayer === "先手" &&
+            turn === (myPlayer === "後手" ? "後手" : "先手") &&
+            myPlayer === (myPlayer === "後手" ? "後手" : "先手") &&
             opponentConnected
               ? handlePieceClick
               : undefined

@@ -8,6 +8,7 @@ type BoardProps = {
   onCellClick: (x: number, y: number) => void;
   isInCheck?: boolean;
   currentPlayer?: string;
+  viewPlayer?: "先手" | "後手" | null;
 };
 
 export default function Board({
@@ -16,6 +17,7 @@ export default function Board({
   onCellClick,
   isInCheck = false,
   currentPlayer = "",
+  viewPlayer = null,
 }: BoardProps) {
   // 駒の初期配置
   // ・ 1 2 3 4 5 6 7 8 9
@@ -32,10 +34,19 @@ export default function Board({
   const renderPiece = (name: string, owner: string) => {
     const src = PieceAssetResolver.getImageUrl(name);
     if (!src) return null;
-    const className =
-      owner === "後手" ? "shogi-piece piece-rotated" : "shogi-piece";
+    // 後手視点では盤面データが反転されているため、相手の駒を回転
+    const shouldRotate = viewPlayer ? owner !== viewPlayer : owner === "後手";
+    const className = shouldRotate
+      ? "shogi-piece piece-rotated"
+      : "shogi-piece";
     return <img src={src} alt={name} className={className} />;
   };
+
+  // 後手視点では盤面データを反転
+  const displayBoard =
+    viewPlayer === "後手"
+      ? board.map((row) => [...row].reverse()).reverse()
+      : board;
 
   return (
     <section>
@@ -43,13 +54,17 @@ export default function Board({
         <div className="shogi-board-container">
           <table className="shogi-board" cellPadding={0} cellSpacing={0}>
             <tbody>
-              {board.map((row, yIdx) => (
+              {displayBoard.map((row, yIdx) => (
                 <tr key={yIdx}>
                   {row.map((cell, xIdx) => {
+                    // 後手視点では表示インデックスをゲーム座標に変換
+                    const gameX = viewPlayer === "後手" ? 9 - xIdx : xIdx + 1;
+                    const gameY = viewPlayer === "後手" ? 9 - yIdx : yIdx + 1;
+
                     const isSelected =
                       selectedPosition &&
-                      selectedPosition.x === xIdx + 1 &&
-                      selectedPosition.y === yIdx + 1;
+                      selectedPosition.x === gameX &&
+                      selectedPosition.y === gameY;
 
                     // 王手されている王かチェック
                     const isKingInCheck =
@@ -65,7 +80,7 @@ export default function Board({
                         className={`cell ${isSelected ? "selected" : ""} ${
                           isKingInCheck ? "in-check" : ""
                         }`}
-                        onClick={() => onCellClick(xIdx + 1, yIdx + 1)}
+                        onClick={() => onCellClick(gameX, gameY)}
                       >
                         {cell && cell.piece
                           ? renderPiece(cell.piece.name, cell.piece.owner)

@@ -29,10 +29,14 @@ export default function Stand({
     return <img src={src} alt={name} className={className} />;
   };
 
+  // 自分のStandは下、相手のStandは上に表示
+  const isMyStand = viewPlayer ? player === viewPlayer : player === "先手";
+  const isTopPosition = !isMyStand;
+
   return (
     <section
       className={`centered-section stand-section ${
-        player === "後手" ? "stand-top" : "stand-bottom"
+        isTopPosition ? "stand-top" : "stand-bottom"
       }`}
     >
       <ul className="stand-pieces-list">
@@ -45,7 +49,7 @@ export default function Stand({
               className={`stand-piece-item ${
                 selectedPiece === piece.type ? "selected" : ""
               } ${!onPieceClick ? "disabled" : ""} ${
-                player === "後手" ? "top-player" : ""
+                isTopPosition ? "top-player" : ""
               }`}
             >
               {renderPiece(piece.name)}
