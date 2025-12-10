@@ -7,6 +7,37 @@
   padding-right: 0 !important;
 }
 
+/* スマホ対応: Standを横長レイアウトに */
+@media (max-width: 768px) {
+  .stand-section {
+    width: 100%;
+    max-width: calc(var(--cell-size, 36px) * 9 + 16px);
+    height: auto;
+    min-height: calc(var(--cell-size, 36px) * 0.9 + 8px);
+    padding: 4px 8px;
+    align-items: flex-start;
+  }
+
+  .stand-section.stand-top {
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .stand-section.stand-bottom {
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .stand-pieces-list {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 6px;
+    margin: 0;
+  }
+}
+
 .stand-section.stand-top {
   align-items: flex-start;
   justify-content: flex-end;
@@ -85,19 +116,7 @@
   filter: drop-shadow(0 0 4px #22c55e);
 }
 
-.stand-piece-item:hover .stand-piece-image {
-  /* No transform on hover */
-}
-
-.stand-piece-item.selected:hover .stand-piece-image {
-  /* No transform on hover */
-}
-
 .stand-piece-item.disabled {
   cursor: default;
   opacity: 0.5;
-}
-
-.stand-piece-item.disabled:hover .stand-piece-image {
-  /* Keep original transform */
 }
